@@ -1,0 +1,16 @@
+### POST Movie 1
+POST {{host}}/movies
+Content-Type: application/json
+
+{
+  "name": "Stardust",
+  "releaseYear": 2007,
+  "genre": "Fantasy",
+  "director": "Matthew Vaughn"
+}
+
+### GET Movies
+GET {{host}}/movies
+
+### GET Movie
+GET {{host}}/movies/1
