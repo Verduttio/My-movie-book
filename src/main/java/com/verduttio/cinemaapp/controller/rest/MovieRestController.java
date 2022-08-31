@@ -1,18 +1,20 @@
-package com.verduttio.cinemaapp.controller;
+package com.verduttio.cinemaapp.controller.rest;
 
 
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.service.MovieService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path="/movies")
-public class MovieController {
+public class MovieRestController {
     private final MovieService movieService;
 
-    public MovieController(MovieService movieService){
+    @Autowired
+    public MovieRestController(MovieService movieService){
         this.movieService = movieService;
     }
 

@@ -3,7 +3,7 @@ POST {{host}}/movies
 Content-Type: application/json
 
 {
-  "name": "Stardust",
+  "title": "Stardust",
   "releaseYear": 2007,
   "genre": "Fantasy",
   "director": "Matthew Vaughn"

@@ -15,8 +15,8 @@ public class Movie {
     @GeneratedValue(strategy = AUTO)
     @JsonProperty("id")
     private final int id;
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("title")
+    private String title;
     @JsonProperty("releaseYear")
     private int releaseYear;
     @JsonProperty("genre")
@@ -26,28 +26,28 @@ public class Movie {
 
     public Movie(){
         id = 0;
-        name = null;
+        title = null;
         releaseYear = 0;
         genre = null;
         director = null;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Movie(int id, String name, int releaseYear, String genre, String director) {
+    public Movie(int id, String title, int releaseYear, String genre, String director) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.releaseYear = releaseYear;
         this.genre = genre;
         this.director = director;
     }
 
     public int id() {return id;}
-    public String name() {return name;}
+    public String title() {return title;}
     public int releaseYear() {return releaseYear;}
     public String genre() {return genre;}
     public String director() {return director;}
 
-    public void setName(String name) {this.name = name;}
+    public void setTitle(String title) {this.title = title;}
     public void setReleaseYear(int releaseYear) {this.releaseYear = releaseYear;}
     public void setGenre(String genre) {this.genre = genre;}
     public void setDirector(String director) {this.director = director;}
@@ -56,7 +56,7 @@ public class Movie {
     public String toString(){
         return "Movie{" +
                 "id = " + id +
-                ", name = " + name +
+                ", title = " + title +
                 ", releaseYear = " + releaseYear +
                 ", genre = "  + genre +
                 ", director = " + director;
