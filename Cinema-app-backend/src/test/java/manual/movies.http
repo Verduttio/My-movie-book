@@ -6,7 +6,8 @@ Content-Type: application/json
   "title": "Stardust",
   "releaseYear": 2007,
   "genre": "Fantasy",
-  "director": "Matthew Vaughn"
+  "director": "Matthew Vaughn",
+  "posterFileName": "stardust.jpg"
 }
 
 ### GET Movies

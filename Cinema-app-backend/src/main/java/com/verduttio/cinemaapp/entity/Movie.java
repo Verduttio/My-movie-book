@@ -23,6 +23,8 @@ public class Movie {
     private String genre;
     @JsonProperty("director")
     private String director;
+    @JsonProperty("posterFileName")
+    private String posterFileName;
 
     public Movie(){
         id = 0;
@@ -30,15 +32,17 @@ public class Movie {
         releaseYear = 0;
         genre = null;
         director = null;
+        posterFileName = null;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Movie(int id, String title, int releaseYear, String genre, String director) {
+    public Movie(int id, String title, int releaseYear, String genre, String director, String posterFileName) {
         this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.genre = genre;
         this.director = director;
+        this.posterFileName = posterFileName;
     }
 
     public int id() {return id;}
@@ -46,11 +50,13 @@ public class Movie {
     public int releaseYear() {return releaseYear;}
     public String genre() {return genre;}
     public String director() {return director;}
+    public String posterFileName() {return posterFileName;}
 
     public void setTitle(String title) {this.title = title;}
     public void setReleaseYear(int releaseYear) {this.releaseYear = releaseYear;}
     public void setGenre(String genre) {this.genre = genre;}
     public void setDirector(String director) {this.director = director;}
+    public void setPosterFileName(String posterFileName) {this.posterFileName = posterFileName;}
 
     @Override
     public String toString(){

@@ -14,12 +14,17 @@
                 <tr>
                     <th>Title</th>
                     <th>Year</th>
+                    <th>Genre</th>
+                    <th>Director</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="movie : ${movies}">
                     <td th:text="${movie.title()}"></td>
                     <td th:text="${movie.releaseYear()}"></td>
+                    <td th:text="${movie.genre()}"></td>
+                    <td th:text="${movie.director()}"></td>
+                    <td><img th:src="@{/files/images/{posterFileName}(posterFileName=${movie.posterFileName})}"></td>
                 </tr>
                 </tbody>
             </table>
