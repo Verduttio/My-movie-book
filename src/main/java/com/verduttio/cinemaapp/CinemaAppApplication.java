@@ -16,12 +16,4 @@ public class CinemaAppApplication {
         SpringApplication.run(CinemaAppApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner init(StorageService storageService) {
-        return (args) -> {
-            storageService.deleteAll();
-            storageService.init();
-        };
-    }
-
 }
