@@ -40,7 +40,7 @@ export default function AddMovie() {
         <h3>Add movie</h3>
         <hr/>
         <form>
-            <div className={"form-group"}>
+            <div className={"mb-3"}>
                 <input
                     type={"text"}
                     className={"form-control col-4"}
@@ -50,7 +50,7 @@ export default function AddMovie() {
                     placeholder={"Title"}
                     />
             </div>
-            <div className={"form-group"}>
+            <div className={"mb-3"}>
                 <input
                     type={"text"}
                     className={"form-control col-4"}
@@ -60,7 +60,7 @@ export default function AddMovie() {
                     placeholder={"Year of release"}
                 />
             </div>
-            <div className={"form-group"}>
+            <div className={"mb-3"}>
                 <input
                     type={"text"}
                     className={"form-control col-4"}
@@ -70,7 +70,7 @@ export default function AddMovie() {
                     placeholder={"Genre"}
                 />
             </div>
-            <div className={"form-group"}>
+            <div className={"mb-3"}>
                 <input
                     type={"text"}
                     className={"form-control col-4"}
@@ -80,7 +80,7 @@ export default function AddMovie() {
                     placeholder={"Director"}
                 />
             </div>
-            <div>
+            <div className={"mb-3"}>
                 <input
                     type={"file"}
                     className={"form-control"}

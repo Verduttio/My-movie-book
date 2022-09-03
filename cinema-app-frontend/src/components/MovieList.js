@@ -24,14 +24,17 @@ export default function MovieList() {
             <div>
                 <Link to={"/add"} className={"btn btn-primary mb-2"}>Add Movie</Link>
                 <table className={"table table-bordered table-striped"}>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Year</th>
-                        <th>Genre</th>
-                        <th>Director</th>
-                        <th>Poster</th>
-                    </tr>
+                    <thead className={"thead-dark"}>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Year</th>
+                            <th>Genre</th>
+                            <th>Director</th>
+                            <th>Poster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     {
                         movies.map(movie => (
                             <tr key={movie.id}>
@@ -44,6 +47,7 @@ export default function MovieList() {
                             </tr>
                         ))
                     }
+                    </tbody>
                 </table>
             </div>
         </div>
