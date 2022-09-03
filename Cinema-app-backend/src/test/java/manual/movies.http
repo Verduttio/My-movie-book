@@ -10,6 +10,18 @@ Content-Type: application/json
   "posterFileName": "stardust.jpg"
 }
 
+### POST Movie 2
+POST {{host}}/movies
+Content-Type: application/json
+
+{
+  "title": "The Lord of the Rings: The Fellowship of the Ring",
+  "releaseYear": 2001,
+  "genre": "Fantasy",
+  "director": "Peter Jackson",
+  "posterFileName": "lotr_1.jpg"
+}
+
 ### GET Movies
 GET {{host}}/movies
 
