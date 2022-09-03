@@ -9,20 +9,29 @@ export default function AddMovie() {
     const[releaseYear, setReleaseYear] = useState('');
     const[genre, setGenre] = useState('');
     const[director, setDirector] = useState('');
+    const[posterImage, setPosterImage] = useState(null);
     const navigate = useNavigate();
 
     const saveMovie = (e) => {
         e.preventDefault();
 
-        const posterFileName = 'stardust.jpg';
+        movieService.uploadPosterImage(posterImage)
+            .then(response => {
+                console.log("Poster image uploaded successfully.", response.data);
+            })
+            .catch(error => {
+            console.log('An error occurred while uploading the image.', error);
+        })
+
+        const posterFileName = posterImage.name;
         const movie = {title, releaseYear, genre, director, posterFileName};
         movieService.create(movie)
             .then(response => {
-                console.log("Movie added successfully", response.data);
+                console.log("Movie uploaded successfully.", response.data);
                 navigate('/');
             })
             .catch(error => {
-                console.log('An error occurred.', error);
+                console.log('An error occurred while uploading the movie.', error);
             })
     }
 
@@ -69,6 +78,14 @@ export default function AddMovie() {
                     value={director}
                     onChange={(e) => setDirector(e.target.value)}
                     placeholder={"Director"}
+                />
+            </div>
+            <div>
+                <input
+                    type={"file"}
+                    className={"form-control"}
+                    id={"file"}
+                    onChange={(e) => setPosterImage(e.target.files[0])}
                 />
             </div>
             <div>

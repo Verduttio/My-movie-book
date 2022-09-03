@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(path="/files/images")
+@CrossOrigin
 public class FileUploadController {
 
     private final StorageService storageService;

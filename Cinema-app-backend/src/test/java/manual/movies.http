@@ -22,6 +22,18 @@ Content-Type: application/json
   "posterFileName": "lotr_1.jpg"
 }
 
+### POST Movie 3
+POST {{host}}/movies
+Content-Type: application/json
+
+{
+  "title": "Star Wars: Episode III",
+  "releaseYear": 2005,
+  "genre": "Sci-Fi",
+  "director": "George Lucas",
+  "posterFileName": "sw_3.jpg"
+}
+
 ### GET Movies
 GET {{host}}/movies
 
