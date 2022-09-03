@@ -46,12 +46,12 @@ public class FileUploadController {
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
 
         Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-//        return ResponseEntity
-//                .ok()
-//                .contentType(MediaType.IMAGE_JPEG)
-//                .body(new InputStreamResource(file.getInputStream()));
+//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+//                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(new InputStreamResource(file.getInputStream()));
     }
 
     @PostMapping
