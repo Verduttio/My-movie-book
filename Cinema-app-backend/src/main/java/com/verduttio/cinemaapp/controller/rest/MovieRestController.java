@@ -33,4 +33,13 @@ public class MovieRestController {
     public List<Movie> getAllMovies() {
         return movieService.getAllMovies();
     }
+
+    @PutMapping
+    @CrossOrigin
+    ////TODO: Keep an eye on it, PUT can create a new movie if it does not exist (security concern)
+    public Movie updateMovie(@RequestBody Movie movie) {return movieService.updateMovie(movie);}
+
+    @DeleteMapping("/{id}")
+    public void removeMovie(@PathVariable("id") int movieId) {movieService.removeMovie(movieId);}
+
 }

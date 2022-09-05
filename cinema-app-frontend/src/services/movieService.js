@@ -8,6 +8,10 @@ const create = data => {
     return httpClient.post("/movies", data);
 }
 
+const deleteMovie = id => {
+    return httpClient.delete("/movies/" + id);
+}
+
 const uploadPosterImage = image => {
     let formData = new FormData();
     formData.append("file", image);
@@ -18,4 +22,12 @@ const uploadPosterImage = image => {
     });
 }
 
-export default {getAll, create, uploadPosterImage};
+const get = id => {
+    return httpClient.get("/movies/"+id);
+}
+
+const update = data => {
+    return httpClient.put("/movies", data);
+}
+
+export default {getAll, create, uploadPosterImage, get, update, deleteMovie};

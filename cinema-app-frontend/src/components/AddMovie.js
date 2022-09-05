@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import movieService from "../services/movieService";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -10,30 +10,65 @@ export default function AddMovie() {
     const[genre, setGenre] = useState('');
     const[director, setDirector] = useState('');
     const[posterImage, setPosterImage] = useState(null);
+    const[posterFileName, setPosterFileName] = useState('');
+
+    const {id} = useParams();
+
     const navigate = useNavigate();
 
     const saveMovie = (e) => {
         e.preventDefault();
 
-        movieService.uploadPosterImage(posterImage)
-            .then(response => {
-                console.log("Poster image uploaded successfully.", response.data);
-            })
-            .catch(error => {
-            console.log('An error occurred while uploading the image.', error);
-        })
+        const movie = {title, releaseYear, genre, director, posterFileName, id};
+        if(id) {
+            // Update record
+            movieService.update(movie)
+                .then(response => {
+                    console.log("Movie data updated successfully.", response.data);
+                    navigate('/');
+                })
+                .catch(error => {
+                    console.log('An error occurred while updating the movie.', error);
+                })
+        } else {
+            // Create new record
+            movieService.uploadPosterImage(posterImage)
+                .then(response => {
+                    console.log("Poster image uploaded successfully.", response.data);
+                })
+                .catch(error => {
+                    console.log('An error occurred while uploading the image.', error);
+                })
 
-        const posterFileName = posterImage.name;
-        const movie = {title, releaseYear, genre, director, posterFileName};
-        movieService.create(movie)
-            .then(response => {
-                console.log("Movie uploaded successfully.", response.data);
-                navigate('/');
-            })
-            .catch(error => {
-                console.log('An error occurred while uploading the movie.', error);
-            })
+
+            movieService.create(movie)
+                .then(response => {
+                    console.log("Movie uploaded successfully.", response.data);
+                    navigate('/');
+                })
+                .catch(error => {
+                    console.log('An error occurred while uploading the movie.', error);
+                })
+        }
+
+
     }
+
+    useEffect(() => {
+        if(id) {
+            movieService.get(id)
+                .then(movie => {
+                    setTitle(movie.data.title);
+                    setGenre(movie.data.genre);
+                    setReleaseYear(movie.data.releaseYear);
+                    setDirector(movie.data.director);
+                    setPosterFileName(movie.data.posterFileName);
+            })
+                .catch(error => {
+                    console.log('And error occurred while getting movie data.', error);
+                })
+        }
+    }, [id])
 
 
     return <div className="container">
@@ -85,7 +120,11 @@ export default function AddMovie() {
                     type={"file"}
                     className={"form-control"}
                     id={"file"}
-                    onChange={(e) => setPosterImage(e.target.files[0])}
+                    onChange={(e) => {
+                            setPosterImage(e.target.files[0]);
+                            setPosterFileName(e.target.files[0].name);
+                        }
+                    }
                 />
             </div>
             <div>
@@ -95,3 +134,4 @@ export default function AddMovie() {
         <hr/>
     </div>
 }
+

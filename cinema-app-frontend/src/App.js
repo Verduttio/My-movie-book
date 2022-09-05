@@ -10,6 +10,7 @@ function App() {
           <Routes>
               <Route path='/' element={<MovieList/>}/>
               <Route path='/add' element={<AddMovie/>}/>
+              <Route path='/edit/:id' element={<AddMovie/>}/>
               <Route path='*' element={<NotFound/>}/>
           </Routes>
         </div>
