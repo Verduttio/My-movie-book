@@ -66,6 +66,12 @@ public class FileUploadController {
         return "redirect:/files/images";
     }
 
+    @DeleteMapping("/{filename:.+}")
+    public ResponseEntity<?> removeFile(@PathVariable String filename) {
+        storageService.delete(filename);
+        return ResponseEntity.ok().build();
+    }
+
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {

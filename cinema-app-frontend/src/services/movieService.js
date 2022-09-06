@@ -22,6 +22,10 @@ const uploadPosterImage = image => {
     });
 }
 
+const deletePosterImage = id => {
+    return httpClient.delete("/files/images/" + id);
+}
+
 const get = id => {
     return httpClient.get("/movies/"+id);
 }
@@ -30,4 +34,4 @@ const update = data => {
     return httpClient.put("/movies", data);
 }
 
-export default {getAll, create, uploadPosterImage, get, update, deleteMovie};
+export default {getAll, create, uploadPosterImage, get, update, deleteMovie, deletePosterImage};

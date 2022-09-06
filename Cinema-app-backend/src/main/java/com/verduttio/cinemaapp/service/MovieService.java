@@ -45,9 +45,9 @@ public class MovieService {
 
     public void removeMovie(int movieId) {
         // We shouldn't load whole movie when we need only its posterFileName.
-        var movie = movieRepository.findById(movieId);
-        var posterFileName = movie.posterFileName();
+//        var movie = movieRepository.findById(movieId);
+//        var posterFileName = movie.posterFileName();
         movieRepository.deleteById(movieId);
-        fileSystemStorageService.delete(posterFileName);
+//        fileSystemStorageService.delete(posterFileName);
     }
 }
