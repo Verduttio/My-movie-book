@@ -9,7 +9,8 @@ Content-Type: application/json
   "releaseYear": 2007,
   "genre": "Fantasy",
   "director": "Matthew Vaughn",
-  "posterFileName": "stardust.jpg"
+  "posterFileName": "stardust.jpg",
+  "description": "In a countryside town bordering on a magical land, a young man makes a promise to his beloved that he'll retrieve a fallen star by venturing into the magical realm."
 }
 
 ### POST Movie 2

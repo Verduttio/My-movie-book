@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -19,7 +20,6 @@ public class Movie {
     private String title;
     @JsonProperty("rating")
     private double rating;
-
     @JsonProperty("numberOfVotes")
     private int numberOfVotes;
     @JsonProperty("releaseYear")
@@ -30,6 +30,9 @@ public class Movie {
     private String director;
     @JsonProperty("posterFileName")
     private String posterFileName;
+    @JsonProperty("description")
+    @Lob
+    private String description;
 
     public Movie(){
         id = 0;
@@ -40,10 +43,11 @@ public class Movie {
         genre = null;
         director = null;
         posterFileName = null;
+        description = null;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Movie(int id, String title, double rating, int numberOfVotes, int releaseYear, String genre, String director, String posterFileName) {
+    public Movie(int id, String title, double rating, int numberOfVotes, int releaseYear, String genre, String director, String posterFileName, String description) {
         this.id = id;
         this.title = title;
         this.rating = rating;
@@ -52,6 +56,7 @@ public class Movie {
         this.genre = genre;
         this.director = director;
         this.posterFileName = posterFileName;
+        this.description = description;
     }
 
     public int id() {return id;}
@@ -62,6 +67,7 @@ public class Movie {
     public String genre() {return genre;}
     public String director() {return director;}
     public String posterFileName() {return posterFileName;}
+    public String description() {return description;}
 
     public void setTitle(String title) {this.title = title;}
     public void setRating(double rating) {this.rating = rating;}
@@ -70,6 +76,7 @@ public class Movie {
     public void setGenre(String genre) {this.genre = genre;}
     public void setDirector(String director) {this.director = director;}
     public void setPosterFileName(String posterFileName) {this.posterFileName = posterFileName;}
+    public void setDescription(String description) {this.description = description;}
 
     @Override
     public String toString(){
@@ -80,7 +87,8 @@ public class Movie {
                 ", numberOfVotes = " + numberOfVotes +
                 ", releaseYear = " + releaseYear +
                 ", genre = "  + genre +
-                ", director = " + director;
+                ", director = " + director +
+                ", description = " + description;
     }
 
 }

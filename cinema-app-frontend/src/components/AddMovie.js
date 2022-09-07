@@ -13,6 +13,7 @@ export default function AddMovie() {
     const[director, setDirector] = useState('');
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState('');
+    const[description, setDescription] = useState('');
 
     const {id} = useParams();
 
@@ -67,6 +68,7 @@ export default function AddMovie() {
                     setPosterFileName(movie.data.posterFileName);
                     setRating(movie.data.rating);
                     setNumberOfVotes(movie.data.numberOfVotes);
+                    setDescription(movie.data.description);
             })
                 .catch(error => {
                     console.log('And error occurred while getting movie data.', error);
@@ -137,6 +139,16 @@ export default function AddMovie() {
                     value={numberOfVotes}
                     onChange={(e) => setNumberOfVotes(e.target.value)}
                     placeholder={"Number of votes"}
+                />
+            </div>
+            <div className={"mb-3"}>
+                <input
+                    type={"text"}
+                    className={"form-control col-4"}
+                    id={"description"}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder={"Description"}
                 />
             </div>
             <div className={"mb-3"}>
