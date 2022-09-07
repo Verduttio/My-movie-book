@@ -6,6 +6,8 @@ import {useNavigate, useParams} from "react-router-dom";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
+    const[rating, setRating] = useState('');
+    const[numberOfVotes, setNumberOfVotes] = useState('');
     const[releaseYear, setReleaseYear] = useState('');
     const[genre, setGenre] = useState('');
     const[director, setDirector] = useState('');
@@ -19,7 +21,7 @@ export default function AddMovie() {
     const saveMovie = (e) => {
         e.preventDefault();
 
-        const movie = {title, releaseYear, genre, director, posterFileName, id};
+        const movie = {title, releaseYear, genre, director, posterFileName, id, rating, numberOfVotes};
         if(id) {
             // Update record
             movieService.update(movie)
@@ -63,6 +65,8 @@ export default function AddMovie() {
                     setReleaseYear(movie.data.releaseYear);
                     setDirector(movie.data.director);
                     setPosterFileName(movie.data.posterFileName);
+                    setRating(movie.data.rating);
+                    setNumberOfVotes(movie.data.numberOfVotes);
             })
                 .catch(error => {
                     console.log('And error occurred while getting movie data.', error);
@@ -113,6 +117,26 @@ export default function AddMovie() {
                     value={director}
                     onChange={(e) => setDirector(e.target.value)}
                     placeholder={"Director"}
+                />
+            </div>
+            <div className={"mb-3"}>
+                <input
+                    type={"text"}
+                    className={"form-control col-4"}
+                    id={"rating"}
+                    value={rating}
+                    onChange={(e) => setRating(e.target.value)}
+                    placeholder={"Rating"}
+                />
+            </div>
+            <div className={"mb-3"}>
+                <input
+                    type={"text"}
+                    className={"form-control col-4"}
+                    id={"numberOfVotes"}
+                    value={numberOfVotes}
+                    onChange={(e) => setNumberOfVotes(e.target.value)}
+                    placeholder={"Number of votes"}
                 />
             </div>
             <div className={"mb-3"}>

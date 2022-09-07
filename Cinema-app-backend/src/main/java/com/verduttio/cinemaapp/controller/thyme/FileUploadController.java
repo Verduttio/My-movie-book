@@ -69,6 +69,7 @@ public class FileUploadController {
     @DeleteMapping("/{filename:.+}")
     public ResponseEntity<?> removeFile(@PathVariable String filename) {
         storageService.delete(filename);
+        ///We should change it to return object state based on the result of the deletion
         return ResponseEntity.ok().build();
     }
 

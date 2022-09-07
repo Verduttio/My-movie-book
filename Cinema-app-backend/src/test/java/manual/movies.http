@@ -4,6 +4,8 @@ Content-Type: application/json
 
 {
   "title": "Stardust",
+  "rating": 7.3,
+  "numberOfVotes": 146233,
   "releaseYear": 2007,
   "genre": "Fantasy",
   "director": "Matthew Vaughn",

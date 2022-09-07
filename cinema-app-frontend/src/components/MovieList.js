@@ -5,6 +5,10 @@ import {Link} from "react-router-dom";
 import movieService from "../services/movieService";
 import "./MovieList.css";
 
+function numberWithSpaces(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
+
 export default function MovieList() {
     const [movies, setMovies] = useState([]);
 
@@ -32,6 +36,8 @@ export default function MovieList() {
                             <th>Year</th>
                             <th>Genre</th>
                             <th>Director</th>
+                            <th>Rating</th>
+                            <th>Votes</th>
                             <th>Poster</th>
                             <th>Action</th>
                         </tr>
@@ -45,6 +51,8 @@ export default function MovieList() {
                                 <td>{movie.releaseYear}</td>
                                 <td>{movie.genre}</td>
                                 <td>{movie.director}</td>
+                                <td>{movie.rating}</td>
+                                <td>{numberWithSpaces(movie.numberOfVotes)}</td>
                                 <td>
                                     <img
                                         src={'http://localhost:8080/files/images/'+movie.posterFileName}
