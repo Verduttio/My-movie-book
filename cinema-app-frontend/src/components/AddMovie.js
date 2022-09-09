@@ -28,7 +28,7 @@ export default function AddMovie() {
             movieService.update(movie)
                 .then(response => {
                     console.log("Movie data updated successfully.", response.data);
-                    navigate('/');
+                    navigate('/movies');
                 })
                 .catch(error => {
                     console.log('An error occurred while updating the movie.', error);
@@ -47,7 +47,7 @@ export default function AddMovie() {
             movieService.create(movie)
                 .then(response => {
                     console.log("Movie uploaded successfully.", response.data);
-                    navigate('/');
+                    navigate('/movies');
                 })
                 .catch(error => {
                     console.log('An error occurred while uploading the movie.', error);

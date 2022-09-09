@@ -9,10 +9,10 @@ function App() {
       <BrowserRouter>
         <div>
           <Routes>
-              <Route path='/' element={<MovieList/>}/>
-              <Route path='/add' element={<AddMovie/>}/>
-              <Route path='/edit/:id' element={<AddMovie/>}/>
-              <Route path='/:id' element={<ViewMovie/>}/>
+              <Route path='/movies' element={<MovieList/>}/>
+              <Route path='/movies/add' element={<AddMovie/>}/>
+              <Route path='/movies/edit/:id' element={<AddMovie/>}/>
+              <Route path='/movies/:id' element={<ViewMovie/>}/>
               <Route path='*' element={<NotFound/>}/>
           </Routes>
         </div>

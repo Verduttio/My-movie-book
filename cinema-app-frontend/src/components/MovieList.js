@@ -25,9 +25,13 @@ export default function MovieList() {
 
     return (
         <div className="container">
-            <h3>List of movies</h3>
+            <div style={{paddingTop: "20px", paddingBottom: "20px"}}>
+                <Link to={"/movies/add"} className={"btn btn-primary mb-2"} style={{float:"right"}}>
+                    Add Movie
+                </Link>
+                <h3 style={{textAlign: "center"}}>List of movies</h3>
+            </div>
             <div>
-                <Link to={"/add"} className={"btn btn-primary mb-2"}>Add Movie</Link>
                 <table className={"table table-bordered table-striped"}>
                     <thead className={"thead-dark"}>
                         <tr>
@@ -69,7 +73,7 @@ export default function MovieList() {
                                 <td>
                                     <td>
                                         <span style={{display:"block"}}>
-                                            <Link className={"btn btn-info"} to={"/" + movie.id}>View</Link>
+                                            <Link className={"btn btn-info"} to={"/movies/" + movie.id}>View</Link>
                                         </span>
                                     </td>
 
