@@ -27,10 +27,17 @@ export default function MovieList() {
     },[id])
 
     const navigate = useNavigate();
-    const myNote = {note};
 
     const addNote = (e) => {
         e.preventDefault();
+
+        let myNote;
+
+        if(note==="") {
+            myNote = movie.note;
+        } else {
+            myNote = {note};
+        }
 
         movieService.modify(id, myNote)
             .then(response => {
@@ -45,13 +52,13 @@ export default function MovieList() {
     return (
         <div className="container">
             <div id={"buttons"} style={{paddingTop: "20px", paddingBottom: "20px"}}>
-                <span style={{display:"block", float:"right"}}>
+                <span style={{display:"block", float:"left"}}>
                     <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>
                 </span>
-                <span style={{display:"block", float:"left"}}>
+                <span style={{display:"block", float:"right"}}>
                     <Link className={"btn btn-warning"} to={"/movies/edit/" + movie.id}>Update</Link>
                 </span>
-                <span style={{display:"block", float:"left", paddingLeft: '20px'}}>
+                <span style={{display:"block", float:"right", paddingRight:"20px"}}>
                     <button className={"btn btn-danger"} onClick={() => {
                         movieService.deleteMovie(movie.id);
                         movieService.deletePosterImage(movie.posterFileName);
@@ -100,41 +107,47 @@ export default function MovieList() {
                     </tbody>
                 </table>
             </div>
-            <div>
-                <h4>Description</h4>
-                <h5>{movie.description}</h5>
+            <div className="card">
+                <div className="card-body">
+                    <h4 className="card-title">Description</h4>
+                    <hr/>
+                    <p className="card-text">{movie.description}</p>
+                </div>
             </div>
-            <div className="form-group" style={{paddingTop: '20px'}}>
-                <h4>My note</h4>
-                {movie.note === null ? (
-                    <form>
-                        <textarea className="form-control" id="exampleFormControlTextarea3" rows="7" onChange={(e) => setNote(e.target.value)}/>
-                        <span style={{display:"block", paddingTop: '20px'}}>
-                            <button className={"btn btn-info"} type={"submit"} onClick={(e) => addNote(e)}>Add note</button>
-                        </span>
-                    </form>
-                ) : (
-                    <div>
-                        {editNote === false ? (
-                            <div>
-                                <h5>{movie.note}</h5>
-                                <button className={"btn btn-info"} onClick={() => setEditNote(true)}>Edit note</button>
-                            </div>
-                        ) : (
+            <div style={{paddingTop: "20px"}}>
+                <div className="card">
+                    <div className="card-body">
+                        <h4 className="card-title">My note</h4>
+                        <hr/>
+                        {movie.note === null ? (
                             <form>
-                                <textarea className="form-control" id="exampleFormControlTextarea3" rows="7" onChange={(e) => setNote(e.target.value)}>
-                                    {movie.note}
-                                </textarea>
+                                <textarea className="form-control" id="exampleFormControlTextarea3" rows="7" onChange={(e) => setNote(e.target.value)}/>
                                 <span style={{display:"block", paddingTop: '20px'}}>
-                                    <button className={"btn btn-info"} type={"submit"} onClick={(e) => addNote(e)}>Edit note</button>
+                                    <button className={"btn btn-info"} type={"submit"} onClick={(e) => addNote(e)}>Add note</button>
                                 </span>
                             </form>
+                        ) : (
+                            <div>
+                                {editNote === false ? (
+                                    <div>
+                                        <p className="card-text">{movie.note}</p>
+                                        <button className={"btn btn-info"} onClick={() => setEditNote(true)}>Edit note</button>
+                                    </div>
+                                ) : (
+                                    <form>
+                                        <textarea className="form-control" id="exampleFormControlTextarea3" rows="7" onChange={(e) => setNote(e.target.value)}>
+                                            {movie.note}
+                                        </textarea>
+                                        <span style={{display:"block", paddingTop: '20px'}}>
+                                            <button className={"btn btn-info"} type={"submit"} onClick={(e) => addNote(e)}>Edit note</button>
+                                        </span>
+                                    </form>
+                                )}
+                            </div>
                         )}
-
                     </div>
-                )}
+                </div>
             </div>
-
         </div>
     );
 }

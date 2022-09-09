@@ -76,7 +76,6 @@ export default function MovieList() {
                                             <Link className={"btn btn-info"} to={"/movies/" + movie.id}>View</Link>
                                         </span>
                                     </td>
-
                                 </td>
                             </tr>
                         ))

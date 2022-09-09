@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import movieService from "../services/movieService";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -78,7 +78,12 @@ export default function AddMovie() {
 
 
     return <div className="container">
-        <h3>Add movie</h3>
+        <div id={"top bar"} style={{paddingTop:"20px"}}>
+            <span style={{display:"block", float:"left"}}>
+                    <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>
+            </span>
+            <h3 style={{textAlign: "center", paddingTop: "20px"}}>Add movie</h3>
+        </div>
         <hr/>
         <form>
             <div className={"mb-3"}>
@@ -163,11 +168,10 @@ export default function AddMovie() {
                     }
                 />
             </div>
-            <div>
+            <div className={"text-center"}>
                 <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Save</button>
             </div>
         </form>
-        <hr/>
     </div>
 }
 
