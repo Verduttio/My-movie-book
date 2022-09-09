@@ -34,6 +34,10 @@ public class Movie {
     @Lob
     private String description;
 
+    @JsonProperty("note")
+    @Lob
+    private String note;
+
     public Movie(){
         id = 0;
         title = null;
@@ -44,6 +48,7 @@ public class Movie {
         director = null;
         posterFileName = null;
         description = null;
+        note = null;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -57,6 +62,7 @@ public class Movie {
         this.director = director;
         this.posterFileName = posterFileName;
         this.description = description;
+        this.note = null;
     }
 
     public int id() {return id;}
@@ -68,6 +74,7 @@ public class Movie {
     public String director() {return director;}
     public String posterFileName() {return posterFileName;}
     public String description() {return description;}
+    public String note() {return note;}
 
     public void setTitle(String title) {this.title = title;}
     public void setRating(double rating) {this.rating = rating;}
@@ -77,6 +84,7 @@ public class Movie {
     public void setDirector(String director) {this.director = director;}
     public void setPosterFileName(String posterFileName) {this.posterFileName = posterFileName;}
     public void setDescription(String description) {this.description = description;}
+    public void setNote(String note) {this.note = note;}
 
     @Override
     public String toString(){

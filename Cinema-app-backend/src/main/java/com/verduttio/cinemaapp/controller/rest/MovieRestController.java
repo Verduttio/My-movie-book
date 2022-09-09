@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -38,6 +39,9 @@ public class MovieRestController {
     @CrossOrigin
     ////TODO: Keep an eye on it, PUT can create a new movie if it does not exist (security concern)
     public Movie updateMovie(@RequestBody Movie movie) {return movieService.updateMovie(movie);}
+
+    @PatchMapping("/{id}")
+    public Movie modifyMovie(@PathVariable("id") int movieId, @RequestBody Map<Object, Object> fields) {return movieService.modifyMovie(movieId, fields);}
 
     @DeleteMapping("/{id}")
     public void removeMovie(@PathVariable("id") int movieId) {movieService.removeMovie(movieId);}

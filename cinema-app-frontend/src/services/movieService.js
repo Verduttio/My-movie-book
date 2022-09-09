@@ -34,4 +34,8 @@ const update = data => {
     return httpClient.put("/movies", data);
 }
 
-export default {getAll, create, uploadPosterImage, get, update, deleteMovie, deletePosterImage};
+const modify = (id, data) => {
+    return httpClient.patch("/movies/" + id, data);
+}
+
+export default {getAll, create, uploadPosterImage, get, update, deleteMovie, deletePosterImage, modify};

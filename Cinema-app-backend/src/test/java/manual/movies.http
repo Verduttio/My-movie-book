@@ -20,9 +20,12 @@ Content-Type: application/json
 {
   "title": "The Lord of the Rings: The Fellowship of the Ring",
   "releaseYear": 2001,
+  "rating": 8.8,
+  "numberOfVotes": 1800000,
   "genre": "Fantasy",
   "director": "Peter Jackson",
-  "posterFileName": "lotr_1.jpg"
+  "posterFileName": "lotr_1.jpg",
+  "description": "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron."
 }
 
 ### POST Movie 3
@@ -36,6 +39,15 @@ Content-Type: application/json
   "director": "George Lucas",
   "posterFileName": "sw_3.jpg"
 }
+
+### PATCH Movie
+PATCH {{host}}/movies/2
+Content-Type: application/json
+
+{
+  "note": "Very good movie."
+}
+
 
 ### GET Movies
 GET {{host}}/movies

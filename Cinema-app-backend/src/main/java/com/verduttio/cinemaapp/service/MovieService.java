@@ -4,8 +4,11 @@ import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MovieService {
@@ -49,5 +52,18 @@ public class MovieService {
 //        var posterFileName = movie.posterFileName();
         movieRepository.deleteById(movieId);
 //        fileSystemStorageService.delete(posterFileName);
+    }
+
+    public Movie modifyMovie(int movieId, Map<Object, Object> fields) {
+        Movie movie = movieRepository.findById(movieId);
+        // Map key is field name, v is value
+        fields.forEach((k,v) -> {
+            // Use reflection to get field k on movie and set it value v
+            Field field = ReflectionUtils.findField(Movie.class, (String) k);
+            assert field != null;  ////TODO: Add an exception or if clause here
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, movie, v);
+        });
+        return movieRepository.save(movie);
     }
 }

@@ -69,17 +69,7 @@ export default function MovieList() {
                                 <td>
                                     <td>
                                         <span style={{display:"block"}}>
-                                            <Link className={"btn btn-warning"} to={"/edit/" + movie.id}>Update</Link>
-                                        </span>
-                                        <span style={{display:"block", paddingTop: '20px'}}>
-                                            <Link className={"btn btn-info"} to={"/add"}>Add note</Link>
-                                        </span>
-                                        <span style={{display:"block", paddingTop: '20px'}}>
-                                            <button className={"btn btn-danger"} onClick={() => {
-                                                movieService.deleteMovie(movie.id);
-                                                movieService.deletePosterImage(movie.posterFileName);
-                                                window.location.reload();
-                                            }}>Delete</button>
+                                            <Link className={"btn btn-info"} to={"/" + movie.id}>View</Link>
                                         </span>
                                     </td>
 

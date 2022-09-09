@@ -22,7 +22,7 @@ export default function AddMovie() {
     const saveMovie = (e) => {
         e.preventDefault();
 
-        const movie = {title, releaseYear, genre, director, posterFileName, id, rating, numberOfVotes};
+        const movie = {title, releaseYear, genre, director, posterFileName, id, rating, numberOfVotes, description};
         if(id) {
             // Update record
             movieService.update(movie)
