@@ -33,10 +33,11 @@ public class Movie {
     @JsonProperty("description")
     @Lob
     private String description;
-
     @JsonProperty("note")
     @Lob
     private String note;
+    @JsonProperty("watched")
+    private boolean watched;
 
     public Movie(){
         id = 0;
@@ -49,6 +50,7 @@ public class Movie {
         posterFileName = null;
         description = null;
         note = null;
+        watched = false;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -63,6 +65,7 @@ public class Movie {
         this.posterFileName = posterFileName;
         this.description = description;
         this.note = null;
+        this.watched = false;
     }
 
     public int id() {return id;}
@@ -75,6 +78,7 @@ public class Movie {
     public String posterFileName() {return posterFileName;}
     public String description() {return description;}
     public String note() {return note;}
+    public boolean watched() {return watched;}
 
     public void setTitle(String title) {this.title = title;}
     public void setRating(double rating) {this.rating = rating;}
@@ -85,6 +89,7 @@ public class Movie {
     public void setPosterFileName(String posterFileName) {this.posterFileName = posterFileName;}
     public void setDescription(String description) {this.description = description;}
     public void setNote(String note) {this.note = note;}
+    public void setWatched(boolean watched) {this.watched = watched;}
 
     @Override
     public String toString(){
@@ -97,6 +102,7 @@ public class Movie {
                 ", genre = "  + genre +
                 ", director = " + director +
                 ", description = " + description;
+                ////TODO: Add existing fields
     }
 
 }

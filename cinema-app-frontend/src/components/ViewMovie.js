@@ -49,6 +49,23 @@ export default function MovieList() {
         window.location.reload();
     }
 
+    const changeWatchStatus = (e) => {
+        e.preventDefault();
+        const watched = !(movie.watched);
+        const data = {watched};
+        console.log("watchStatus: ", watched);
+        console.log("movie.watched: ", movie.watched);
+
+        movieService.modify(id, data)
+            .then(response => {
+                console.log("Changed movie's watch status", response.data);
+            })
+            .catch(error => {
+                console.log("An error occurred while changing movie's status", error);
+            })
+        window.location.reload();
+    }
+
     return (
         <div className="container">
             <div id={"buttons"} style={{paddingTop: "20px", paddingBottom: "20px"}}>
@@ -56,6 +73,11 @@ export default function MovieList() {
                     <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>
                 </span>
                 <span style={{display:"block", float:"right"}}>
+                    <button className={"btn btn-success"} onClick={(e) => {
+                        changeWatchStatus(e);
+                    }}>{movie.watched === false ? ("Mark as watched") : ("You watched it!")}</button>
+                </span>
+                <span style={{display:"block", float:"right", paddingRight: "20px"}}>
                     <Link className={"btn btn-warning"} to={"/movies/edit/" + movie.id}>Update</Link>
                 </span>
                 <span style={{display:"block", float:"right", paddingRight:"20px"}}>

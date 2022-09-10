@@ -51,7 +51,9 @@ export default function MovieList() {
                         movies.map(movie => (
                             <tr key={movie.id}>
                                 <td>{movie.id}</td>
-                                <td>{movie.title}</td>
+                                <td style={movie.watched ?
+                                    ({color: "darkseagreen"}) : ({color: "red"})
+                                }>{movie.title}</td>
                                 <td>{movie.releaseYear}</td>
                                 <td>{movie.genre}</td>
                                 <td>{movie.director}</td>
