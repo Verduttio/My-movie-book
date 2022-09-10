@@ -29,7 +29,7 @@ export default function MovieList() {
                 <Link to={"/movies/add"} className={"btn btn-primary mb-2"} style={{float:"right"}}>
                     Add Movie
                 </Link>
-                <h3 style={{textAlign: "center"}}>List of movies</h3>
+                <h3 style={{textAlign: "center"}}>My watch list</h3>
             </div>
             <div>
                 <table className={"table table-bordered table-striped"}>

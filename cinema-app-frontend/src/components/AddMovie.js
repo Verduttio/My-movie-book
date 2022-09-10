@@ -84,94 +84,97 @@ export default function AddMovie() {
             </span>
             <h3 style={{textAlign: "center", paddingTop: "20px"}}>Add movie</h3>
         </div>
-        <hr/>
-        <form>
-            <div className={"mb-3"}>
-                <input
-                    type={"text"}
-                    className={"form-control col-4"}
-                    id={"title"}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder={"Title"}
-                    />
+        <div className="card">
+            <div className="card-body">
+                <form>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"title"}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            placeholder={"Title"}
+                            />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"releaseYear"}
+                            value={releaseYear}
+                            onChange={(e) => setReleaseYear(e.target.value)}
+                            placeholder={"Year of release"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"genre"}
+                            value={genre}
+                            onChange={(e) => setGenre(e.target.value)}
+                            placeholder={"Genre"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"director"}
+                            value={director}
+                            onChange={(e) => setDirector(e.target.value)}
+                            placeholder={"Director"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"rating"}
+                            value={rating}
+                            onChange={(e) => setRating(e.target.value)}
+                            placeholder={"Rating"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"numberOfVotes"}
+                            value={numberOfVotes}
+                            onChange={(e) => setNumberOfVotes(e.target.value)}
+                            placeholder={"Number of votes"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"description"}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder={"Description"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"file"}
+                            className={"form-control"}
+                            id={"file"}
+                            onChange={(e) => {
+                                    setPosterImage(e.target.files[0]);
+                                    setPosterFileName(e.target.files[0].name);
+                                }
+                            }
+                        />
+                    </div>
+                    <div className={"text-center"}>
+                        <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Save</button>
+                    </div>
+                </form>
             </div>
-            <div className={"mb-3"}>
-                <input
-                    type={"text"}
-                    className={"form-control col-4"}
-                    id={"releaseYear"}
-                    value={releaseYear}
-                    onChange={(e) => setReleaseYear(e.target.value)}
-                    placeholder={"Year of release"}
-                />
-            </div>
-            <div className={"mb-3"}>
-                <input
-                    type={"text"}
-                    className={"form-control col-4"}
-                    id={"genre"}
-                    value={genre}
-                    onChange={(e) => setGenre(e.target.value)}
-                    placeholder={"Genre"}
-                />
-            </div>
-            <div className={"mb-3"}>
-                <input
-                    type={"text"}
-                    className={"form-control col-4"}
-                    id={"director"}
-                    value={director}
-                    onChange={(e) => setDirector(e.target.value)}
-                    placeholder={"Director"}
-                />
-            </div>
-            <div className={"mb-3"}>
-                <input
-                    type={"text"}
-                    className={"form-control col-4"}
-                    id={"rating"}
-                    value={rating}
-                    onChange={(e) => setRating(e.target.value)}
-                    placeholder={"Rating"}
-                />
-            </div>
-            <div className={"mb-3"}>
-                <input
-                    type={"text"}
-                    className={"form-control col-4"}
-                    id={"numberOfVotes"}
-                    value={numberOfVotes}
-                    onChange={(e) => setNumberOfVotes(e.target.value)}
-                    placeholder={"Number of votes"}
-                />
-            </div>
-            <div className={"mb-3"}>
-                <input
-                    type={"text"}
-                    className={"form-control col-4"}
-                    id={"description"}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder={"Description"}
-                />
-            </div>
-            <div className={"mb-3"}>
-                <input
-                    type={"file"}
-                    className={"form-control"}
-                    id={"file"}
-                    onChange={(e) => {
-                            setPosterImage(e.target.files[0]);
-                            setPosterFileName(e.target.files[0].name);
-                        }
-                    }
-                />
-            </div>
-            <div className={"text-center"}>
-                <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Save</button>
-            </div>
-        </form>
+        </div>
     </div>
 }
 
