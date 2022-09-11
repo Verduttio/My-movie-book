@@ -5,12 +5,12 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import movieService from "../services/movieService";
 import "./MovieList.css";
 
-function numberWithSpaces(x) {
-    return x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+function numberWithSpaces (x){
+    return x !== undefined ? x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : x;
 }
 
 export default function MovieList() {
-    const [movie, setMovie] = useState([]);
+    const [movie, setMovie] = useState({});
     const [note, setNote] = useState("");
     const [editNote, setEditNote] = useState(false);
     const {id} = useParams();
@@ -23,10 +23,13 @@ export default function MovieList() {
             })
             .catch(error => {
                 console.log('An error occurred while getting the movie.', error);
-            })
+            });
     },[id])
 
     const navigate = useNavigate();
+
+    console.log("movie.numberOfVotes: ", movie.numberOfVotes);
+    // console.log("numberWithSpaces(movie.numberOfVotes): ", numberWithSpaces(movie.numberOfVotes));
 
     const addNote = (e) => {
         e.preventDefault();
@@ -110,8 +113,8 @@ export default function MovieList() {
                             <td>{movie.genre}</td>
                             <td>{movie.director}</td>
                             <td>{movie.rating}</td>
-                            {/*<td>{numberWithSpaces(movie.numberOfVotes)}</td>*/}
-                            <td>{movie.numberOfVotes}</td>
+                            <td>{numberWithSpaces(movie.numberOfVotes)}</td>
+                            {/*<td>{movie.numberOfVotes}</td>*/}
                             <td>
                                 <img
                                     src={'http://localhost:8080/files/images/'+movie.posterFileName}
