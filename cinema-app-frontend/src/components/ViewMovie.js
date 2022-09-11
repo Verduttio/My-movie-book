@@ -92,54 +92,31 @@ export default function MovieList() {
                 </span>
             </div>
             <div style={{paddingTop:"40px"}}>
-                <table className={"table table-bordered table-striped"}>
-                    <thead className={"thead-dark"}>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Year</th>
-                        <th>Genre</th>
-                        <th>Director</th>
-                        <th>Rating</th>
-                        <th>Votes</th>
-                        <th>Poster</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr key={movie.id}>
-                            <td>{movie.id}</td>
-                            <td>{movie.title}</td>
-                            <td>{movie.releaseYear}</td>
-                            <td>{movie.genre}</td>
-                            <td>{movie.director}</td>
-                            <td>{movie.rating}</td>
-                            <td>{numberWithSpaces(movie.numberOfVotes)}</td>
-                            {/*<td>{movie.numberOfVotes}</td>*/}
-                            <td>
-                                <img
-                                    src={'http://localhost:8080/files/images/'+movie.posterFileName}
-                                    alt={movie.posterFileName}
-                                    style={{
-                                        width: '150px',
-                                        height: 'auto',
-                                        display: 'block',
-                                        marginLeft: 'auto',
-                                        marginRight: 'auto'
-                                    }}>
-                                </img>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div className="card">
-                <div className="card-body">
-                    <h4 className="card-title">Description</h4>
-                    <hr/>
-                    <p className="card-text">{movie.description}</p>
+                <div className={movie.watched ? ("card mb-3 border-success") : ("card mb-3 border-danger")} style={{maxWidth: "800px"}}>
+                    <div className="row g-0">
+                        <div className="col-md-4">
+                            <img src={'http://localhost:8080/files/images/'+movie.posterFileName}
+                                 className="img-fluid rounded-start"
+                                 alt={movie.posterFileName}
+                            />
+                        </div>
+                        <div className="col-md-8">
+                            <div className="card-body">
+                                <h5 className="card-title">Title: {movie.title}</h5>
+                                <p className="card-text">Year: {movie.releaseYear}</p>
+                                <p className="card-text">Genre: {movie.genre}</p>
+                                <p className="card-text">Director: {movie.director}</p>
+                                <p className="card-text">Year: {movie.releaseYear}</p>
+                                <p className="card-text">Rating: {movie.rating}</p>
+                                <p className="card-text">Votes: {numberWithSpaces(movie.numberOfVotes)}</p>
+                                <p className="card-text"><small className="text-muted">{movie.description}</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div style={{paddingTop: "20px"}}>
+            <div style={{paddingTop: "20px", maxWidth: "800px"}}>
                 <div className="card">
                     <div className="card-body">
                         <h4 className="card-title">My note</h4>
