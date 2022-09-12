@@ -92,25 +92,126 @@ export default function MovieList() {
                 </span>
             </div>
             <div style={{paddingTop:"40px"}}>
-                <div className={movie.watched ? ("card mb-3 border-success") : ("card mb-3 border-danger")} style={{maxWidth: "800px"}}>
-                    <div className="row g-0">
-                        <div className="col-md-4">
-                            <img src={'http://localhost:8080/files/images/'+movie.posterFileName}
-                                 className="img-fluid rounded-start"
-                                 alt={movie.posterFileName}
-                            />
+                <div className="row">
+                    <div className="col-8">
+                        <div className={movie.watched ? ("card border-success") : ("card border-danger")} style={{maxWidth: "800px"}}>
+                            <div className="row g-0">
+                                <div className="col-md-4">
+                                    <img src={'http://localhost:8080/files/images/'+movie.posterFileName}
+                                         className="img-fluid rounded-start"
+                                         alt={movie.posterFileName}
+                                    />
+                                </div>
+                                <div className="col-md-8">
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                                <h5 className="card-title">Title</h5>
+                                            </div>
+                                            <div className="col">
+                                                <h5 className="card-title">{movie.title}</h5>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                                <p className="card-text">Year</p>
+                                            </div>
+                                            <div className="col">
+                                                <p className="card-text">{movie.releaseYear}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                                <p className="card-text">Genre</p>
+                                            </div>
+                                            <div className="col">
+                                                <p className="card-text">{movie.genre}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                                <p className="card-text">Director</p>
+                                            </div>
+                                            <div className="col">
+                                                <p className="card-text">{movie.director}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                                <p className="card-text">Description</p>
+                                            </div>
+                                            <div className="col">
+                                                <p className="card-text">{movie.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-md-8">
-                            <div className="card-body">
-                                <h5 className="card-title">Title: {movie.title}</h5>
-                                <p className="card-text">Year: {movie.releaseYear}</p>
-                                <p className="card-text">Genre: {movie.genre}</p>
-                                <p className="card-text">Director: {movie.director}</p>
-                                <p className="card-text">Year: {movie.releaseYear}</p>
-                                <p className="card-text">Rating: {movie.rating}</p>
-                                <p className="card-text">Votes: {numberWithSpaces(movie.numberOfVotes)}</p>
-                                <p className="card-text"><small className="text-muted">{movie.description}</small>
-                                </p>
+                    </div>
+                    <div className="col-4">
+                        <div className="row">
+                            <div className="card" style={{maxWidth: "800px"}}>
+                                <div className="row bg-secondary">
+                                    <img src={'http://localhost:8080/files/images/filmweb.jpg'}
+                                         alt={"filmweb"}
+                                         style={{
+                                             maxHeight: "60px",
+                                             width: "auto",
+                                             marginLeft: "auto",
+                                             marginRight: "auto",
+                                             padding: "10px",
+                                             borderRadius: "15px"
+                                        }}
+                                    />
+                                </div>
+                                <div className="row bg-light">
+                                    <hr/>
+                                    <div className="col-4">
+                                        <p>Rating</p>
+                                    </div>
+                                    <div className="col-8">
+                                        <p style={{textAlign: "right"}}>8.0</p>
+                                    </div>
+                                </div>
+                                <div className="row bg-light">
+                                    <hr/>
+                                    <div className="col-4">
+                                        <p>Votes</p>
+                                    </div>
+                                    <div className="col-8">
+                                        <p style={{textAlign: "right"}}>900 000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row" style={{paddingTop: "50px"}}>
+                            <div className="card" style={{maxWidth: "800px"}}>
+                                <div className="row bg-secondary">
+                                    <img src={'http://localhost:8080/files/images/imdb.png'}
+                                         className="img-fluid rounded-start"
+                                         alt={"filmweb"}
+                                         style={{maxHeight: "60px", width: "auto", marginLeft: "auto", marginRight: "auto", padding: "10px"}}
+                                    />
+                                </div>
+                                <div className="row bg-light">
+                                    <hr/>
+                                    <div className="col-4">
+                                        <p>Rating</p>
+                                    </div>
+                                    <div className="col-8">
+                                        <p style={{textAlign: "right"}}>8.8</p>
+                                    </div>
+                                </div>
+                                <div className="row bg-light">
+                                    <hr/>
+                                    <div className="col-4">
+                                        <p>Votes</p>
+                                    </div>
+                                    <div className="col-8">
+                                        <p style={{textAlign: "right"}}>1 800 000</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
