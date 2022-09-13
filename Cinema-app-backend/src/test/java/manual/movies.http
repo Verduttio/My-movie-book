@@ -4,8 +4,10 @@ Content-Type: application/json
 
 {
   "title": "Stardust",
-  "rating": 7.3,
-  "numberOfVotes": 146233,
+  "filmwebRating": 7.3,
+  "filmwebNumberOfVotes": 146233,
+  "imdbRating": 7.6,
+  "imdbNumberOfVotes": 271951,
   "releaseYear": 2007,
   "genre": "Fantasy",
   "director": "Matthew Vaughn",
@@ -20,8 +22,10 @@ Content-Type: application/json
 {
   "title": "The Lord of the Rings: The Fellowship of the Ring",
   "releaseYear": 2001,
-  "rating": 8.8,
-  "numberOfVotes": 1800000,
+  "filmwebRating": 8.0,
+  "filmwebNumberOfVotes": 717513,
+  "imdbRating": 8.8,
+  "imdbNumberOfVotes": 1800000,
   "genre": "Fantasy",
   "director": "Peter Jackson",
   "posterFileName": "lotr_1.jpg",

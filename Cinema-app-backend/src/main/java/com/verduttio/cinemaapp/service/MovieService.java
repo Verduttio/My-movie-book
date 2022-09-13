@@ -13,12 +13,10 @@ import java.util.Map;
 @Service
 public class MovieService {
     private final MovieRepository movieRepository;
-    private final FileSystemStorageService fileSystemStorageService;
 
     @Autowired
-    public MovieService(MovieRepository movieRepository, FileSystemStorageService fileSystemStorageService) {
+    public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
-        this.fileSystemStorageService = fileSystemStorageService;
     }
 
     public Movie saveMovie(Movie movie) {
@@ -47,11 +45,7 @@ public class MovieService {
     }
 
     public void removeMovie(int movieId) {
-        // We shouldn't load whole movie when we need only its posterFileName.
-//        var movie = movieRepository.findById(movieId);
-//        var posterFileName = movie.posterFileName();
         movieRepository.deleteById(movieId);
-//        fileSystemStorageService.delete(posterFileName);
     }
 
     public Movie modifyMovie(int movieId, Map<Object, Object> fields) {

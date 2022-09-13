@@ -18,10 +18,14 @@ public class Movie {
     private final int id;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("rating")
-    private double rating;
-    @JsonProperty("numberOfVotes")
-    private int numberOfVotes;
+    @JsonProperty("filmwebRating")
+    private double filmwebRating;
+    @JsonProperty("filmwebNumberOfVotes")
+    private int filmwebNumberOfVotes;
+    @JsonProperty("imdbRating")
+    private double imdbRating;
+    @JsonProperty("imdbNumberOfVotes")
+    private int imdbNumberOfVotes;
     @JsonProperty("releaseYear")
     private int releaseYear;
     @JsonProperty("genre")
@@ -42,8 +46,10 @@ public class Movie {
     public Movie(){
         id = 0;
         title = null;
-        rating = 0;
-        numberOfVotes = 0;
+        filmwebRating = 0;
+        filmwebNumberOfVotes = 0;
+        imdbRating = 0;
+        imdbNumberOfVotes = 0;
         releaseYear = 0;
         genre = null;
         director = null;
@@ -54,11 +60,13 @@ public class Movie {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Movie(int id, String title, double rating, int numberOfVotes, int releaseYear, String genre, String director, String posterFileName, String description) {
+    public Movie(int id, String title, double filmwebRating, int filmwebNumberOfVotes, double imdbRating, int imdbNumberOfVotes, int releaseYear, String genre, String director, String posterFileName, String description) {
         this.id = id;
         this.title = title;
-        this.rating = rating;
-        this.numberOfVotes = numberOfVotes;
+        this.filmwebRating = filmwebRating;
+        this.filmwebNumberOfVotes = filmwebNumberOfVotes;
+        this.imdbRating = imdbRating;
+        this.imdbNumberOfVotes = imdbNumberOfVotes;
         this.releaseYear = releaseYear;
         this.genre = genre;
         this.director = director;
@@ -70,8 +78,10 @@ public class Movie {
 
     public int id() {return id;}
     public String title() {return title;}
-    public double rating() {return rating;}
-    public int numberOfVotes() {return numberOfVotes;}
+    public double filmwebRating() {return filmwebRating;}
+    public int filmwebNumberOfVotes() {return filmwebNumberOfVotes;}
+    public double imdbRating() {return imdbRating;}
+    public int imdbNumberOfVotes() {return imdbNumberOfVotes;}
     public int releaseYear() {return releaseYear;}
     public String genre() {return genre;}
     public String director() {return director;}
@@ -81,8 +91,10 @@ public class Movie {
     public boolean watched() {return watched;}
 
     public void setTitle(String title) {this.title = title;}
-    public void setRating(double rating) {this.rating = rating;}
-    public void setNumberOfVotes(int numberOfVotes) {this.numberOfVotes = numberOfVotes;}
+    public void setFilmwebRating(double filmwebRating) {this.filmwebRating = filmwebRating;}
+    public void setFilmwebNumberOfVotes(int filmwebNumberOfVotes) {this.filmwebNumberOfVotes = filmwebNumberOfVotes;}
+    public void setImdbRating(double imdbRating) {this.imdbRating = imdbRating;}
+    public void setImdbNumberOfVotes(int imdbNumberOfVotes) {this.imdbNumberOfVotes = imdbNumberOfVotes;}
     public void setReleaseYear(int releaseYear) {this.releaseYear = releaseYear;}
     public void setGenre(String genre) {this.genre = genre;}
     public void setDirector(String director) {this.director = director;}
@@ -96,8 +108,8 @@ public class Movie {
         return "Movie{" +
                 "id = " + id +
                 ", title = " + title +
-                ", rating = " + rating +
-                ", numberOfVotes = " + numberOfVotes +
+                ", filmwebRating = " + filmwebRating +
+                ", filmwebNumberOfVotes = " + filmwebNumberOfVotes +
                 ", releaseYear = " + releaseYear +
                 ", genre = "  + genre +
                 ", director = " + director +
