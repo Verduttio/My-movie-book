@@ -6,8 +6,10 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
-    const[rating, setRating] = useState('');
-    const[numberOfVotes, setNumberOfVotes] = useState('');
+    const[filmwebRating, setFilmwebRating] = useState('');
+    const[filmwebNumberOfVotes, setFilmwebNumberOfVotes] = useState('');
+    const[imdbRating, setImdbRating] = useState('');
+    const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState('');
     const[releaseYear, setReleaseYear] = useState('');
     const[genre, setGenre] = useState('');
     const[director, setDirector] = useState('');
@@ -22,7 +24,7 @@ export default function AddMovie() {
     const saveMovie = (e) => {
         e.preventDefault();
 
-        const movie = {title, releaseYear, genre, director, posterFileName, id, rating, numberOfVotes, description};
+        const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description};
         if(id) {
             // Update record
             movieService.update(movie)
@@ -66,8 +68,10 @@ export default function AddMovie() {
                     setReleaseYear(movie.data.releaseYear);
                     setDirector(movie.data.director);
                     setPosterFileName(movie.data.posterFileName);
-                    setRating(movie.data.rating);
-                    setNumberOfVotes(movie.data.numberOfVotes);
+                    setFilmwebRating(movie.data.filmwebRating);
+                    setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
+                    setImdbRating(movie.data.imdbRating);
+                    setImdbNumberOfVotes(movie.data.imdbNumberOfVotes);
                     setDescription(movie.data.description);
             })
                 .catch(error => {
@@ -131,20 +135,40 @@ export default function AddMovie() {
                         <input
                             type={"text"}
                             className={"form-control col-4"}
-                            id={"rating"}
-                            value={rating}
-                            onChange={(e) => setRating(e.target.value)}
-                            placeholder={"Rating"}
+                            id={"filmwebRating"}
+                            value={filmwebRating}
+                            onChange={(e) => setFilmwebRating(e.target.value)}
+                            placeholder={"Filmweb rating"}
                         />
                     </div>
                     <div className={"mb-3"}>
                         <input
                             type={"text"}
                             className={"form-control col-4"}
-                            id={"numberOfVotes"}
-                            value={numberOfVotes}
-                            onChange={(e) => setNumberOfVotes(e.target.value)}
-                            placeholder={"Number of votes"}
+                            id={"filmwebNumberOfVotes"}
+                            value={filmwebNumberOfVotes}
+                            onChange={(e) => setFilmwebNumberOfVotes(e.target.value)}
+                            placeholder={"Filmweb number of votes"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"imdbRating"}
+                            value={imdbRating}
+                            onChange={(e) => setImdbRating(e.target.value)}
+                            placeholder={"IMDb rating"}
+                        />
+                    </div>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"imdbNumberOfVotes"}
+                            value={imdbNumberOfVotes}
+                            onChange={(e) => setImdbNumberOfVotes(e.target.value)}
+                            placeholder={"IMDb number of votes"}
                         />
                     </div>
                     <div className={"mb-3"}>

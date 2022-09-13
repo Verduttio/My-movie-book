@@ -28,9 +28,6 @@ export default function MovieList() {
 
     const navigate = useNavigate();
 
-    console.log("movie.numberOfVotes: ", movie.numberOfVotes);
-    // console.log("numberWithSpaces(movie.numberOfVotes): ", numberWithSpaces(movie.numberOfVotes));
-
     const addNote = (e) => {
         e.preventDefault();
 
@@ -94,12 +91,20 @@ export default function MovieList() {
             <div style={{paddingTop:"40px"}}>
                 <div className="row">
                     <div className="col-8">
-                        <div className={movie.watched ? ("card border-success") : ("card border-danger")} style={{maxWidth: "800px"}}>
-                            <div className="row g-0">
+                        <div className={movie.watched ? ("card border-success") : ("card border-danger")} style={{minHeight: "406px", maxWidth: "800px"}}>
+                            <div className="row g-0" style={{minHeight: "406px"}}>
                                 <div className="col-md-4">
                                     <img src={'http://localhost:8080/files/images/'+movie.posterFileName}
-                                         className="img-fluid rounded-start"
+                                         // className="img-fluid rounded-start"
                                          alt={movie.posterFileName}
+                                         style={{
+                                             maxWidth: "100%",
+                                             height: "auto",
+                                             position: "relative",
+                                             top: "50%",
+                                             transform: "translateY(-50%)"
+
+                                         }}
                                     />
                                 </div>
                                 <div className="col-md-8">
@@ -171,7 +176,7 @@ export default function MovieList() {
                                         <p>Rating</p>
                                     </div>
                                     <div className="col-8">
-                                        <p style={{textAlign: "right"}}>8.0</p>
+                                        <p style={{textAlign: "right"}}>{movie.filmwebRating === undefined ? ("") : (movie.filmwebRating.toFixed(1))}</p>
                                     </div>
                                 </div>
                                 <div className="row bg-light">
@@ -180,7 +185,7 @@ export default function MovieList() {
                                         <p>Votes</p>
                                     </div>
                                     <div className="col-8">
-                                        <p style={{textAlign: "right"}}>900 000</p>
+                                        <p style={{textAlign: "right"}}>{numberWithSpaces(movie.filmwebNumberOfVotes)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +205,7 @@ export default function MovieList() {
                                         <p>Rating</p>
                                     </div>
                                     <div className="col-8">
-                                        <p style={{textAlign: "right"}}>8.8</p>
+                                        <p style={{textAlign: "right"}}>{movie.imdbRating === undefined ? ("") : (movie.imdbRating.toFixed(1))}</p>
                                     </div>
                                 </div>
                                 <div className="row bg-light">
@@ -209,7 +214,7 @@ export default function MovieList() {
                                         <p>Votes</p>
                                     </div>
                                     <div className="col-8">
-                                        <p style={{textAlign: "right"}}>1 800 000</p>
+                                        <p style={{textAlign: "right"}}>{numberWithSpaces(movie.imdbNumberOfVotes)}</p>
                                     </div>
                                 </div>
                             </div>
