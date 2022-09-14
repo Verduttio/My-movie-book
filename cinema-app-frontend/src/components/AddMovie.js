@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import movieService from "../services/movieService";
 import {Link, useNavigate, useParams} from "react-router-dom";
+import filmwebFetcher from "../services/filmwebFetcher";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -16,6 +17,8 @@ export default function AddMovie() {
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState('');
     const[description, setDescription] = useState('');
+
+    const[filmwebLink, setFilmwebLink] = useState('');
 
     const {id} = useParams();
 
@@ -55,9 +58,24 @@ export default function AddMovie() {
                     console.log('An error occurred while uploading the movie.', error);
                 })
         }
-
-
     }
+
+    const fetchFromFilmweb = ((e) => {
+        e.preventDefault();
+        filmwebFetcher.fetchData(filmwebLink)
+            .then(movie => {
+                setTitle(movie.data.title);
+                setGenre(movie.data.genre);
+                setReleaseYear(movie.data.releaseYear);
+                setDirector(movie.data.director);
+                setFilmwebRating(movie.data.filmwebRating);
+                setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
+                setDescription(movie.data.description);
+            })
+            .catch(error => {
+                console.log('And error occurred while fetching data from filmweb.', error);
+            })
+    })
 
     useEffect(() => {
         if(id) {
@@ -198,6 +216,23 @@ export default function AddMovie() {
                     </div>
                 </form>
             </div>
+        </div>
+        <div>
+            <form>
+                <div className={"mb-3"}>
+                    <input
+                        type={"text"}
+                        className={"form-control col-4"}
+                        id={"movieName"}
+                        value={filmwebLink}
+                        onChange={(e) => setFilmwebLink(e.target.value)}
+                        placeholder={"Filmweb link"}
+                    />
+                </div>
+                <div className={"text-center"}>
+                    <button className={"btn btn-primary"} onClick={(e) => fetchFromFilmweb(e)}>Load data from filmweb</button>
+                </div>
+            </form>
         </div>
     </div>
 }
