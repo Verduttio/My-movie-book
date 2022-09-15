@@ -19,6 +19,12 @@ export default function AddMovie() {
     const[description, setDescription] = useState('');
 
     const[filmwebLink, setFilmwebLink] = useState('');
+    const[filmwebFetchedData, setFilmwebFetchedData] = useState(false);
+
+    const[enterMovieDataOption, setEnterMovieDataOption] = useState(0);
+    // 0 - basic (user has not chosen yet)
+    // 1 - fetch from filmweb
+    // 2 - fill in manually
 
     const {id} = useParams();
 
@@ -71,6 +77,7 @@ export default function AddMovie() {
                 setFilmwebRating(movie.data.filmwebRating);
                 setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
                 setDescription(movie.data.description);
+                setFilmwebFetchedData(true);
             })
             .catch(error => {
                 console.log('And error occurred while fetching data from filmweb.', error);
@@ -99,7 +106,7 @@ export default function AddMovie() {
     }, [id])
 
 
-    return <div className="container">
+    return <div>{id ? (<div className="container">
         <div id={"top bar"} style={{paddingTop:"20px"}}>
             <span style={{display:"block", float:"left"}}>
                     <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>
@@ -217,23 +224,282 @@ export default function AddMovie() {
                 </form>
             </div>
         </div>
+    </div>) : (
+        <div>{enterMovieDataOption === 0 ? (
         <div>
-            <form>
-                <div className={"mb-3"}>
-                    <input
-                        type={"text"}
-                        className={"form-control col-4"}
-                        id={"movieName"}
-                        value={filmwebLink}
-                        onChange={(e) => setFilmwebLink(e.target.value)}
-                        placeholder={"Filmweb link"}
-                    />
-                </div>
-                <div className={"text-center"}>
-                    <button className={"btn btn-primary"} onClick={(e) => fetchFromFilmweb(e)}>Load data from filmweb</button>
-                </div>
-            </form>
+            <div className={"text-center"} style={{padding: "30px"}}>
+                <button className={"btn btn-primary"} onClick={(e) => setEnterMovieDataOption(1)}>Load data from filmweb</button>
+            </div>
+            <div className={"text-center"}>
+                <button className={"btn btn-primary"} onClick={(e) => setEnterMovieDataOption(2)}>Fill in data manually</button>
+            </div>
         </div>
+    ) : (
+        <div>{enterMovieDataOption === 1 ? (
+            <div>
+                {filmwebFetchedData ? (
+                    <div className="container">
+                        <div id={"top bar"} style={{paddingTop:"20px"}}>
+            <span style={{display:"block", float:"left"}}>
+                    <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>
+            </span>
+                            <h3 style={{textAlign: "center", paddingTop: "20px"}}>Add movie</h3>
+                        </div>
+                        <div className="card">
+                            <div className="card-body">
+                                <form>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"title"}
+                                            value={title}
+                                            onChange={(e) => setTitle(e.target.value)}
+                                            placeholder={"Title"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"releaseYear"}
+                                            value={releaseYear}
+                                            onChange={(e) => setReleaseYear(e.target.value)}
+                                            placeholder={"Year of release"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"genre"}
+                                            value={genre}
+                                            onChange={(e) => setGenre(e.target.value)}
+                                            placeholder={"Genre"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"director"}
+                                            value={director}
+                                            onChange={(e) => setDirector(e.target.value)}
+                                            placeholder={"Director"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"filmwebRating"}
+                                            value={filmwebRating}
+                                            onChange={(e) => setFilmwebRating(e.target.value)}
+                                            placeholder={"Filmweb rating"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"filmwebNumberOfVotes"}
+                                            value={filmwebNumberOfVotes}
+                                            onChange={(e) => setFilmwebNumberOfVotes(e.target.value)}
+                                            placeholder={"Filmweb number of votes"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"imdbRating"}
+                                            value={imdbRating}
+                                            onChange={(e) => setImdbRating(e.target.value)}
+                                            placeholder={"IMDb rating"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"imdbNumberOfVotes"}
+                                            value={imdbNumberOfVotes}
+                                            onChange={(e) => setImdbNumberOfVotes(e.target.value)}
+                                            placeholder={"IMDb number of votes"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"text"}
+                                            className={"form-control col-4"}
+                                            id={"description"}
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            placeholder={"Description"}
+                                        />
+                                    </div>
+                                    <div className={"mb-3"}>
+                                        <input
+                                            type={"file"}
+                                            className={"form-control"}
+                                            id={"file"}
+                                            onChange={(e) => {
+                                                setPosterImage(e.target.files[0]);
+                                                setPosterFileName(e.target.files[0].name);
+                                            }
+                                            }
+                                        />
+                                    </div>
+                                    <div className={"text-center"}>
+                                        <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                ) : (<div></div>)}
+                {filmwebFetchedData ? (<div></div>) : (
+                <form>
+                    <div className={"mb-3"}>
+                        <input
+                            type={"text"}
+                            className={"form-control col-4"}
+                            id={"movieName"}
+                            value={filmwebLink}
+                            onChange={(e) => setFilmwebLink(e.target.value)}
+                            placeholder={"Filmweb link"}
+                        />
+                    </div>
+                    <div className={"text-center"}>
+                        <button className={"btn btn-primary"} onClick={(e) => fetchFromFilmweb(e)}>Load data from filmweb</button>
+                    </div>
+                </form>
+                )}
+            </div>
+        ) : (// enterMovieDataOption === 2
+            <div className="container">
+                <div id={"top bar"} style={{paddingTop:"20px"}}>
+            <span style={{display:"block", float:"left"}}>
+                    <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>
+            </span>
+                    <h3 style={{textAlign: "center", paddingTop: "20px"}}>Add movie</h3>
+                </div>
+                <div className="card">
+                    <div className="card-body">
+                        <form>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"title"}
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder={"Title"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"releaseYear"}
+                                    value={releaseYear}
+                                    onChange={(e) => setReleaseYear(e.target.value)}
+                                    placeholder={"Year of release"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"genre"}
+                                    value={genre}
+                                    onChange={(e) => setGenre(e.target.value)}
+                                    placeholder={"Genre"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"director"}
+                                    value={director}
+                                    onChange={(e) => setDirector(e.target.value)}
+                                    placeholder={"Director"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"filmwebRating"}
+                                    value={filmwebRating}
+                                    onChange={(e) => setFilmwebRating(e.target.value)}
+                                    placeholder={"Filmweb rating"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"filmwebNumberOfVotes"}
+                                    value={filmwebNumberOfVotes}
+                                    onChange={(e) => setFilmwebNumberOfVotes(e.target.value)}
+                                    placeholder={"Filmweb number of votes"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"imdbRating"}
+                                    value={imdbRating}
+                                    onChange={(e) => setImdbRating(e.target.value)}
+                                    placeholder={"IMDb rating"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"imdbNumberOfVotes"}
+                                    value={imdbNumberOfVotes}
+                                    onChange={(e) => setImdbNumberOfVotes(e.target.value)}
+                                    placeholder={"IMDb number of votes"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"text"}
+                                    className={"form-control col-4"}
+                                    id={"description"}
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    placeholder={"Description"}
+                                />
+                            </div>
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"file"}
+                                    className={"form-control"}
+                                    id={"file"}
+                                    onChange={(e) => {
+                                        setPosterImage(e.target.files[0]);
+                                        setPosterFileName(e.target.files[0].name);
+                                    }
+                                    }
+                                />
+                            </div>
+                            <div className={"text-center"}>
+                                <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        )}</div>
+    )}
+
+    </div>)}
     </div>
 }
 
