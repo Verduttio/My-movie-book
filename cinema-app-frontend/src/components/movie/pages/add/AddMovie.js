@@ -28,6 +28,8 @@ export default function AddMovie() {
     // 1 - fetch from filmweb
     // 2 - fill in manually
 
+    const[posterURL, setPosterURL] = useState('');
+
 
     const movieFetchedFilmweb = {
         titleF: title,
@@ -36,7 +38,8 @@ export default function AddMovie() {
         directorF: director,
         filmwebRatingF: filmwebRating,
         filmwebNumberOfVotesF: filmwebNumberOfVotes,
-        descriptionF: description
+        descriptionF: description,
+        posterURLF: posterURL
     }
 
     const fetchFromFilmweb = ((e) => {
@@ -53,6 +56,7 @@ export default function AddMovie() {
                 setFilmwebRating(movie.data.filmwebRating);
                 setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
                 setDescription(movie.data.description);
+                setPosterURL(movie.data.posterFileName);
                 setFilmwebFetchedData(true);
             })
             .catch(error => {

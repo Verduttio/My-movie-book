@@ -2,10 +2,9 @@ import * as React from "react";
 import {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import movieService from "../../services/movieService";
-import {useEffect} from "react";
 
 export default function MovieDataAddFromFilmwebBox(props) {
-    const {titleF, releaseYearF, genreF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF} = props.movie;
+    const {titleF, releaseYearF, genreF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF, posterURLF} = props.movie;
 
     const[title, setTitle] = useState(titleF.toString());
     const[filmwebRating, setFilmwebRating] = useState(filmwebRatingF.toString());
@@ -16,7 +15,7 @@ export default function MovieDataAddFromFilmwebBox(props) {
     const[genre, setGenre] = useState(genreF.toString());
     const[director, setDirector] = useState(directorF.toString());
     const[posterImage, setPosterImage] = useState(null);
-    const[posterFileName, setPosterFileName] = useState('');
+    const[posterFileName, setPosterFileName] = useState(posterURLF.toString());
     const[description, setDescription] = useState(descriptionF.toString());
 
     const navigate = useNavigate();

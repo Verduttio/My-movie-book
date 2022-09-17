@@ -2,7 +2,9 @@ package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Movie;
 import org.springframework.stereotype.Service;
+import org.unbescape.html.HtmlEscape;
 
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -10,8 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.text.StringEscapeUtils;
 
 @Service
 public class FilmwebFetcher {
@@ -105,6 +105,14 @@ public class FilmwebFetcher {
         return genre;
     }
 
+    private String findPosterURL(String regexResult) {
+        String field = "content=\"";
+        String posterURL = regexResult.substring(regexResult.indexOf(field)+field.length(), regexResult.length()-1);
+        System.out.println("posterURL: " + posterURL);
+        return posterURL;
+    }
+
+
     private double getRating() {
         String regexResult = getRegexResult("<script type=\"application/json\" id=\"filmDataRating\">[^<]*</script>", this.pageContent);
         String rating = findRate(regexResult);
@@ -121,7 +129,7 @@ public class FilmwebFetcher {
 //        String regexResult = getRegexResult("<script type=\"application/json\" class=\"dataSource\" data-source=\"filmTitle\">[^<]*</script>", this.pageContent);
         String regexResult = getRegexResult("filmTitle\",\\{title:\"[^\"]*\"}", this.pageContent);
         String title = findTitle(regexResult);
-        return StringEscapeUtils.unescapeHtml4(title);
+        return HtmlEscape.unescapeHtml(title);
     }
 
     private int getReleaseYear() {
@@ -133,21 +141,26 @@ public class FilmwebFetcher {
     private String getDescription() {
         String regexResult = getRegexResult("<span itemprop=\"description\">[^<]*</span>", this.pageContent);
         String description = findDescription(regexResult);
-        return StringEscapeUtils.unescapeHtml4(description);
+        return HtmlEscape.unescapeHtml(description);
     }
 
     private String getDirector() {
         String regexResult = getRegexResult("<a href=\"[^\"]*\" title=\"[^\"]*\" itemprop=\"director\" itemscope itemtype=\"http://schema.org/Person\">", this.pageContent);
         String director = findDirector(regexResult);
-        return StringEscapeUtils.unescapeHtml4(director);
+        return HtmlEscape.unescapeHtml(director);
     }
 
     private String getGenre() {
         String regexResult = getRegexResult("<div class=\"filmInfo__info\" itemprop=\"genre\"><span> <a href=\"[^\"]*\">[^<]*</a>", this.pageContent);
         String genre = findGenre(regexResult);
-        return StringEscapeUtils.unescapeHtml4(genre);
+        return HtmlEscape.unescapeHtml(genre);
     }
 
+    private String getPosterURL() {
+        String regexResult = getRegexResult("<img id=\"filmPoster\" itemprop=\"image\" content=\"[^\"]*\"", this.pageContent);
+        String posterURL = findPosterURL(regexResult);
+        return posterURL;
+    }
 
 
 
@@ -163,7 +176,21 @@ public class FilmwebFetcher {
         movie.setDescription(getDescription());
         movie.setDirector(getDirector());
         movie.setGenre(getGenre());
+        movie.setPosterFileName(getNumberOfViews() + ".jpg");
+
+        // Save poster image from filmweb
+        savePoster(getPosterURL(), movie.posterFileName());
+
         return movie;
+    }
+
+    private void savePoster(String url, String fileName) {
+        ImageFetcher imageFetcher = new ImageFetcher();
+        try {
+            imageFetcher.fetch(url, fileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
