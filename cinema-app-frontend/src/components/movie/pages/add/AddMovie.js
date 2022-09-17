@@ -5,6 +5,7 @@ import filmwebFetcher from "../../../../services/filmwebFetcher";
 import MovieDataAddFromFilmwebBox from "../../MovieDataAddFromFilmwebBox";
 import MovieDataAddBox from "../../MovieDataAddBox";
 import HeaderUploadMovie from "../../HeaderUploadMovie";
+import {cutLink} from "../../../../functionalities/filmwebLinkCutter";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -40,7 +41,10 @@ export default function AddMovie() {
 
     const fetchFromFilmweb = ((e) => {
         e.preventDefault();
-        filmwebFetcher.fetchData(filmwebLink)
+
+        const movieLink = cutLink(filmwebLink);
+
+        filmwebFetcher.fetchData(movieLink)
             .then(movie => {
                 setTitle(movie.data.title);
                 setGenre(movie.data.genre);
