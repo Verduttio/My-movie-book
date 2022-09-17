@@ -2,8 +2,8 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link, useNavigate, useParams} from "react-router-dom";
-import movieService from "../services/movieService";
-import "./MovieList.css";
+import movieService from "../../../../services/movieService";
+import "../main/MovieList.css";
 
 function numberWithSpaces (x){
     return x !== undefined ? x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : x;

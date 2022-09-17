@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from "react-router-dom";
-import movieService from "../services/movieService";
+import movieService from "../../../../services/movieService";
 import "./MovieList.css";
 
 function numberWithSpaces (x){

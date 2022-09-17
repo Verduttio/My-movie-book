@@ -11,6 +11,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 @Service
 public class FilmwebFetcher {
     String movieURL;
@@ -69,8 +71,8 @@ public class FilmwebFetcher {
     }
 
     private String findTitle(String regexResult) {
-        String jsonFieldTitle = "\"title\":\"";
-        String title = regexResult.substring(regexResult.indexOf(jsonFieldTitle)+jsonFieldTitle.length(), regexResult.indexOf("}")-1);
+        String jsonFieldTitle = "\"filmTitle\",{title:\"";
+        String title = regexResult.substring(regexResult.indexOf(jsonFieldTitle)+jsonFieldTitle.length(), regexResult.indexOf("\"}"));
         System.out.println("title: " + title);
         return title;
     }
@@ -116,9 +118,10 @@ public class FilmwebFetcher {
     }
 
     private String getTitle() {
-        String regexResult = getRegexResult("<script type=\"application/json\" class=\"dataSource\" data-source=\"filmTitle\">[^<]*</script>", this.pageContent);
+//        String regexResult = getRegexResult("<script type=\"application/json\" class=\"dataSource\" data-source=\"filmTitle\">[^<]*</script>", this.pageContent);
+        String regexResult = getRegexResult("filmTitle\",\\{title:\"[^\"]*\"}", this.pageContent);
         String title = findTitle(regexResult);
-        return title;
+        return StringEscapeUtils.unescapeHtml4(title);
     }
 
     private int getReleaseYear() {
@@ -130,21 +133,19 @@ public class FilmwebFetcher {
     private String getDescription() {
         String regexResult = getRegexResult("<span itemprop=\"description\">[^<]*</span>", this.pageContent);
         String description = findDescription(regexResult);
-        return fixOInPolish(description);
+        return StringEscapeUtils.unescapeHtml4(description);
     }
 
     private String getDirector() {
         String regexResult = getRegexResult("<a href=\"[^\"]*\" title=\"[^\"]*\" itemprop=\"director\" itemscope itemtype=\"http://schema.org/Person\">", this.pageContent);
         String director = findDirector(regexResult);
-        return director;
+        return StringEscapeUtils.unescapeHtml4(director);
     }
 
     private String getGenre() {
-//        System.out.println("\n\n\n");
-//        System.out.println(this.pageContent);
         String regexResult = getRegexResult("<div class=\"filmInfo__info\" itemprop=\"genre\"><span> <a href=\"[^\"]*\">[^<]*</a>", this.pageContent);
         String genre = findGenre(regexResult);
-        return genre;
+        return StringEscapeUtils.unescapeHtml4(genre);
     }
 
 
@@ -152,6 +153,8 @@ public class FilmwebFetcher {
 
     public Movie fetchMovie(String movieURL) {
         init(movieURL);
+        System.out.println("\n\n\n");
+        System.out.println(this.pageContent);
         Movie movie = new Movie();
         movie.setFilmwebRating(getRating());
         movie.setFilmwebNumberOfVotes(getNumberOfViews());
@@ -161,10 +164,6 @@ public class FilmwebFetcher {
         movie.setDirector(getDirector());
         movie.setGenre(getGenre());
         return movie;
-    }
-
-    private String fixOInPolish(String content) {
-        return content.replace("&oacute;", "ó");
     }
 
 }
