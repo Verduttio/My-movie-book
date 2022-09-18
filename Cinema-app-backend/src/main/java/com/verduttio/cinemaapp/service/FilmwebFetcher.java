@@ -71,8 +71,8 @@ public class FilmwebFetcher {
     }
 
     private String findTitle(String regexResult) {
-        String jsonFieldTitle = "\"filmTitle\",{title:\"";
-        String title = regexResult.substring(regexResult.indexOf(jsonFieldTitle)+jsonFieldTitle.length(), regexResult.indexOf("\"}"));
+        String previousText = ">";
+        String title = regexResult.substring(regexResult.indexOf(previousText)+previousText.length(), regexResult.indexOf("</h1>"));
         System.out.println("title: " + title);
         return title;
     }
@@ -127,7 +127,7 @@ public class FilmwebFetcher {
 
     private String getTitle() {
 //        String regexResult = getRegexResult("<script type=\"application/json\" class=\"dataSource\" data-source=\"filmTitle\">[^<]*</script>", this.pageContent);
-        String regexResult = getRegexResult("filmTitle\",\\{title:\"[^\"]*\"}", this.pageContent);
+        String regexResult = getRegexResult("<h1 class=\"filmCoverSection__title[^>]*>[^<]*</h1>", this.pageContent);
         String title = findTitle(regexResult);
         return HtmlEscape.unescapeHtml(title);
     }
