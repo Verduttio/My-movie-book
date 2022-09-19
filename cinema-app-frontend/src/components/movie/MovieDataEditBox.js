@@ -3,6 +3,7 @@ import {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import movieService from "../../services/movieService";
 import {useEffect} from "react";
+import UploadImage from "./UploadImage";
 
 export default function MovieDataEditBox(params) {
     const[title, setTitle] = useState('');
@@ -152,18 +153,14 @@ export default function MovieDataEditBox(params) {
                         placeholder={"Description"}
                     />
                 </div>
-                <div className={"mb-3"}>
-                    <input
-                        type={"file"}
-                        className={"form-control"}
-                        id={"file"}
-                        onChange={(e) => {
-                            setPosterImage(e.target.files[0]);
-                            setPosterFileName(e.target.files[0].name);
-                        }
-                        }
-                    />
-                </div>
+                <UploadImage
+                    posterFileName={posterFileName}
+                    setPosterFileName={setPosterFileName}
+                    changePoster={changePoster}
+                    setChangePoster={setChangePoster}
+                    posterImage={posterImage}
+                    setPosterImage={setPosterImage}
+                />
                 <div className={"text-center"}>
                     <button className={"btn btn-primary"} onClick={(e) => editMovie(e)}>Apply changes</button>
                 </div>

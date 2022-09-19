@@ -23,17 +23,6 @@ export default function MovieDataAddFromFilmwebBox(props) {
 
     const navigate = useNavigate();
 
-    if(posterImage != null) {
-        movieService.uploadPosterImage(posterImage)
-            .then(response => {
-                console.log("Poster image uploaded successfully.", response.data);
-                setChangePoster(false);
-            })
-            .catch(error => {
-                console.log('An error occurred while uploading the image.', error);
-            })
-    }
-
 
     const saveMovie = (e) => {
         e.preventDefault();
@@ -49,17 +38,6 @@ export default function MovieDataAddFromFilmwebBox(props) {
                 console.log('An error occurred while uploading the movie.', error);
             })
     };
-
-    const changedImage = (changePosterVal, posterImageVal) => {
-        setChangePoster(changePosterVal);
-        setPosterImage(posterImageVal);
-    };
-
-    const chooseImage = (posterFileNameVal, posterImageVal) => {
-        setPosterFileName(posterFileNameVal);
-        setPosterImage(posterImageVal);
-    }
-
 
     return(
         <div className="container">
@@ -156,7 +134,14 @@ export default function MovieDataAddFromFilmwebBox(props) {
                                 placeholder={"Description"}
                             />
                         </div>
-                        <UploadImage posterFileName={posterFileName} changedImage={changedImage} chooseImage={chooseImage} changePoster={changePoster}/>
+                        <UploadImage
+                            posterFileName={posterFileName}
+                            setPosterFileName={setPosterFileName}
+                            changePoster={changePoster}
+                            setChangePoster={setChangePoster}
+                            posterImage={posterImage}
+                            setPosterImage={setPosterImage}
+                        />
                         <div className={"text-center"}>
                             <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Add movie</button>
                         </div>

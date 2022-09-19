@@ -1,8 +1,26 @@
 import movieService from "../../services/movieService";
 
 export default function UploadImage(props) {
-    const {posterFileName, changedImage, chooseImage, changePoster} = props;
+    const {
+        posterFileName,
+        setPosterFileName,
+        changePoster,
+        setChangePoster,
+        posterImage,
+        setPosterImage
+    } = props;
 
+    console.log("changePoster: ", changePoster);
+
+    if(posterImage != null) {
+        movieService.uploadPosterImage(posterImage)
+            .then(response => {
+                console.log("Poster image uploaded successfully.", response.data);
+            })
+            .catch(error => {
+                console.log('An error occurred while uploading the image.', error);
+            })
+    }
 
     if (changePoster) {
         return (
@@ -12,7 +30,9 @@ export default function UploadImage(props) {
                     className={"form-control"}
                     id={"file"}
                     onChange={(e) => {
-                        chooseImage(e.target.files[0].name, e.target.files[0]);
+                        setPosterFileName(e.target.files[0].name);
+                        setPosterImage(e.target.files[0]);
+                        setChangePoster(!changePoster);
                     }
                     }
                 />
@@ -51,7 +71,8 @@ export default function UploadImage(props) {
                                         transform: "translateY(-50%)"
                                     }}
                                     onClick={(e) => {
-                                        changedImage(!changePoster, null);
+                                            setChangePoster(!changePoster);
+                                            setPosterImage(null);
                                     }}
                             >Change
                             </button>

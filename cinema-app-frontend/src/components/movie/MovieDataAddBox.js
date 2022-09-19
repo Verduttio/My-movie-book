@@ -2,7 +2,6 @@ import * as React from "react";
 import {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import movieService from "../../services/movieService";
-import {useEffect} from "react";
 import UploadImage from "./UploadImage";
 
 export default function MovieDataAddBox(params) {
@@ -38,28 +37,6 @@ export default function MovieDataAddBox(params) {
                 console.log('An error occurred while uploading the movie.', error);
             })
     };
-
-    if(posterImage != null) {
-        movieService.uploadPosterImage(posterImage)
-            .then(response => {
-                console.log("Poster image uploaded successfully.", response.data);
-                setChangePoster(false);
-            })
-            .catch(error => {
-                console.log('An error occurred while uploading the image.', error);
-            })
-    }
-
-    const changedImage = (changePosterVal, posterImageVal) => {
-        setChangePoster(changePosterVal);
-        setPosterImage(posterImageVal);
-    };
-
-    const chooseImage = (posterFileNameVal, posterImageVal) => {
-        setPosterFileName(posterFileNameVal);
-        setPosterImage(posterImageVal);
-    }
-
 
     return(<div className="card">
         <div className="card-body">
@@ -154,7 +131,14 @@ export default function MovieDataAddBox(params) {
                         placeholder={"Description"}
                     />
                 </div>
-                <UploadImage posterFileName={posterFileName} changedImage={changedImage} chooseImage={chooseImage} changePoster={changePoster}/>
+                <UploadImage
+                    posterFileName={posterFileName}
+                    setPosterFileName={setPosterFileName}
+                    changePoster={changePoster}
+                    setChangePoster={setChangePoster}
+                    posterImage={posterImage}
+                    setPosterImage={setPosterImage}
+                />
                 <div className={"text-center"}>
                     <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Save</button>
                 </div>
