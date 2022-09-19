@@ -18,7 +18,20 @@ export default function MovieDataAddFromFilmwebBox(props) {
     const[posterFileName, setPosterFileName] = useState(posterURLF.toString());
     const[description, setDescription] = useState(descriptionF.toString());
 
+    const[changePoster, setChangePoster] = useState(false);
+
     const navigate = useNavigate();
+
+    if(posterImage != null) {
+        movieService.uploadPosterImage(posterImage)
+            .then(response => {
+                console.log("Poster image uploaded successfully.", response.data);
+                setChangePoster(false);
+            })
+            .catch(error => {
+                console.log('An error occurred while uploading the image.', error);
+            })
+    }
 
 
     const saveMovie = (e) => {
@@ -26,15 +39,6 @@ export default function MovieDataAddFromFilmwebBox(props) {
 
         const movie = {title, releaseYear, genre, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description};
         // Create new record
-        movieService.uploadPosterImage(posterImage)
-            .then(response => {
-                console.log("Poster image uploaded successfully.", response.data);
-            })
-            .catch(error => {
-                console.log('An error occurred while uploading the image.', error);
-            })
-
-
         movieService.create(movie)
             .then(response => {
                 console.log("Movie uploaded successfully.", response.data);
@@ -141,18 +145,60 @@ export default function MovieDataAddFromFilmwebBox(props) {
                                 placeholder={"Description"}
                             />
                         </div>
-                        <div className={"mb-3"}>
-                            <input
-                                type={"file"}
-                                className={"form-control"}
-                                id={"file"}
-                                onChange={(e) => {
-                                    setPosterImage(e.target.files[0]);
-                                    setPosterFileName(e.target.files[0].name);
-                                }
-                                }
-                            />
-                        </div>
+                        {!changePoster ? (
+                            <div className="card mb-3">
+                                <div>
+                                    <div className="row">
+                                        <div className="col-6">
+                                            <div className="row">
+                                                <div className="col-3">
+                                                    <img src={'http://localhost:8080/files/images/'+posterFileName}
+                                                        // className="img-fluid rounded-start"
+                                                         alt={posterFileName}
+                                                         style={{
+                                                             height: "120px",
+                                                             width: "auto",
+                                                             borderRadius: "10px",
+                                                             paddingRight: "20px"
+                                                         }}
+                                                    />
+                                                </div>
+                                                <div className="col-9">
+                                                    <p>Poster: {posterFileName}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-6">
+                                            <button className={"btn btn-warning"}
+                                                    style={{
+                                                        float: "right",
+                                                        position: "relative",
+                                                        top: "50%",
+                                                        transform: "translateY(-50%)"
+                                                    }}
+                                                    onClick={(e) => {
+                                                        setChangePoster(true);
+                                                        setPosterImage(null);
+                                                    }}
+                                            >Change</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={"mb-3"}>
+                                <input
+                                    type={"file"}
+                                    className={"form-control"}
+                                    id={"file"}
+                                    onChange={(e) => {
+                                        setPosterFileName(e.target.files[0].name);
+                                        setPosterImage(e.target.files[0]);
+                                    }
+                                    }
+                                />
+                            </div>
+                        )}
                         <div className={"text-center"}>
                             <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Add movie</button>
                         </div>

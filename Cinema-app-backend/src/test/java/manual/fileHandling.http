@@ -1,2 +1,5 @@
 ### Delete file stardust.jpg
-DELETE {{host}}/files/images/stardust.jpg
+DELETE {{host}}/files/images/stardust.
+
+### GET List files
+GET {{host}}/files/images
