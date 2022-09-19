@@ -47,6 +47,19 @@ public class FileUploadController {
                 .body(new InputStreamResource(file.getInputStream()));
     }
 
+    @GetMapping("/temp/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFileTemp(@PathVariable String filename) throws IOException {
+
+        Resource file = storageService.loadAsResource("temp/" + filename);
+//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+//                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(new InputStreamResource(file.getInputStream()));
+    }
+
     @PostMapping
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
         storageService.store(file);

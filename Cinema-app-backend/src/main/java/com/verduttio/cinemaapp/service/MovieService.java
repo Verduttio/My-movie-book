@@ -20,6 +20,12 @@ public class MovieService {
     }
 
     public Movie saveMovie(Movie movie) {
+        // If user upload an image and then change it before saving a movie,
+        // we have unused files uploaded to files/images/temp.
+
+        // So that firstly, we move the movie image to files/images,
+        // and then we delete all files inside files/images/temp.
+        FilesCleaner.clean("files/images/temp/"+movie.posterFileName(), "files/images/"+movie.posterFileName());
         return movieRepository.save(movie);
     }
 

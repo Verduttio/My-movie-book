@@ -10,7 +10,7 @@ public class ImageFetcher {
     public void fetch(String url, String fileName) throws IOException {
         URL imageUrl = new URL(url);
 
-        String path = "files/images/";
+        String path = "files/images/temp/";
         String destinationFile = path + fileName;
 
         /********

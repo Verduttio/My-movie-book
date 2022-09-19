@@ -7,13 +7,23 @@ public class StorageProperties {
     /**
      * Folder location for storing files
      */
-    private String location = "files/images";
+    private String locationMain = "files/images";
 
-    public String getLocation() {
-        return location;
+    private String locationTemp = "files/images/temp";
+
+    public String getLocationMain() {
+        return locationMain;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationMain(String location) {
+        this.locationMain = location;
+    }
+
+    public String getLocationTemp() {
+        return locationTemp;
+    }
+
+    public void setLocationTemp(String location) {
+        this.locationTemp = location;
     }
 }

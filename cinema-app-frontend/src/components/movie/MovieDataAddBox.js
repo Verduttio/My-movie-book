@@ -3,6 +3,7 @@ import {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import movieService from "../../services/movieService";
 import {useEffect} from "react";
+import UploadImage from "./UploadImage";
 
 export default function MovieDataAddBox(params) {
     const[title, setTitle] = useState('');
@@ -17,6 +18,8 @@ export default function MovieDataAddBox(params) {
     const[posterFileName, setPosterFileName] = useState('');
     const[description, setDescription] = useState('');
 
+    const[changePoster, setChangePoster] = useState(true);
+
     const navigate = useNavigate();
 
     const id = params.id;
@@ -26,15 +29,6 @@ export default function MovieDataAddBox(params) {
 
         const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description};
         // Create new record
-        movieService.uploadPosterImage(posterImage)
-            .then(response => {
-                console.log("Poster image uploaded successfully.", response.data);
-            })
-            .catch(error => {
-                console.log('An error occurred while uploading the image.', error);
-            })
-
-
         movieService.create(movie)
             .then(response => {
                 console.log("Movie uploaded successfully.", response.data);
@@ -44,6 +38,27 @@ export default function MovieDataAddBox(params) {
                 console.log('An error occurred while uploading the movie.', error);
             })
     };
+
+    if(posterImage != null) {
+        movieService.uploadPosterImage(posterImage)
+            .then(response => {
+                console.log("Poster image uploaded successfully.", response.data);
+                setChangePoster(false);
+            })
+            .catch(error => {
+                console.log('An error occurred while uploading the image.', error);
+            })
+    }
+
+    const changedImage = (changePosterVal, posterImageVal) => {
+        setChangePoster(changePosterVal);
+        setPosterImage(posterImageVal);
+    };
+
+    const chooseImage = (posterFileNameVal, posterImageVal) => {
+        setPosterFileName(posterFileNameVal);
+        setPosterImage(posterImageVal);
+    }
 
 
     return(<div className="card">
@@ -139,18 +154,7 @@ export default function MovieDataAddBox(params) {
                         placeholder={"Description"}
                     />
                 </div>
-                <div className={"mb-3"}>
-                    <input
-                        type={"file"}
-                        className={"form-control"}
-                        id={"file"}
-                        onChange={(e) => {
-                            setPosterImage(e.target.files[0]);
-                            setPosterFileName(e.target.files[0].name);
-                        }
-                        }
-                    />
-                </div>
+                <UploadImage posterFileName={posterFileName} changedImage={changedImage} chooseImage={chooseImage} changePoster={changePoster}/>
                 <div className={"text-center"}>
                     <button className={"btn btn-primary"} onClick={(e) => saveMovie(e)}>Save</button>
                 </div>

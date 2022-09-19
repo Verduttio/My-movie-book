@@ -17,6 +17,8 @@ export default function MovieDataEditBox(params) {
     const[posterFileName, setPosterFileName] = useState('');
     const[description, setDescription] = useState('');
 
+    const[changePoster, setChangePoster] = useState(false);
+
     const navigate = useNavigate();
 
     const id = params.id;

@@ -166,8 +166,8 @@ public class FilmwebFetcher {
 
     public Movie fetchMovie(String movieURL) {
         init(movieURL);
-        System.out.println("\n\n\n");
-        System.out.println(this.pageContent);
+//        System.out.println("\n\n\n");
+//        System.out.println(this.pageContent);
         Movie movie = new Movie();
         movie.setFilmwebRating(getRating());
         movie.setFilmwebNumberOfVotes(getNumberOfViews());
