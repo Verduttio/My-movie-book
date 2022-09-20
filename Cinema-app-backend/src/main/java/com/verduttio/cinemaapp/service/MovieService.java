@@ -25,7 +25,7 @@ public class MovieService {
 
         // So that firstly, we move the movie image to files/images,
         // and then we delete all files inside files/images/temp.
-        FilesCleaner.clean("files/images/temp/"+movie.posterFileName(), "files/images/"+movie.posterFileName());
+        FilesCleaner.cleanAfterUploadImage(movie.posterFileName());
         return movieRepository.save(movie);
     }
 
@@ -47,16 +47,18 @@ public class MovieService {
         // So someone not authorized could create a new movie.
 
 
-        
+
         // If user upload an image and then change it before saving a movie,
         // we have unused files uploaded to files/images/temp.
 
         // So that firstly, we move the movie image to files/images,
         // and then we delete all files inside files/images/temp.
-        ////TODO: We should delete the old image also (in files/images).
 
-        FilesCleaner.clean("files/images/temp/"+movie.posterFileName(), "files/images/"+movie.posterFileName());
-
+        // WARNING
+        ////TODO: Create a query to the database to get only posterFileName
+        ////We don't have to load whole movie, because we don't need all its fields.
+        Movie oldMovie = getMovieById(movie.id());
+        FilesCleaner.cleanAfterEditImage(oldMovie.posterFileName(), movie.posterFileName());
         System.out.println("movie.posterFileName(): " + movie.posterFileName());
 
         return movieRepository.save(movie);
