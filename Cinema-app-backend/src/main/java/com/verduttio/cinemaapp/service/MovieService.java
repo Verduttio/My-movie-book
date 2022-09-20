@@ -54,11 +54,9 @@ public class MovieService {
         // So that firstly, we move the movie image to files/images,
         // and then we delete all files inside files/images/temp.
 
-        // WARNING
-        ////TODO: Create a query to the database to get only posterFileName
-        ////We don't have to load whole movie, because we don't need all its fields.
-        Movie oldMovie = getMovieById(movie.id());
-        FilesCleaner.cleanAfterEditImage(oldMovie.posterFileName(), movie.posterFileName());
+        
+        String oldFileName = movieRepository.getPosterImageByMovieId(movie.id());
+        FilesCleaner.cleanAfterEditImage(oldFileName, movie.posterFileName());
         System.out.println("movie.posterFileName(): " + movie.posterFileName());
 
         return movieRepository.save(movie);
