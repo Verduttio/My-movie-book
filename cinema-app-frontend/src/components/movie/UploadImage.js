@@ -18,12 +18,13 @@ export default function UploadImage(props) {
             movieService.uploadPosterImage(posterImage)
                 .then(response => {
                     console.log("Poster image uploaded successfully.", response.data);
+                    setChangePoster(!changePoster);
                 })
                 .catch(error => {
                     console.log('An error occurred while uploading the image.', error);
                 })
         }
-    })
+    }, [posterImage]);
 
 
     if (changePoster) {
@@ -36,7 +37,6 @@ export default function UploadImage(props) {
                     onChange={(e) => {
                         setPosterFileName(e.target.files[0].name);
                         setPosterImage(e.target.files[0]);
-                        setChangePoster(!changePoster);
                     }
                     }
                 />
