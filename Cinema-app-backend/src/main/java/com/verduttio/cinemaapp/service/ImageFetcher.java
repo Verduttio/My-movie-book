@@ -48,12 +48,4 @@ public class ImageFetcher {
         outputStream.close();
     }
 
-//    public static void main(String[] args) {
-//        ImageFetcher imageFetcher = new ImageFetcher();
-//        try {
-//            imageFetcher.fetch("https://fwcdn.pl/fpo/63/76/106376/7115941.6.jpg", "batman.jpg");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

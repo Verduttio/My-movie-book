@@ -37,10 +37,7 @@ public class FileUploadController {
     @GetMapping("/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
-
         Resource file = storageService.loadAsResource(filename);
-//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-//                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.IMAGE_JPEG)
@@ -50,10 +47,7 @@ public class FileUploadController {
     @GetMapping("/temp/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFileTemp(@PathVariable String filename) throws IOException {
-
         Resource file = storageService.loadAsResource("temp/" + filename);
-//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-//                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.IMAGE_JPEG)
