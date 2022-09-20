@@ -60,24 +60,24 @@ export default function MovieList() {
                                 <td>{movie.filmwebRating.toFixed(1)}</td>
                                 <td>{numberWithSpaces(movie.filmwebNumberOfVotes)}</td>
                                 <td>
-                                    <img
-                                        src={'http://localhost:8080/files/images/'+movie.posterFileName}
-                                        alt={movie.posterFileName}
-                                        style={{
-                                            width: '150px',
-                                            height: 'auto',
-                                            display: 'block',
-                                            marginLeft: 'auto',
-                                            marginRight: 'auto'
-                                        }}>
-                                    </img>
+                                    {movie.posterFileName !== undefined ? (
+                                        <img
+                                            src={'http://localhost:8080/files/images/' + movie.posterFileName}
+                                            alt={movie.posterFileName}
+                                            style={{
+                                                width: '150px',
+                                                height: 'auto',
+                                                display: 'block',
+                                                marginLeft: 'auto',
+                                                marginRight: 'auto'
+                                            }}>
+                                        </img>
+                                    ) : null}
                                 </td>
                                 <td>
-                                    <td>
-                                        <span style={{display:"block"}}>
-                                            <Link className={"btn btn-info"} to={"/movies/" + movie.id}>View</Link>
-                                        </span>
-                                    </td>
+                                    <span style={{display:"block"}}>
+                                        <Link className={"btn btn-info"} to={"/movies/" + movie.id}>View</Link>
+                                    </span>
                                 </td>
                             </tr>
                         ))

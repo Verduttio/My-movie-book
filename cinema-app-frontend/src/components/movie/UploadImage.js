@@ -1,5 +1,5 @@
 import movieService from "../../services/movieService";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 export default function UploadImage(props) {
     const {
@@ -8,10 +8,25 @@ export default function UploadImage(props) {
         changePoster,
         setChangePoster,
         posterImage,
-        setPosterImage
+        setPosterImage,
+        mode
     } = props;
 
-    console.log("changePoster: ", changePoster);
+    // console.log("changePoster: ", changePoster);
+
+    // When editing file, we have to load image from main location
+    // because there is nothing in temp location.
+    // After changing image, we also change location to temp because new file
+    // is uploaded always to temp location.
+    const[imgPath, setImgPath] = useState("");
+    useEffect(() => {
+        console.log("[useEffect] imgPath: ", imgPath);
+        if(mode === "edit") {
+            setImgPath("http://localhost:8080/files/images/");
+        } else {
+            setImgPath("http://localhost:8080/files/images/temp/");
+        }
+    },[]);
 
     useEffect(() => {
         if(posterImage != null) {
@@ -50,7 +65,7 @@ export default function UploadImage(props) {
                         <div className="col-6">
                             <div className="row">
                                 <div className="col-3">
-                                    <img src={'http://localhost:8080/files/images/temp/' + posterFileName}
+                                    <img src={imgPath + posterFileName}
                                         // className="img-fluid rounded-start"
                                          alt={posterFileName}
                                          style={{
@@ -77,6 +92,7 @@ export default function UploadImage(props) {
                                     onClick={(e) => {
                                             setChangePoster(!changePoster);
                                             setPosterImage(null);
+                                            setImgPath("http://localhost:8080/files/images/temp/");
                                     }}
                             >Change
                             </button>

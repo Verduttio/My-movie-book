@@ -160,6 +160,7 @@ export default function MovieDataEditBox(params) {
                     setChangePoster={setChangePoster}
                     posterImage={posterImage}
                     setPosterImage={setPosterImage}
+                    mode={"edit"}
                 />
                 <div className={"text-center"}>
                     <button className={"btn btn-primary"} onClick={(e) => editMovie(e)}>Apply changes</button>
