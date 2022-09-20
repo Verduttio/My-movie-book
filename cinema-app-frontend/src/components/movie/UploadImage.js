@@ -1,4 +1,5 @@
 import movieService from "../../services/movieService";
+import {useEffect} from "react";
 
 export default function UploadImage(props) {
     const {
@@ -12,15 +13,18 @@ export default function UploadImage(props) {
 
     console.log("changePoster: ", changePoster);
 
-    if(posterImage != null) {
-        movieService.uploadPosterImage(posterImage)
-            .then(response => {
-                console.log("Poster image uploaded successfully.", response.data);
-            })
-            .catch(error => {
-                console.log('An error occurred while uploading the image.', error);
-            })
-    }
+    useEffect(() => {
+        if(posterImage != null) {
+            movieService.uploadPosterImage(posterImage)
+                .then(response => {
+                    console.log("Poster image uploaded successfully.", response.data);
+                })
+                .catch(error => {
+                    console.log('An error occurred while uploading the image.', error);
+                })
+        }
+    })
+
 
     if (changePoster) {
         return (

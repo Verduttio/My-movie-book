@@ -46,6 +46,16 @@ public class MovieService {
         // It can lead to security leaks later in future development(ex. adding authorization), because we can forget about this PUT request and creating new movie.
         // So someone not authorized could create a new movie.
 
+        // If user upload an image and then change it before saving a movie,
+        // we have unused files uploaded to files/images/temp.
+
+        // So that firstly, we move the movie image to files/images,
+        // and then we delete all files inside files/images/temp.
+        ////TODO: We should delete the old image also (in files/images).
+
+        FilesCleaner.clean("files/images/temp/"+movie.posterFileName(), "files/images/"+movie.posterFileName());
+
+        System.out.println("movie.posterFileName(): " + movie.posterFileName());
 
         return movieRepository.save(movie);
     }
@@ -64,12 +74,6 @@ public class MovieService {
             field.setAccessible(true);
             ReflectionUtils.setField(field, movie, v);
         });
-        // If user upload an image and then change it before saving a movie,
-        // we have unused files uploaded to files/images/temp.
-
-        // So that firstly, we move the movie image to files/images,
-        // and then we delete all files inside files/images/temp.
-        FilesCleaner.clean("files/images/temp/"+movie.posterFileName(), "files/images/"+movie.posterFileName());
         return movieRepository.save(movie);
     }
 }
