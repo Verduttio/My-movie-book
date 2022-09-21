@@ -1,6 +1,7 @@
 package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Movie;
+import com.verduttio.cinemaapp.service.imageHandling.ImageFetcher;
 import org.springframework.stereotype.Service;
 import org.unbescape.html.HtmlEscape;
 
@@ -185,9 +186,8 @@ public class FilmwebFetcher {
     }
 
     private void savePoster(String url, String fileName) {
-        ImageFetcher imageFetcher = new ImageFetcher();
         try {
-            imageFetcher.fetch(url, fileName);
+            ImageFetcher.fetch(url, fileName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

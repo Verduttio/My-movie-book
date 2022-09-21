@@ -2,6 +2,7 @@ package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.repository.MovieRepository;
+import com.verduttio.cinemaapp.service.storage.FilesCleaner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -54,7 +55,6 @@ public class MovieService {
         // So that firstly, we move the movie image to files/images,
         // and then we delete all files inside files/images/temp.
 
-        
         String oldFileName = movieRepository.getPosterImageByMovieId(movie.id());
         FilesCleaner.cleanAfterEditImage(oldFileName, movie.posterFileName());
         System.out.println("movie.posterFileName(): " + movie.posterFileName());

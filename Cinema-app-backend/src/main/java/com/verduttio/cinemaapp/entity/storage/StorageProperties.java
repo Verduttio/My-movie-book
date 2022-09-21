@@ -1,29 +1,12 @@
 package com.verduttio.cinemaapp.entity.storage;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+public interface StorageProperties {
 
-@ConfigurationProperties("storage")
-public class StorageProperties {
-    /**
-     * Folder location for storing files
-     */
-    private String locationMain = "files/images";
+    String getLocationMain();
 
-    private String locationTemp = "files/images/temp";
+    void setLocationMain(String location);
 
-    public String getLocationMain() {
-        return locationMain;
-    }
+    String getLocationTemp();
 
-    public void setLocationMain(String location) {
-        this.locationMain = location;
-    }
-
-    public String getLocationTemp() {
-        return locationTemp;
-    }
-
-    public void setLocationTemp(String location) {
-        this.locationTemp = location;
-    }
+    void setLocationTemp(String location);
 }

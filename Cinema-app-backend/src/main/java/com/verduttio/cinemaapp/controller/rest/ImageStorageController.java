@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.verduttio.cinemaapp.entity.storage.StorageFileNotFoundException;
-import com.verduttio.cinemaapp.service.StorageService;
+import com.verduttio.cinemaapp.service.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -18,12 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping(path="/files/images")
 @CrossOrigin
-public class FileUploadController {
+public class ImageStorageController {
 
     private final StorageService storageService;
 
     @Autowired
-    public FileUploadController(StorageService storageService) {
+    public ImageStorageController(StorageService storageService) {
         this.storageService = storageService;
     }
 

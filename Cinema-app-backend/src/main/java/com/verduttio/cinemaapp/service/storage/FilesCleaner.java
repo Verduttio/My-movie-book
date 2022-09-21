@@ -1,4 +1,4 @@
-package com.verduttio.cinemaapp.service;
+package com.verduttio.cinemaapp.service.storage;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.util.FileSystemUtils;

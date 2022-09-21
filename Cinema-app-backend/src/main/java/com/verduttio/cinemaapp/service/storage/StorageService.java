@@ -1,4 +1,4 @@
-package com.verduttio.cinemaapp.service;
+package com.verduttio.cinemaapp.service.storage;
 
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;

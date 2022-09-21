@@ -6,15 +6,13 @@ import com.verduttio.cinemaapp.service.FilmwebFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URL;
-
 @RestController
-@RequestMapping(path="/externalMoviesPage")
-public class ExternalMoviesPageController {
+@RequestMapping(path="/externalMovieData")
+public class ExternalMovieDataController {
     private final FilmwebFetcher filmwebFetcher;
 
     @Autowired
-    public ExternalMoviesPageController(FilmwebFetcher filmwebFetcher) {
+    public ExternalMovieDataController(FilmwebFetcher filmwebFetcher) {
         this.filmwebFetcher = filmwebFetcher;
     }
 

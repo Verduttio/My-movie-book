@@ -12,11 +12,11 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping(path="/movies")
-public class MovieRestController {
+public class MovieController {
     private final MovieService movieService;
 
     @Autowired
-    public MovieRestController(MovieService movieService){
+    public MovieController(MovieService movieService){
         this.movieService = movieService;
     }
 

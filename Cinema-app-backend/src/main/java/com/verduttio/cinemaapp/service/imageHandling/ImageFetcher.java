@@ -1,4 +1,4 @@
-package com.verduttio.cinemaapp.service;
+package com.verduttio.cinemaapp.service.imageHandling;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.net.URL;
 
 public class ImageFetcher {
-    public void fetch(String url, String fileName) throws IOException {
+    public static void fetch(String url, String fileName) throws IOException {
         URL imageUrl = new URL(url);
 
         String path = "files/images/temp/";
