@@ -22,9 +22,9 @@ export default function UploadImage(props) {
     useEffect(() => {
         console.log("[useEffect] imgPath: ", imgPath);
         if(mode === "edit") {
-            setImgPath("http://localhost:8080/files/images/");
+            setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/");
         } else {
-            setImgPath("http://localhost:8080/files/images/temp/");
+            setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/temp/");
         }
     },[]);
 
@@ -92,7 +92,7 @@ export default function UploadImage(props) {
                                     onClick={(e) => {
                                             setChangePoster(!changePoster);
                                             setPosterImage(null);
-                                            setImgPath("http://localhost:8080/files/images/temp/");
+                                            setImgPath("http://"+process.env.REACT_APP_HOST+"/files/images/temp/");
                                     }}
                             >Change
                             </button>

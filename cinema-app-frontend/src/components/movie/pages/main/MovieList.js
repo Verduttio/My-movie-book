@@ -62,7 +62,7 @@ export default function MovieList() {
                                 <td>
                                     {movie.posterFileName !== undefined ? (
                                         <img
-                                            src={'http://localhost:8080/files/images/' + movie.posterFileName}
+                                            src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + movie.posterFileName}
                                             alt={movie.posterFileName}
                                             style={{
                                                 width: '150px',

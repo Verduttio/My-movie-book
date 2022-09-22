@@ -94,7 +94,7 @@ export default function MovieList() {
                         <div className={movie.watched ? ("card border-success") : ("card border-danger")} style={{minHeight: "406px", maxWidth: "800px"}}>
                             <div className="row g-0" style={{minHeight: "406px"}}>
                                 <div className="col-md-4">
-                                    <img src={'http://localhost:8080/files/images/'+movie.posterFileName}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/'+movie.posterFileName}
                                          // className="img-fluid rounded-start"
                                          alt={movie.posterFileName}
                                          style={{
@@ -158,7 +158,7 @@ export default function MovieList() {
                         <div className="row">
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
-                                    <img src={'http://localhost:8080/files/images/filmweb.jpg'}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/filmweb.jpg'}
                                          alt={"filmweb"}
                                          style={{
                                              maxHeight: "60px",
@@ -193,7 +193,7 @@ export default function MovieList() {
                         <div className="row" style={{paddingTop: "50px"}}>
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
-                                    <img src={'http://localhost:8080/files/images/imdb.png'}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/imdb.png'}
                                          className="img-fluid rounded-start"
                                          alt={"filmweb"}
                                          style={{maxHeight: "60px", width: "auto", marginLeft: "auto", marginRight: "auto", padding: "10px"}}
