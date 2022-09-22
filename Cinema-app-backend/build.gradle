@@ -16,12 +16,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.unbescape:unbescape:1.1.6.RELEASE'
     //For StorageProperties.java
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    runtimeOnly 'com.h2database:h2'
+//    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql:42.5.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    implementation 'org.apache.commons:commons-text:1.9'
-    implementation 'org.unbescape:unbescape:1.1.6.RELEASE'
+
 }
 
 tasks.named('test') {
