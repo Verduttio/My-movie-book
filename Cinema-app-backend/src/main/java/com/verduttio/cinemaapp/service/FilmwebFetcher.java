@@ -2,6 +2,7 @@ package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.service.imageHandling.ImageFetcher;
+import com.verduttio.cinemaapp.service.storage.FileNameGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -162,7 +163,7 @@ public class FilmwebFetcher {
         movie.setDescription(getDescription());
         movie.setDirector(getDirector());
         movie.setGenre(getGenre());
-        movie.setPosterFileName(getNumberOfViews() + ".jpg");
+        movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
         logger.info("fetchMovie() - Fetched movie: {}", movieFetchedInfo(movie));
 
         // Save poster image from filmweb

@@ -2,6 +2,7 @@ package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.repository.MovieRepository;
+import com.verduttio.cinemaapp.service.storage.FileNameGenerator;
 import com.verduttio.cinemaapp.service.storage.FilesCleaner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,9 @@ public class MovieService {
 
         // So that firstly, we move the movie image to files/images,
         // and then we delete all files inside files/images/temp.
-        FilesCleaner.cleanAfterUploadImage(movie.posterFileName());
+        String uploadPosterFileName = movie.posterFileName();
+        movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
+        FilesCleaner.cleanAfterUploadImage(uploadPosterFileName, movie.posterFileName());
         Movie response = movieRepository.save(movie);
         logger.debug("saveMovie() - movie: {} - SAVED", movie);
         return response;
@@ -54,7 +57,6 @@ public class MovieService {
         // So someone not authorized could create a new movie.
 
 
-
         // If user upload an image and then change it before saving a movie,
         // we have unused files uploaded to files/images/temp.
 
@@ -62,8 +64,10 @@ public class MovieService {
         // and then we delete all files inside files/images/temp.
 
         String oldFileName = movieRepository.getPosterImageByMovieId(movie.id());
+        String uploadFileName = movie.posterFileName();
+        movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
         logger.debug("updateMovie() - oldFileName: {}, newFileName:{}", oldFileName, movie.posterFileName());
-        FilesCleaner.cleanAfterEditImage(oldFileName, movie.posterFileName());
+        FilesCleaner.cleanAfterEditImage(oldFileName, uploadFileName, movie.posterFileName());
 
         return movieRepository.save(movie);
     }
