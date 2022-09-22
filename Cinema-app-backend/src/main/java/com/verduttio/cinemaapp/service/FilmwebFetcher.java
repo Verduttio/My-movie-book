@@ -2,6 +2,8 @@ package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.service.imageHandling.ImageFetcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.unbescape.html.HtmlEscape;
 
@@ -16,8 +18,10 @@ import java.util.regex.Pattern;
 
 @Service
 public class FilmwebFetcher {
-    String movieURL;
-    String pageContent;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private String movieURL;
+    private String pageContent;
 
     public FilmwebFetcher() {
         this.movieURL = null;
@@ -27,7 +31,6 @@ public class FilmwebFetcher {
     private void init(String movieTitle) {
         this.movieURL = "https://www.filmweb.pl/film/" + URLEncoder.encode(movieTitle, StandardCharsets.UTF_8);
         this.pageContent = getPageContent(movieURL);
-        System.out.println("init(String movieTitle) movieURL: " + this.movieURL);
     }
 
 
@@ -58,59 +61,43 @@ public class FilmwebFetcher {
 
     private String findRate(String regexResult){
         String jsonFieldRate = "\"rate\":";
-        String rate = regexResult.substring(regexResult.indexOf(jsonFieldRate)+jsonFieldRate.length(), regexResult.indexOf(","));
-        System.out.println("rate: " + rate);
-        return rate;
+        return regexResult.substring(regexResult.indexOf(jsonFieldRate)+jsonFieldRate.length(), regexResult.indexOf(","));
     }
 
     private String findNumberOfViews(String regexResult) {
         regexResult = regexResult.substring(regexResult.indexOf(',')+1);
         String jsonFieldRatingCount = "\"ratingCount\":";
-        String ratingCount = regexResult.substring(regexResult.indexOf(jsonFieldRatingCount)+jsonFieldRatingCount.length(), regexResult.indexOf(","));
-        System.out.println("ratingCount: " + ratingCount);
-        return ratingCount;
+        return regexResult.substring(regexResult.indexOf(jsonFieldRatingCount)+jsonFieldRatingCount.length(), regexResult.indexOf(","));
     }
 
     private String findTitle(String regexResult) {
         String previousText = ">";
-        String title = regexResult.substring(regexResult.indexOf(previousText)+previousText.length(), regexResult.indexOf("</h1>"));
-        System.out.println("title: " + title);
-        return title;
+        return regexResult.substring(regexResult.indexOf(previousText)+previousText.length(), regexResult.indexOf("</h1>"));
     }
 
     private String findReleaseYear(String regexResult) {
-        String releaseYear = regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("</div>"));
-        System.out.println("releaseYear: " + releaseYear);
-        return releaseYear;
+        return regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("</div>"));
     }
 
     private String findDescription(String regexResult) {
-        String description = regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("</span>"));
-        System.out.println("description: " + description);
-        return description;
+        return regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("</span>"));
     }
 
     private String findDirector(String regexResult) {
         String field = "title=\"";
-        String director = regexResult.substring(regexResult.indexOf(field)+field.length(), regexResult.indexOf("itemprop")-2);
-        System.out.println("director: " + director);
-        return director;
+        return regexResult.substring(regexResult.indexOf(field)+field.length(), regexResult.indexOf("itemprop")-2);
     }
 
     private String findGenre(String regexResult) {
         String field = "a href=\"";
         regexResult = regexResult.substring(regexResult.indexOf(field)+field.length()+1);
         regexResult = regexResult.substring(regexResult.indexOf('"')+2);
-        String genre = regexResult.substring(0, regexResult.indexOf('<'));
-        System.out.println("genre: " + genre);
-        return genre;
+        return regexResult.substring(0, regexResult.indexOf('<'));
     }
 
     private String findPosterURL(String regexResult) {
         String field = "content=\"";
-        String posterURL = regexResult.substring(regexResult.indexOf(field)+field.length(), regexResult.length()-1);
-        System.out.println("posterURL: " + posterURL);
-        return posterURL;
+        return regexResult.substring(regexResult.indexOf(field)+field.length(), regexResult.length()-1);
     }
 
 
@@ -127,7 +114,6 @@ public class FilmwebFetcher {
     }
 
     private String getTitle() {
-//        String regexResult = getRegexResult("<script type=\"application/json\" class=\"dataSource\" data-source=\"filmTitle\">[^<]*</script>", this.pageContent);
         String regexResult = getRegexResult("<h1 class=\"filmCoverSection__title[^>]*>[^<]*</h1>", this.pageContent);
         String title = findTitle(regexResult);
         return HtmlEscape.unescapeHtml(title);
@@ -159,8 +145,7 @@ public class FilmwebFetcher {
 
     private String getPosterURL() {
         String regexResult = getRegexResult("<img id=\"filmPoster\" itemprop=\"image\" content=\"[^\"]*\"", this.pageContent);
-        String posterURL = findPosterURL(regexResult);
-        return posterURL;
+        return findPosterURL(regexResult);
     }
 
 
@@ -178,11 +163,26 @@ public class FilmwebFetcher {
         movie.setDirector(getDirector());
         movie.setGenre(getGenre());
         movie.setPosterFileName(getNumberOfViews() + ".jpg");
+        logger.info("fetchMovie() - Fetched movie: {}", movieFetchedInfo(movie));
 
         // Save poster image from filmweb
         savePoster(getPosterURL(), movie.posterFileName());
 
         return movie;
+    }
+
+    private String movieFetchedInfo(Movie movie) {
+        return "Movie {" +
+                "\nid = " + movie.id() +
+                ", \ntitle = " + movie.title() +
+                ", \nfilmwebRating = " + movie.filmwebRating() +
+                ", \nfilmwebNumberOfVotes = " + movie.filmwebNumberOfVotes() +
+                ", \nreleaseYear = " + movie.releaseYear() +
+                ", \ngenre = "  + movie.genre() +
+                ", \ndirector = " + movie.director() +
+                ", \nposterFileName = " + movie.posterFileName() +
+                ", \ndescription = " + movie.description() +
+                "\n}";
     }
 
     private void savePoster(String url, String fileName) {

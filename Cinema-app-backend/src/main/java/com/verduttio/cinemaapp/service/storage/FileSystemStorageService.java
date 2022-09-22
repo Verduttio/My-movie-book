@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 import com.verduttio.cinemaapp.entity.storage.StorageException;
 import com.verduttio.cinemaapp.entity.storage.StorageFileNotFoundException;
 import com.verduttio.cinemaapp.entity.storage.StorageProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -22,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileSystemStorageService implements StorageService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final Path rootLocation;
     private final Path tempLocation;
@@ -47,8 +51,8 @@ public class FileSystemStorageService implements StorageService {
                         "Cannot store file outside current directory.");
             }
             try (InputStream inputStream = file.getInputStream()) {
-                System.out.println("[FileSystemStorageService] (store) destinationFile: " + destinationFile);
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+                logger.debug("store() - destinationFile: {} - SAVED", destinationFile);
             }
         }
         catch (IOException e) {

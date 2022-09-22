@@ -3,6 +3,8 @@ package com.verduttio.cinemaapp.service;
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.repository.MovieRepository;
 import com.verduttio.cinemaapp.service.storage.FilesCleaner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
@@ -13,6 +15,8 @@ import java.util.Map;
 
 @Service
 public class MovieService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final MovieRepository movieRepository;
 
     @Autowired
@@ -27,7 +31,9 @@ public class MovieService {
         // So that firstly, we move the movie image to files/images,
         // and then we delete all files inside files/images/temp.
         FilesCleaner.cleanAfterUploadImage(movie.posterFileName());
-        return movieRepository.save(movie);
+        Movie response = movieRepository.save(movie);
+        logger.debug("saveMovie() - movie: {} - SAVED", movie);
+        return response;
     }
 
     public Movie getMovieById(int movieId) {
@@ -56,17 +62,19 @@ public class MovieService {
         // and then we delete all files inside files/images/temp.
 
         String oldFileName = movieRepository.getPosterImageByMovieId(movie.id());
+        logger.debug("updateMovie() - oldFileName: {}, newFileName:{}", oldFileName, movie.posterFileName());
         FilesCleaner.cleanAfterEditImage(oldFileName, movie.posterFileName());
-        System.out.println("movie.posterFileName(): " + movie.posterFileName());
 
         return movieRepository.save(movie);
     }
 
     public void removeMovie(int movieId) {
+        logger.info("removeMovie() - movieId:{}", movieId);
         movieRepository.deleteById(movieId);
     }
 
     public Movie modifyMovie(int movieId, Map<Object, Object> fields) {
+        ////TODO: Maybe some update queries would be better than loading whole movie, then changing values and uploading object.
         Movie movie = movieRepository.findById(movieId);
         // Map key is field name, v is value
         fields.forEach((k,v) -> {
@@ -75,6 +83,7 @@ public class MovieService {
             assert field != null;  ////TODO: Add an exception or if clause here
             field.setAccessible(true);
             ReflectionUtils.setField(field, movie, v);
+            logger.info("modifyMovie() - movieId:{}, field: {}, newValue: {}", movieId, field.getName(), v.toString());
         });
         return movieRepository.save(movie);
     }

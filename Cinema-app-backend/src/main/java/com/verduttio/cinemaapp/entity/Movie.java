@@ -105,16 +105,21 @@ public class Movie {
 
     @Override
     public String toString(){
-        return "Movie{" +
-                "id = " + id +
-                ", title = " + title +
-                ", filmwebRating = " + filmwebRating +
-                ", filmwebNumberOfVotes = " + filmwebNumberOfVotes +
-                ", releaseYear = " + releaseYear +
-                ", genre = "  + genre +
-                ", director = " + director +
-                ", description = " + description;
-                ////TODO: Add existing fields
+        return "Movie {" +
+                "\nid = " + id +
+                ", \ntitle = " + title +
+                ", \nfilmwebRating = " + filmwebRating +
+                ", \nfilmwebNumberOfVotes = " + filmwebNumberOfVotes +
+                ", \nimdbRating = " + imdbRating +
+                ", \nimdbNumberOfVotes = " + imdbNumberOfVotes +
+                ", \nreleaseYear = " + releaseYear +
+                ", \ngenre = "  + genre +
+                ", \ndirector = " + director +
+                ", \nposterFileName = " + posterFileName +
+                ", \ndescription = " + description +
+                ", \nnote = " + note +
+                ", \nwatched = " + watched +
+                "\n}";
     }
 
 }

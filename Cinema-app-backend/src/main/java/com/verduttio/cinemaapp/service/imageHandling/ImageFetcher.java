@@ -1,5 +1,8 @@
 package com.verduttio.cinemaapp.service.imageHandling;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +10,7 @@ import java.io.OutputStream;
 import java.net.URL;
 
 public class ImageFetcher {
+    private static final Logger logger = LoggerFactory.getLogger(ImageFetcher.class);
     public static void fetch(String url, String fileName) throws IOException {
         URL imageUrl = new URL(url);
 
@@ -46,6 +50,8 @@ public class ImageFetcher {
          ********/
         inputStream.close();
         outputStream.close();
+
+        logger.info("fetch() - destinationFile: {} - SAVED", destinationFile);
     }
 
 }
