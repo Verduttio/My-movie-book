@@ -1,0 +1,48 @@
+### POST User signup
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "Verduttio",
+  "email": "verduttio@gmail.com",
+  "password": "FrodoBaggins",
+  "role": ["admin"]
+}
+
+### POST User 2
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "Bilbo",
+  "email": "bilbo@gmail.com",
+  "password": "FrodoBaggins",
+  "role": ["user"]
+}
+
+
+### POST User signin
+POST {{host}}/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "Verduttio",
+  "password": "FrodoBaggins"
+}
+
+### POST User Frodo signin
+POST {{host}}/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "Bilbo",
+  "password": "FrodoBaggins"
+}
+
+
+
+### GET all
+GET {{host}}/api/test/all
+
+### GET admin content
+GET {{host}}/api/test/admin
