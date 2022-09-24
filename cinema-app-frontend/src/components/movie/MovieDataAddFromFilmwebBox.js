@@ -1,9 +1,10 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import movieService from "../../services/movieService";
 import UploadImage from "./UploadImage";
 import InputBoxesRegisterMovie from "./InputBoxesRegisterMovie";
+import AuthService from "../../services/authService";
 
 export default function MovieDataAddFromFilmwebBox(props) {
     const {titleF, releaseYearF, genreF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF, posterURLF} = props.movie;
@@ -20,6 +21,8 @@ export default function MovieDataAddFromFilmwebBox(props) {
     const[posterFileName, setPosterFileName] = useState(posterURLF.toString());
     const[description, setDescription] = useState(descriptionF.toString());
 
+    const currentUser = AuthService.getCurrentUser();
+
     const[changePoster, setChangePoster] = useState(false);
 
     const navigate = useNavigate();
@@ -28,11 +31,19 @@ export default function MovieDataAddFromFilmwebBox(props) {
     const saveMovie = (e) => {
         e.preventDefault();
 
-        const movie = {title, releaseYear, genre, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description};
+        let userId;
+        if(currentUser === null) {
+            userId = 0;
+        } else {
+            userId = currentUser.id;
+        }
+
+        const movie = {title, releaseYear, genre, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         // Create new record
         movieService.create(movie)
             .then(response => {
                 console.log("Movie uploaded successfully.", response.data);
+                console.log("UserId: ", userId);
                 navigate('/movies');
             })
             .catch(error => {

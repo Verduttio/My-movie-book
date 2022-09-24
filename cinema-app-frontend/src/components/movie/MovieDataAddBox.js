@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import movieService from "../../services/movieService";
 import UploadImage from "./UploadImage";
 import InputBoxesRegisterMovie from "./InputBoxesRegisterMovie";
+import AuthService from "../../services/authService";
 
 export default function MovieDataAddBox(params) {
     const[title, setTitle] = useState('');
@@ -18,6 +19,9 @@ export default function MovieDataAddBox(params) {
     const[posterFileName, setPosterFileName] = useState('');
     const[description, setDescription] = useState('');
 
+    const currentUser = AuthService.getCurrentUser();
+
+
     const[changePoster, setChangePoster] = useState(true);
 
     const navigate = useNavigate();
@@ -27,7 +31,14 @@ export default function MovieDataAddBox(params) {
     const saveMovie = (e) => {
         e.preventDefault();
 
-        const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description};
+        let userId;
+        if(currentUser === null) {
+            userId = 0;
+        } else {
+            userId = currentUser.id;
+        }
+
+        const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         // Create new record
         movieService.create(movie)
             .then(response => {

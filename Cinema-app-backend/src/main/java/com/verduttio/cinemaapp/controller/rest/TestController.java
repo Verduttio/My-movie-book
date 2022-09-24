@@ -23,6 +23,7 @@ public class TestController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("'Verduttio' == authentication.principal.username")
     public String adminAccess() {
         return "Admin Board.";
     }

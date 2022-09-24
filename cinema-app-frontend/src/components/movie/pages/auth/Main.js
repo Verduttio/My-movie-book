@@ -7,10 +7,10 @@ import AuthService from "../../../../services/authService";
 
 import Login from "./Login";
 import Register from "./Register";
-import Home from "../auth_test/Home";
+import Home from "./auth_test/Home";
 import Profile from "./Profile";
-import BoardUser from "../auth_test/BoardUser";
-import BoardAdmin from "../auth_test/BoardAdmin";
+import BoardUser from "./auth_test/BoardUser";
+import BoardAdmin from "./auth_test/BoardAdmin";
 
 const Main = () => {
     const [showAdminBoard, setShowAdminBoard] = useState(false);

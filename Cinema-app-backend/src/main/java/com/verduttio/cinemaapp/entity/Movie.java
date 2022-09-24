@@ -43,6 +43,9 @@ public class Movie {
     @JsonProperty("watched")
     private boolean watched;
 
+    @JsonProperty("userId")
+    private int userId;
+
     public Movie(){
         id = 0;
         title = null;
@@ -57,10 +60,11 @@ public class Movie {
         description = null;
         note = null;
         watched = false;
+        userId = 0;
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Movie(int id, String title, double filmwebRating, int filmwebNumberOfVotes, double imdbRating, int imdbNumberOfVotes, int releaseYear, String genre, String director, String posterFileName, String description) {
+    public Movie(int id, String title, double filmwebRating, int filmwebNumberOfVotes, double imdbRating, int imdbNumberOfVotes, int releaseYear, String genre, String director, String posterFileName, String description, int userId) {
         this.id = id;
         this.title = title;
         this.filmwebRating = filmwebRating;
@@ -74,6 +78,7 @@ public class Movie {
         this.description = description;
         this.note = null;
         this.watched = false;
+        this.userId = userId;
     }
 
     public int id() {return id;}
@@ -89,6 +94,7 @@ public class Movie {
     public String description() {return description;}
     public String note() {return note;}
     public boolean watched() {return watched;}
+    public int userId() {return userId;}
 
     public void setTitle(String title) {this.title = title;}
     public void setFilmwebRating(double filmwebRating) {this.filmwebRating = filmwebRating;}
@@ -102,6 +108,7 @@ public class Movie {
     public void setDescription(String description) {this.description = description;}
     public void setNote(String note) {this.note = note;}
     public void setWatched(boolean watched) {this.watched = watched;}
+    public void setUserId(int userId) {this.userId = userId;}
 
     @Override
     public String toString(){

@@ -1,11 +1,13 @@
 import httpClient from "../http-common";
+import authHeader from "./authHeader";
+import httpClientAuth from "../http-common-secured"
 
 const getAll = () => {
     return httpClient.get('/movies');
 }
 
 const create = data => {
-    return httpClient.post("/movies", data);
+    return httpClientAuth.post("/movies", data);
 }
 
 const deleteMovie = id => {
