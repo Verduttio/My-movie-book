@@ -4,21 +4,23 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import MovieList from "./components/movie/pages/main/MovieList";
 import NotFound from "./components/NotFound";
 import ViewMovie from "./components/movie/pages/view/ViewMovie";
+import Main from "./components/movie/pages/auth/Main";
 
 function App() {
   return (
-      <BrowserRouter>
-        <div>
-          <Routes>
-              <Route path='/movies' element={<MovieList/>}/>
-              <Route path='/movies/add' element={<AddMovie/>}/>
-              <Route path='/movies/edit/:id' element={<EditMovie/>}/>
-              <Route path='/movies/:id' element={<ViewMovie/>}/>
-              <Route path='*' element={<NotFound/>}/>
-              <Route path="/" element={<Navigate replace to="/movies"/>}/>
-          </Routes>
-        </div>
-      </BrowserRouter>
+      <Main/>
+      // <BrowserRouter>
+      //   <div>
+      //     <Routes>
+      //         <Route path='/movies' element={<MovieList/>}/>
+      //         <Route path='/movies/add' element={<AddMovie/>}/>
+      //         <Route path='/movies/edit/:id' element={<EditMovie/>}/>
+      //         <Route path='/movies/:id' element={<ViewMovie/>}/>
+      //         <Route path='*' element={<NotFound/>}/>
+      //         <Route path="/" element={<Navigate replace to="/movies"/>}/>
+      //     </Routes>
+      //   </div>
+      // </BrowserRouter>
   );
 }
 
