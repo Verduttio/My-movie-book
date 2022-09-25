@@ -20,6 +20,17 @@ Content-Type: application/json
   "role": ["user"]
 }
 
+### POST User 2_1
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "Bilboo",
+  "email": "bilbo@gmaill.com",
+  "password": "FrodoBaggins",
+  "role": ["user"]
+}
+
 
 ### POST User signin
 POST {{host}}/api/auth/signin
