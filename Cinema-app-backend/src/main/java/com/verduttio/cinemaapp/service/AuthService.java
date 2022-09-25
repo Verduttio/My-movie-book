@@ -11,6 +11,7 @@ import com.verduttio.cinemaapp.repository.RoleRepository;
 import com.verduttio.cinemaapp.repository.UserRepository;
 import com.verduttio.cinemaapp.security.jwt.JwtUtils;
 import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
+import com.verduttio.cinemaapp.service.storage.FilesInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -106,6 +107,9 @@ public class AuthService {
 
         user.setRoles(roles);
         userRepository.save(user);
+
+        ////TODO: Create user directory for storing movie images
+        FilesInitializer.makeSpaceForNewUser(user.getId());
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
