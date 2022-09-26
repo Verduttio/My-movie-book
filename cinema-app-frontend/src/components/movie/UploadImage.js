@@ -1,5 +1,6 @@
 import movieService from "../../services/movieService";
 import {useEffect, useState} from "react";
+import authService from "../../services/authService";
 
 export default function UploadImage(props) {
     const {
@@ -30,7 +31,7 @@ export default function UploadImage(props) {
 
     useEffect(() => {
         if(posterImage != null) {
-            movieService.uploadPosterImage(posterImage)
+            movieService.uploadPosterImage(posterImage, authService.getCurrentUser().id)
                 .then(response => {
                     console.log("Poster image uploaded successfully.", response.data);
                     setChangePoster(!changePoster);

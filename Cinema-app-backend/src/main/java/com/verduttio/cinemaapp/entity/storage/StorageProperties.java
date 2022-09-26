@@ -2,11 +2,7 @@ package com.verduttio.cinemaapp.entity.storage;
 
 public interface StorageProperties {
 
-    String getLocationMain();
+    String getLocation();
 
-    void setLocationMain(String location);
-
-    String getLocationTemp();
-
-    void setLocationTemp(String location);
+    void setLocation(String location);
 }

@@ -14,10 +14,10 @@ const deleteMovie = id => {
     return httpClient.delete("/movies/" + id);
 }
 
-const uploadPosterImage = image => {
+const uploadPosterImage = (image, userId) => {
     let formData = new FormData();
     formData.append("file", image);
-    return httpClient.post("/files/images", formData, {
+    return httpClient.post("/files/images/" + userId, formData, {
         headers: {
             'Content-Type' : 'multipart/form-data'
         }

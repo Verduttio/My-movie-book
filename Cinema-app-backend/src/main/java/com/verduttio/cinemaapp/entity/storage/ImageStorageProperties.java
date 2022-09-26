@@ -5,27 +5,25 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("storage")
 public class ImageStorageProperties implements StorageProperties{
-    private String locationMain = "files/images";
-
-    private String locationTemp = "files/images/temp";
+    private String location = "files/images/";
 
     @Override
-    public String getLocationMain() {
-        return locationMain;
+    public String getLocation() {
+        return location;
     }
 
     @Override
-    public void setLocationMain(String location) {
-        this.locationMain = location;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    @Override
-    public String getLocationTemp() {
-        return locationTemp;
-    }
+//    @Override
+//    public String getLocationTemp() {
+//        return locationTemp;
+//    }
 
-    @Override
-    public void setLocationTemp(String location) {
-        this.locationTemp = location;
-    }
+//    @Override
+//    public void setLocationTemp(String location) {
+//        this.locationTemp = location;
+//    }
 }

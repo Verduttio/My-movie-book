@@ -1,10 +1,7 @@
 package com.verduttio.cinemaapp.controller.rest;
 
-import java.io.IOException;
-import java.util.List;
-
 import com.verduttio.cinemaapp.entity.storage.StorageFileNotFoundException;
-import com.verduttio.cinemaapp.service.storage.StorageService;
+import com.verduttio.cinemaapp.service.storage.ImageStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -14,30 +11,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.List;
+
 
 @Controller
-@RequestMapping(path="/files/images")
+@RequestMapping(path="/files/images/{userId}")
 @CrossOrigin
 public class ImageStorageController {
 
-    private final StorageService storageService;
+    private final ImageStorageService storageService;
 
     @Autowired
-    public ImageStorageController(StorageService storageService) {
+    public ImageStorageController(ImageStorageService storageService) {
         this.storageService = storageService;
     }
 
     @GetMapping
     @ResponseBody
-    public List<?> listUploadedFiles() {
-        return storageService.loadAll().map(
+    public List<?> listUploadedFiles(@PathVariable String userId) {
+        return storageService.loadAll(userId).map(
                 path -> path.getFileName().toString()).toList();
     }
 
     @GetMapping("/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
-        Resource file = storageService.loadAsResource(filename);
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename, @PathVariable String userId) throws IOException {
+        Resource file = storageService.loadAsResourceFromHome(filename, userId);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.IMAGE_JPEG)
@@ -46,8 +46,8 @@ public class ImageStorageController {
 
     @GetMapping("/temp/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFileTemp(@PathVariable String filename) throws IOException {
-        Resource file = storageService.loadAsResource("temp/" + filename);
+    public ResponseEntity<Resource> serveFileTemp(@PathVariable String filename, @PathVariable String userId) throws IOException {
+        Resource file = storageService.loadAsResourceFromTemp(filename, userId);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.IMAGE_JPEG)
@@ -55,14 +55,14 @@ public class ImageStorageController {
     }
 
     @PostMapping
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        storageService.store(file);
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String userId) {
+        storageService.store(file, userId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{filename:.+}")
-    public ResponseEntity<?> removeFile(@PathVariable String filename) {
-        storageService.delete(filename);
+    public ResponseEntity<?> removeFile(@PathVariable String filename, @PathVariable String userId) {
+        storageService.delete(filename, userId);
         ///We should change it to return object state based on the result of the deletion
         return ResponseEntity.ok().build();
     }
