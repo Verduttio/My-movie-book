@@ -13,6 +13,8 @@ export default function UploadImage(props) {
         mode
     } = props;
 
+    const userId = authService.getCurrentUser().id;
+
     // console.log("changePoster: ", changePoster);
 
     // When editing file, we have to load image from main location
@@ -23,15 +25,15 @@ export default function UploadImage(props) {
     useEffect(() => {
         console.log("[useEffect] imgPath: ", imgPath);
         if(mode === "edit") {
-            setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/");
+            setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/" + userId + "/");
         } else {
-            setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/temp/");
+            setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/" + userId + "/temp/");
         }
     },[]);
 
     useEffect(() => {
         if(posterImage != null) {
-            movieService.uploadPosterImage(posterImage, authService.getCurrentUser().id)
+            movieService.uploadPosterImage(posterImage, userId)
                 .then(response => {
                     console.log("Poster image uploaded successfully.", response.data);
                     setChangePoster(!changePoster);
@@ -93,7 +95,7 @@ export default function UploadImage(props) {
                                     onClick={(e) => {
                                             setChangePoster(!changePoster);
                                             setPosterImage(null);
-                                            setImgPath("http://"+process.env.REACT_APP_HOST+"/files/images/temp/");
+                                            setImgPath("http://"+process.env.REACT_APP_HOST+"/files/images/" + userId+ "/temp/");
                                     }}
                             >Change
                             </button>

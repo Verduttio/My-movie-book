@@ -17,12 +17,12 @@ public class FilesCleaner {
      *
 //     * @param  fileName Name of the accepted uploaded file.
      */
-    public static void cleanAfterUploadImage(String uploadedFileName, String generatedFileName) {
+    public static void cleanAfterUploadImage(int userId, String uploadedFileName, String generatedFileName) {
         logger.info("cleanAfterUploadImage()");
-        File file = new File("files/images/temp/" + uploadedFileName);
-        file.renameTo(new File("files/images/" + generatedFileName));
+        File file = new File("files/images/" + userId +"/temp/" + uploadedFileName);
+        file.renameTo(new File("files/images/" + userId + "/"+ generatedFileName));
         try {
-            FileUtils.cleanDirectory(new File("files/images/temp/"));
+            FileUtils.cleanDirectory(new File("files/images/"+userId+"/temp/"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -36,10 +36,10 @@ public class FilesCleaner {
      * @param oldFileName Name of the old image file.
 //     * @param newFileName Name of the new image file.
      */
-    public static void cleanAfterEditImage(String oldFileName, String uploadFileName, String generatedFileName) {
+    public static void cleanAfterEditImage(int userId, String oldFileName, String uploadFileName, String generatedFileName) {
         logger.info("cleanAfterEditImage()");
-        FileSystemUtils.deleteRecursively(new File("files/images/"+oldFileName));
-        cleanAfterUploadImage(uploadFileName, generatedFileName);
+        FileSystemUtils.deleteRecursively(new File("files/images/"+ userId + "/" +oldFileName));
+        cleanAfterUploadImage(userId, uploadFileName, generatedFileName);
     }
 
     public static void renameImage(String oldFileName, String newFileName) {

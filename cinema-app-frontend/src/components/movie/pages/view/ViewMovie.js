@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link, useNavigate, useParams} from "react-router-dom";
 import movieService from "../../../../services/movieService";
 import "../main/MovieList.css";
+import authService from "../../../../services/authService";
 
 function numberWithSpaces (x){
     return x !== undefined ? x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : x;
@@ -14,6 +15,9 @@ export default function MovieList() {
     const [note, setNote] = useState("");
     const [editNote, setEditNote] = useState(false);
     const {id} = useParams();
+
+
+    const userId = authService.getCurrentUser().id;
 
     useEffect(()=> {
         movieService.get(id)
@@ -94,7 +98,7 @@ export default function MovieList() {
                         <div className={movie.watched ? ("card border-success") : ("card border-danger")} style={{minHeight: "406px", maxWidth: "800px"}}>
                             <div className="row g-0" style={{minHeight: "406px"}}>
                                 <div className="col-md-4">
-                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/'+movie.posterFileName}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + userId +'/'+movie.posterFileName}
                                          // className="img-fluid rounded-start"
                                          alt={movie.posterFileName}
                                          style={{
@@ -158,7 +162,7 @@ export default function MovieList() {
                         <div className="row">
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
-                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/filmweb.jpg'}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/forAll/filmweb.jpg'}
                                          alt={"filmweb"}
                                          style={{
                                              maxHeight: "60px",
@@ -193,7 +197,7 @@ export default function MovieList() {
                         <div className="row" style={{paddingTop: "50px"}}>
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
-                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/imdb.png'}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/forAll/imdb.png'}
                                          className="img-fluid rounded-start"
                                          alt={"filmweb"}
                                          style={{maxHeight: "60px", width: "auto", marginLeft: "auto", marginRight: "auto", padding: "10px"}}

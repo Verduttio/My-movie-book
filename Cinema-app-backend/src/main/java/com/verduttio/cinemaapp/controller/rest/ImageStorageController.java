@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping(path="/files/images/{userId}")
+@RequestMapping(path="/files/images")
 @CrossOrigin
 public class ImageStorageController {
 
@@ -27,14 +27,24 @@ public class ImageStorageController {
         this.storageService = storageService;
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
     @ResponseBody
     public List<?> listUploadedFiles(@PathVariable String userId) {
         return storageService.loadAll(userId).map(
                 path -> path.getFileName().toString()).toList();
     }
 
-    @GetMapping("/{filename:.+}")
+    @GetMapping("/forAll/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
+        Resource file = storageService.loadAsResourceFromForAll(filename);
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(new InputStreamResource(file.getInputStream()));
+    }
+
+    @GetMapping("/{userId}/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename, @PathVariable String userId) throws IOException {
         Resource file = storageService.loadAsResourceFromHome(filename, userId);
@@ -44,7 +54,7 @@ public class ImageStorageController {
                 .body(new InputStreamResource(file.getInputStream()));
     }
 
-    @GetMapping("/temp/{filename:.+}")
+    @GetMapping("/{userId}/temp/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFileTemp(@PathVariable String filename, @PathVariable String userId) throws IOException {
         Resource file = storageService.loadAsResourceFromTemp(filename, userId);
@@ -54,13 +64,13 @@ public class ImageStorageController {
                 .body(new InputStreamResource(file.getInputStream()));
     }
 
-    @PostMapping
+    @PostMapping("/{userId}")
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String userId) {
         storageService.store(file, userId);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{filename:.+}")
+    @DeleteMapping("/{userId}/{filename:.+}")
     public ResponseEntity<?> removeFile(@PathVariable String filename, @PathVariable String userId) {
         storageService.delete(filename, userId);
         ///We should change it to return object state based on the result of the deletion

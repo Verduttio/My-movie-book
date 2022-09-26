@@ -2,11 +2,13 @@ package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.repository.MovieRepository;
+import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
 import com.verduttio.cinemaapp.service.storage.FileNameGenerator;
 import com.verduttio.cinemaapp.service.storage.FilesCleaner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -33,7 +35,9 @@ public class MovieService {
         // and then we delete all files inside files/images/temp.
         String uploadPosterFileName = movie.posterFileName();
         movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
-        FilesCleaner.cleanAfterUploadImage(uploadPosterFileName, movie.posterFileName());
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userId = userDetails.getId();
+        FilesCleaner.cleanAfterUploadImage(userId, uploadPosterFileName, movie.posterFileName());
         Movie response = movieRepository.save(movie);
         logger.debug("saveMovie() - movie: {} - SAVED", movie);
         return response;
@@ -67,7 +71,10 @@ public class MovieService {
         String uploadFileName = movie.posterFileName();
         movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
         logger.debug("updateMovie() - oldFileName: {}, newFileName:{}", oldFileName, movie.posterFileName());
-        FilesCleaner.cleanAfterEditImage(oldFileName, uploadFileName, movie.posterFileName());
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userId = userDetails.getId();
+        FilesCleaner.cleanAfterEditImage(userId, oldFileName, uploadFileName, movie.posterFileName());
 
         return movieRepository.save(movie);
     }

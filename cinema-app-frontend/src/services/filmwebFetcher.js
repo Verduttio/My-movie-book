@@ -1,7 +1,7 @@
-import httpClient from "../http-common";
+import httpClientAuth from "../http-common-secured";
 
 const fetchData = (movieName) => {
-    return httpClient.get('/externalMovieData/filmweb/' + movieName);
+    return httpClientAuth.get('/externalMovieData/filmweb/' + movieName);
 }
 
 export default {fetchData}

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from "react-router-dom";
 import movieService from "../../../../services/movieService";
 import "./MovieList.css";
+import authService from "../../../../services/authService";
 
 function numberWithSpaces (x){
     return x !== undefined ? x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : x;
@@ -11,6 +12,8 @@ function numberWithSpaces (x){
 
 export default function MovieList() {
     const [movies, setMovies] = useState([]);
+
+    const userId = authService.getCurrentUser().id;
 
     useEffect(()=> {
         movieService.getAll()
@@ -62,7 +65,7 @@ export default function MovieList() {
                                 <td>
                                     {movie.posterFileName !== undefined ? (
                                         <img
-                                            src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + movie.posterFileName}
+                                            src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + userId + "/" + movie.posterFileName}
                                             alt={movie.posterFileName}
                                             style={{
                                                 width: '150px',

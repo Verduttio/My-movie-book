@@ -37,7 +37,6 @@ public class ImageStorageService {
 
     private Path pathHome(String userId) {
         return this.rootLocation
-                .resolve("images")
                 .resolve(userId);
     }
 
@@ -52,6 +51,10 @@ public class ImageStorageService {
 
     public Path loadFromTemp(String filename, String userId) {
         return fileStorage.load(filename, pathTemp(userId));
+    }
+
+    public Resource loadAsResourceFromForAll(String filename) {
+        return fileStorage.loadAsResource(filename, this.rootLocation);
     }
 
     public Resource loadAsResourceFromHome(String filename, String userId) {

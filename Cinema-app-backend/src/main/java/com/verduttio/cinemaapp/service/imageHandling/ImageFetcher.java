@@ -1,7 +1,12 @@
 package com.verduttio.cinemaapp.service.imageHandling;
 
+import com.verduttio.cinemaapp.entity.User;
+import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,9 +17,13 @@ import java.net.URL;
 public class ImageFetcher {
     private static final Logger logger = LoggerFactory.getLogger(ImageFetcher.class);
     public static void fetch(String url, String fileName) throws IOException {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int userId = userDetails.getId();
+
         URL imageUrl = new URL(url);
 
-        String path = "files/images/temp/";
+
+        String path = "files/images/" + userId + "/temp/";
         String destinationFile = path + fileName;
 
         /********
