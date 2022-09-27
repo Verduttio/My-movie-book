@@ -34,10 +34,10 @@ public class ImageStorageController {
                 path -> path.getFileName().toString()).toList();
     }
 
-    @GetMapping("/forAll/{filename:.+}")
+    @GetMapping("/public/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws IOException {
-        Resource file = storageService.loadAsResourceFromForAll(filename);
+        Resource file = storageService.loadAsResourceFromPublic(filename);
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.IMAGE_JPEG)

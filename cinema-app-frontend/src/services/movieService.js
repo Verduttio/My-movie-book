@@ -3,7 +3,7 @@ import authHeader from "./authHeader";
 import httpClientAuth from "../http-common-secured"
 
 const getAll = () => {
-    return httpClient.get('/movies');
+    return httpClientAuth.get('/movies/user');
 }
 
 const create = data => {
@@ -11,7 +11,7 @@ const create = data => {
 }
 
 const deleteMovie = id => {
-    return httpClient.delete("/movies/" + id);
+    return httpClientAuth.delete("/movies/" + id);
 }
 
 const uploadPosterImage = (image, userId) => {
@@ -19,7 +19,8 @@ const uploadPosterImage = (image, userId) => {
     formData.append("file", image);
     return httpClient.post("/files/images/" + userId, formData, {
         headers: {
-            'Content-Type' : 'multipart/form-data'
+            'Content-Type' : 'multipart/form-data',
+            Authorization: authHeader().Authorization
         }
     });
 }
@@ -29,15 +30,15 @@ const deletePosterImage = (id, userId) => {
 }
 
 const get = id => {
-    return httpClient.get("/movies/"+id);
+    return httpClientAuth.get("/movies/"+id);
 }
 
 const update = data => {
-    return httpClient.put("/movies", data);
+    return httpClientAuth.put("/movies", data);
 }
 
 const modify = (id, data) => {
-    return httpClient.patch("/movies/" + id, data);
+    return httpClientAuth.patch("/movies/" + id, data);
 }
 
 export default {getAll, create, uploadPosterImage, get, update, deleteMovie, deletePosterImage, modify};

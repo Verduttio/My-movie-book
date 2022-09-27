@@ -162,7 +162,7 @@ export default function MovieList() {
                         <div className="row">
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
-                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/forAll/filmweb.jpg'}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/public/filmweb.jpg'}
                                          alt={"filmweb"}
                                          style={{
                                              maxHeight: "60px",
@@ -197,7 +197,7 @@ export default function MovieList() {
                         <div className="row" style={{paddingTop: "50px"}}>
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
-                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/forAll/imdb.png'}
+                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/public/imdb.png'}
                                          className="img-fluid rounded-start"
                                          alt={"filmweb"}
                                          style={{maxHeight: "60px", width: "auto", marginLeft: "auto", marginRight: "auto", padding: "10px"}}

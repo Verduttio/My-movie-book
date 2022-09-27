@@ -2,23 +2,23 @@ package com.verduttio.cinemaapp.controller.rest;
 
 
 import com.verduttio.cinemaapp.entity.Movie;
-import com.verduttio.cinemaapp.service.FilmwebFetcher;
+import com.verduttio.cinemaapp.service.FilmwebDataFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path="/externalMovieData")
 public class ExternalMovieDataController {
-    private final FilmwebFetcher filmwebFetcher;
+    private final FilmwebDataFetcher filmwebDataFetcher;
 
     @Autowired
-    public ExternalMovieDataController(FilmwebFetcher filmwebFetcher) {
-        this.filmwebFetcher = filmwebFetcher;
+    public ExternalMovieDataController(FilmwebDataFetcher filmwebDataFetcher) {
+        this.filmwebDataFetcher = filmwebDataFetcher;
     }
 
     @CrossOrigin
     @GetMapping("/filmweb/{movieName}")
     public Movie getFilmwebInfo(@PathVariable("movieName") String movieName) {
-        return filmwebFetcher.fetchMovie(movieName);
+        return filmwebDataFetcher.fetchMovie(movieName);
     }
 }

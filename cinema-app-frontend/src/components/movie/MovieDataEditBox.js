@@ -5,6 +5,7 @@ import movieService from "../../services/movieService";
 import {useEffect} from "react";
 import UploadImage from "./UploadImage";
 import InputBoxesRegisterMovie from "./InputBoxesRegisterMovie";
+import authService from "../../services/authService";
 
 export default function MovieDataEditBox(params) {
     const[title, setTitle] = useState('');
@@ -30,7 +31,7 @@ export default function MovieDataEditBox(params) {
     const editMovie = (e) => {
         e.preventDefault();
 
-        const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, note, watched};
+        const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, note, watched, userId: authService.getCurrentUser().id};
         // Update record
         movieService.update(movie)
             .then(response => {

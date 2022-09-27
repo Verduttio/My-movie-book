@@ -2,4 +2,4 @@
 DELETE {{host}}/files/images/stardust.
 
 ### GET List files
-GET {{host}}/files/images
+GET {{host}}/files/images/21

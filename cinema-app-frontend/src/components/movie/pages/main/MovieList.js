@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import movieService from "../../../../services/movieService";
 import "./MovieList.css";
 import authService from "../../../../services/authService";
+import authHeader from "../../../../services/authHeader";
 
 function numberWithSpaces (x){
     return x !== undefined ? x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : x;
@@ -16,14 +17,18 @@ export default function MovieList() {
     const userId = authService.getCurrentUser().id;
 
     useEffect(()=> {
-        movieService.getAll()
-            .then(response => {
-                console.log('Printing the movies data', response.data);
-                setMovies(response.data);
-            })
-            .catch(error => {
-                console.log('An error occurred.', error);
-            })
+        if(authService.getCurrentUser().id !== undefined) {
+            console.log("authService.getCurrentUser().id: ", authService.getCurrentUser().id);
+            console.log("authHeader: ", authHeader().Authorization);
+            movieService.getAll()
+                .then(response => {
+                    console.log('Printing the movies data', response.data);
+                    setMovies(response.data);
+                })
+                .catch(error => {
+                    console.log('An error occurred.', error);
+                })
+        }
     },[])
 
     return (

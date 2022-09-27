@@ -53,8 +53,8 @@ public class ImageStorageService {
         return fileStorage.load(filename, pathTemp(userId));
     }
 
-    public Resource loadAsResourceFromForAll(String filename) {
-        return fileStorage.loadAsResource(filename, this.rootLocation);
+    public Resource loadAsResourceFromPublic(String filename) {
+        return fileStorage.loadAsResource(filename, this.rootLocation.resolve("public"));
     }
 
     public Resource loadAsResourceFromHome(String filename, String userId) {

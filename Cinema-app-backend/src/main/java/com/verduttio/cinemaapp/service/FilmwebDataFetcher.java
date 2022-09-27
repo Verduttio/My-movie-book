@@ -18,13 +18,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class FilmwebFetcher {
+public class FilmwebDataFetcher {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private String movieURL;
     private String pageContent;
 
-    public FilmwebFetcher() {
+    public FilmwebDataFetcher() {
         this.movieURL = null;
         this.pageContent = null;
     }

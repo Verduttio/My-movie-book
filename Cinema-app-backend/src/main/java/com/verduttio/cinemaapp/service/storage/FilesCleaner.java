@@ -7,6 +7,7 @@ import org.springframework.util.FileSystemUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class FilesCleaner {
     private final static Logger logger = LoggerFactory.getLogger(FilesCleaner.class);
@@ -37,9 +38,11 @@ public class FilesCleaner {
 //     * @param newFileName Name of the new image file.
      */
     public static void cleanAfterEditImage(int userId, String oldFileName, String uploadFileName, String generatedFileName) {
-        logger.info("cleanAfterEditImage()");
-        FileSystemUtils.deleteRecursively(new File("files/images/"+ userId + "/" +oldFileName));
-        cleanAfterUploadImage(userId, uploadFileName, generatedFileName);
+        if(!Objects.equals(oldFileName, uploadFileName)) {
+            logger.info("cleanAfterEditImage()");
+            FileSystemUtils.deleteRecursively(new File("files/images/" + userId + "/" + oldFileName));
+            cleanAfterUploadImage(userId, uploadFileName, generatedFileName);
+        }
     }
 
     public static void renameImage(String oldFileName, String newFileName) {

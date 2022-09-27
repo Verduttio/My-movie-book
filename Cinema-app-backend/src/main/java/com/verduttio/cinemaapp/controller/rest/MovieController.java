@@ -32,7 +32,13 @@ public class MovieController {
         return movieService.getMovieById(movieId);
     }
 
+    @GetMapping("/user")
+    public List<Movie> getMoviesByUserId() {
+        return movieService.getCurrentUserMovies();
+    }
+
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Movie> getAllMovies() {
         return movieService.getAllMovies();
     }
