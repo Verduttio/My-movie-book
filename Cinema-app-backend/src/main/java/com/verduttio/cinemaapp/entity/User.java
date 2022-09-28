@@ -16,7 +16,7 @@ import static javax.persistence.GenerationType.AUTO;
         })
 public class User {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank
