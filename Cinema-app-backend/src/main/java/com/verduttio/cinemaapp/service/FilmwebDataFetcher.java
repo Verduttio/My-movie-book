@@ -61,14 +61,13 @@ public class FilmwebDataFetcher {
     }
 
     private String findRate(String regexResult){
-        String jsonFieldRate = "\"rate\":";
-        return regexResult.substring(regexResult.indexOf(jsonFieldRate)+jsonFieldRate.length(), regexResult.indexOf(","));
+        String rate = regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("</span"));
+        return rate.replace(',', '.');
     }
 
     private String findNumberOfViews(String regexResult) {
-        regexResult = regexResult.substring(regexResult.indexOf(',')+1);
-        String jsonFieldRatingCount = "\"ratingCount\":";
-        return regexResult.substring(regexResult.indexOf(jsonFieldRatingCount)+jsonFieldRatingCount.length(), regexResult.indexOf(","));
+        regexResult = regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("<br"));
+        return regexResult.replace("\"", "").replace(" ", "");
     }
 
     private String findTitle(String regexResult) {
@@ -103,13 +102,13 @@ public class FilmwebDataFetcher {
 
 
     private double getRating() {
-        String regexResult = getRegexResult("<script type=\"application/json\" id=\"filmDataRating\">[^<]*</script>", this.pageContent);
+        String regexResult = getRegexResult("<span class=\"filmRating__rateValue\">[\\d,]*</span>", this.pageContent);
         String rating = findRate(regexResult);
         return Double.parseDouble(rating);
     }
 
     private int getNumberOfViews() {
-        String regexResult = getRegexResult("<script type=\"application/json\" id=\"filmDataRating\">[^<]*</script>", this.pageContent);
+        String regexResult = getRegexResult("<span class=\"filmRating__count\">[^<]*<br", this.pageContent);
         String numberOfViews = findNumberOfViews(regexResult);
         return Integer.parseInt(numberOfViews);
     }
