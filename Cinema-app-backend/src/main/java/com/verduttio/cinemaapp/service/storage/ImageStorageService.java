@@ -1,10 +1,12 @@
 package com.verduttio.cinemaapp.service.storage;
 
 import com.verduttio.cinemaapp.entity.storage.ImageStorageProperties;
+import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +27,13 @@ public class ImageStorageService {
         this.fileStorage = fileStorage;
     }
 
-    public void store(MultipartFile file, String userId) {
-        fileStorage.store(file, pathTemp(userId));
+    public void store(MultipartFile file) {
+        fileStorage.store(file, pathTemp(String.valueOf(getIdOfCurrentUser())));
+    }
+
+    private int getIdOfCurrentUser() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getId();
     }
 
     private Path pathTemp(String userId) {
@@ -69,7 +76,7 @@ public class ImageStorageService {
         fileStorage.deleteAll(pathHome(userId));
     }
 
-    public void delete(String fileName, String userId) {
-        fileStorage.delete(fileName, pathHome(userId));
+    public void delete(String fileName) {
+        fileStorage.delete(fileName, pathHome(String.valueOf(getIdOfCurrentUser())));
     }
 }

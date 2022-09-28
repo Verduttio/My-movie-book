@@ -25,6 +25,7 @@ export default function UploadImage(props) {
     useEffect(() => {
         console.log("[useEffect] imgPath: ", imgPath);
         if(mode === "edit") {
+            setPosterFileName("loading");
             setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/" + userId + "/");
         } else {
             setImgPath("http://"+ process.env.REACT_APP_HOST+ "/files/images/" + userId + "/temp/");

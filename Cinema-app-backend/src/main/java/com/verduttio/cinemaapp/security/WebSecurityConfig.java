@@ -63,7 +63,6 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
-//                .antMatchers("/movies/**").permitAll()
                 .antMatchers("/files/images/**").permitAll()
                 .antMatchers("/externalMovieData/**").permitAll()
                 .anyRequest().authenticated();

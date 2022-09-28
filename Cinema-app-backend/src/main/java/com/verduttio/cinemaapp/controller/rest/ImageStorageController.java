@@ -7,6 +7,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ public class ImageStorageController {
 
     @GetMapping("/{userId}")
     @ResponseBody
+    @PreAuthorize("#userId == authentication.principal.id")
     public List<?> listUploadedFiles(@PathVariable String userId) {
         return storageService.loadAll(userId).map(
                 path -> path.getFileName().toString()).toList();
@@ -64,15 +66,15 @@ public class ImageStorageController {
                 .body(new InputStreamResource(file.getInputStream()));
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String userId) {
-        storageService.store(file, userId);
+    @PostMapping
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        storageService.store(file);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{userId}/{filename:.+}")
-    public ResponseEntity<?> removeFile(@PathVariable String filename, @PathVariable String userId) {
-        storageService.delete(filename, userId);
+    @DeleteMapping("/{filename:.+}")
+    public ResponseEntity<?> removeFile(@PathVariable String filename) {
+        storageService.delete(filename);
         ///We should change it to return object state based on the result of the deletion
         return ResponseEntity.ok().build();
     }
