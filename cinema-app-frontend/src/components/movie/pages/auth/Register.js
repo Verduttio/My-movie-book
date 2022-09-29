@@ -5,6 +5,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
 import AuthService from "../../../../services/authService";
+import {Link} from "react-router-dom";
 
 const required = (value) => {
     if (!value) {
@@ -101,73 +102,162 @@ const Register = () => {
     };
 
     return (
-        <div className="col-md-12">
-            <div className="card card-container">
-                <img
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    alt="profile-img"
-                    className="profile-img-card"
-                />
-
-                <Form onSubmit={handleRegister} ref={form}>
-                    {!successful && (
-                        <div>
-                            <div className="form-group">
-                                <label htmlFor="username">Username</label>
-                                <Input
-                                    type="text"
-                                    className="form-control"
-                                    name="username"
-                                    value={username}
-                                    onChange={onChangeUsername}
-                                    validations={[required, vusername]}
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <Input
-                                    type="text"
-                                    className="form-control"
-                                    name="email"
-                                    value={email}
-                                    onChange={onChangeEmail}
-                                    validations={[required, validEmail]}
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <Input
-                                    type="password"
-                                    className="form-control"
-                                    name="password"
-                                    value={password}
-                                    onChange={onChangePassword}
-                                    validations={[required, vpassword]}
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <button className="btn btn-primary btn-block">Sign Up</button>
-                            </div>
+        <div>
+            <section className="vh-100">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-sm-6 px-0 d-none d-sm-block">
+                            <img src="https://media.gettyimages.com/photos/cinema-background-picture-id174466762?s=2048x2048"
+                                 className="w-100 vh-auto"
+                                 style={{objectFit: "cover", objectPosition: "left"}}/>
                         </div>
-                    )}
-
-                    {message && (
-                        <div className="form-group">
-                            <div
-                                className={ successful ? "alert alert-success" : "alert alert-danger" }
-                                role="alert"
-                            >
-                                {message}
+                        <div className="col-sm-6 text-black">
+                            <div className="px-5 ms-xl-4 mt-5">
+                                <span className="h1 fw-bold mb-0">My movie book</span>
                             </div>
+                            <div className="d-flex align-items-center px-5 ms-xl-4 pt-5 pt-xl-5 mt-xl-n5">
+
+                                <Form onSubmit={handleRegister} ref={form} style={{width: "23rem"}}>
+                                    <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: "1px"}}>Register</h3>
+                                    {!successful && (
+                                        <div>
+                                            <div className="form-outline mb-4">
+                                                <Input
+                                                    type="text"
+                                                    id="form2Example18"
+                                                    name={"username"}
+                                                    value={username}
+                                                    onChange={onChangeUsername}
+                                                    validations={[required, vusername]}
+                                                    className="form-control form-control-lg"
+                                                />
+                                                <label className="form-label" htmlFor="form2Example18">Username</label>
+                                            </div>
+
+                                            <div className="form-outline mb-4">
+                                                <Input
+                                                    type="text"
+                                                    id="form2Example18"
+                                                    name={"email"}
+                                                    value={email}
+                                                    onChange={onChangeEmail}
+                                                    validations={[required, validEmail]}
+                                                    className="form-control form-control-lg"
+                                                />
+                                                <label className="form-label" htmlFor="form2Example18">Email</label>
+                                            </div>
+
+                                            <div className="form-outline mb-4">
+                                                <Input
+                                                    type="password"
+                                                    name={"password"}
+                                                    value={password}
+                                                    onChange={onChangePassword}
+                                                    validations={[required, vpassword]}
+                                                    id="form2Example28"
+                                                    className="form-control form-control-lg"
+                                                />
+                                                <label className="form-label" htmlFor="form2Example28">Password</label>
+                                            </div>
+
+                                            <div className="pt-1 mb-4">
+                                                <button className="btn btn-info btn-lg btn-block" type="button">
+                                                    Sign Up
+                                                </button>
+                                            </div>
+                                        </div>
+                                        )}
+
+                                     {message && (
+                                         <div className="form-group">
+                                             <div
+                                                 className={ successful ? "alert alert-success" : "alert alert-danger" }
+                                                 role="alert"
+                                             >
+                                                 {message}
+                                             </div>
+                                             <Link className={"btn btn-primary"} to={"/login"}>Login now</Link>
+                                         </div>
+                                     )}
+                                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                                </Form>
+
+                            </div>
+
                         </div>
-                    )}
-                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
-                </Form>
-            </div>
+                    </div>
+                </div>
+            </section>
         </div>
+
+
+        // <div className="col-md-12">
+        //     <div className="card card-container">
+        //         <img
+        //             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+        //             alt="profile-img"
+        //             className="profile-img-card"
+        //         />
+        //
+        //         <Form onSubmit={handleRegister} ref={form}>
+        //             {!successful && (
+        //                 <div>
+        //                     <div className="form-group">
+        //                         <label htmlFor="username">Username</label>
+        //                         <Input
+        //                             type="text"
+        //                             className="form-control"
+        //                             name="username"
+        //                             value={username}
+        //                             onChange={onChangeUsername}
+        //                             validations={[required, vusername]}
+        //                         />
+        //                     </div>
+        //
+        //                     <div className="form-group">
+        //                         <label htmlFor="email">Email</label>
+        //                         <Input
+        //                             type="text"
+        //                             className="form-control"
+        //                             name="email"
+        //                             value={email}
+        //                             onChange={onChangeEmail}
+        //                             validations={[required, validEmail]}
+        //                         />
+        //                     </div>
+        //
+        //                     <div className="form-group">
+        //                         <label htmlFor="password">Password</label>
+        //                         <Input
+        //                             type="password"
+        //                             className="form-control"
+        //                             name="password"
+        //                             value={password}
+        //                             onChange={onChangePassword}
+        //                             validations={[required, vpassword]}
+        //                         />
+        //                     </div>
+        //
+        //                     <div className="form-group">
+        //                         <button className="btn btn-primary btn-block">Sign Up</button>
+        //                     </div>
+        //                 </div>
+        //             )}
+        //
+        //             {message && (
+        //                 <div className="form-group">
+        //                     <div
+        //                         className={ successful ? "alert alert-success" : "alert alert-danger" }
+        //                         role="alert"
+        //                     >
+        //                         {message}
+        //                     </div>
+        //                 </div>
+        //             )}
+        //             <CheckButton style={{ display: "none" }} ref={checkBtn} />
+        //         </Form>
+        //     </div>
+        // </div>
     );
 };
 
