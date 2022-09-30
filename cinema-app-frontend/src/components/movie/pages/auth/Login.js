@@ -116,7 +116,7 @@ const Login = () => {
                                 </div>
 
                                 <div className="pt-1 mb-4">
-                                    <button className="btn btn-info btn-lg btn-block" type="button" disabled={loading}>
+                                    <button className="btn btn-info btn-lg btn-block" type="button" disabled={loading} onClick={handleLogin}>
                                         {loading && (
                                             <span className="spinner-border spinner-border-sm"></span>
                                         )}

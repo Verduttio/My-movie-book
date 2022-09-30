@@ -2,3 +2,16 @@ td {
     text-align: center;
     vertical-align: middle;
 }
+
+
+.card#home_list {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+
+
+.card:hover#home_list {
+    background-color: #D7E1E9;
+    /*transform: scale(1.1);*/
+}
