@@ -1,10 +1,13 @@
 package com.verduttio.cinemaapp.service;
 
+import com.verduttio.cinemaapp.entity.Genre;
 import com.verduttio.cinemaapp.entity.Movie;
+import com.verduttio.cinemaapp.repository.GenreRepository;
 import com.verduttio.cinemaapp.service.imageHandling.ImageFetcher;
 import com.verduttio.cinemaapp.service.storage.FileNameGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.unbescape.html.HtmlEscape;
 
@@ -13,9 +16,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmwebDataFetcher {
@@ -24,9 +28,13 @@ public class FilmwebDataFetcher {
     private String movieURL;
     private String pageContent;
 
-    public FilmwebDataFetcher() {
+    private final GenreRepository genreRepository;
+
+    @Autowired
+    public FilmwebDataFetcher(GenreRepository genreRepository) {
         this.movieURL = null;
         this.pageContent = null;
+        this.genreRepository = genreRepository;
     }
 
     private void init(String movieTitle) {
@@ -58,6 +66,18 @@ public class FilmwebDataFetcher {
         boolean found = matcher.find();
 
         return matcher.group();
+    }
+
+    private LinkedHashSet<String> getRegexResults(String regex, String content) {
+        LinkedHashSet<String> allMatches = new LinkedHashSet<>();
+        Pattern pattern = Pattern.compile(regex);
+        assert content != null;
+        Matcher matcher = pattern.matcher(content);
+        while(matcher.find()) {
+            allMatches.add(matcher.group());
+        }
+
+        return allMatches;
     }
 
     private String findRate(String regexResult){
@@ -137,6 +157,22 @@ public class FilmwebDataFetcher {
         return HtmlEscape.unescapeHtml(director);
     }
 
+    private Set<Genre> getGenres() {
+        String regexResult = getRegexResult("<div class=\"filmInfo__info\" itemprop=\"genre\">.*?</div>", this.pageContent);
+//        System.out.println("getGenres: regexResult: |" + regexResult + "|");
+
+        // Get a tags only from the regex
+        LinkedHashSet<String> regexResults = getRegexResults("<a href.*?</a>", regexResult);
+//        System.out.println("getGenres: regexResult_v2: ");
+//        regexResults.forEach((el) -> {System.out.println(findGenre(el));});
+
+//        LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
+//        regexResults.forEach(genre -> {genres.add(new Genre(findGenre(genre)));});
+        return regexResults.stream().map(
+                genre -> genreRepository.findByName(genre).get()
+        ).collect(Collectors.toSet());
+    }
+
     private String getGenre() {
         String regexResult = getRegexResult("<div class=\"filmInfo__info\" itemprop=\"genre\"><span> <a href=\"[^\"]*\">[^<]*</a>", this.pageContent);
         String genre = findGenre(regexResult);
@@ -147,6 +183,13 @@ public class FilmwebDataFetcher {
         String regexResult = getRegexResult("<img id=\"filmPoster\" itemprop=\"image\" content=\"[^\"]*\"", this.pageContent);
         return findPosterURL(regexResult);
     }
+
+//    public static void main(String[] args) {
+//        FilmwebDataFetcher filmwebDataFetcher = new FilmwebDataFetcher();
+////        filmwebDataFetcher.init("Next-2007-221722");
+////        filmwebDataFetcher.getGenres();
+//        filmwebDataFetcher.fetchMovie("Next-2007-221722");
+//    }
 
 
 
@@ -161,7 +204,7 @@ public class FilmwebDataFetcher {
         movie.setReleaseYear(getReleaseYear());
         movie.setDescription(getDescription());
         movie.setDirector(getDirector());
-        movie.setGenre(getGenre());
+        movie.setGenres(getGenres());
         movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
         logger.info("fetchMovie() - Fetched movie: {}", movieFetchedInfo(movie));
 
@@ -178,7 +221,7 @@ public class FilmwebDataFetcher {
                 ", \nfilmwebRating = " + movie.filmwebRating() +
                 ", \nfilmwebNumberOfVotes = " + movie.filmwebNumberOfVotes() +
                 ", \nreleaseYear = " + movie.releaseYear() +
-                ", \ngenre = "  + movie.genre() +
+                ", \ngenre = "  + movie.genres().stream().map(Genre::getName).collect(Collectors.joining(",")) +
                 ", \ndirector = " + movie.director() +
                 ", \nposterFileName = " + movie.posterFileName() +
                 ", \ndescription = " + movie.description() +

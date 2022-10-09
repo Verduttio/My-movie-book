@@ -2,6 +2,7 @@ package com.verduttio.cinemaapp.controller.rest;
 
 
 import com.verduttio.cinemaapp.entity.Movie;
+import com.verduttio.cinemaapp.entity.MovieRequest;
 import com.verduttio.cinemaapp.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +24,7 @@ public class MovieController {
 
     @PostMapping
     @PreAuthorize("#movie.userId == authentication.principal.id")
-    public Movie saveMovie(@RequestBody Movie movie){
+    public Movie saveMovie(@RequestBody MovieRequest movie){
         return movieService.saveMovie(movie);
     }
 

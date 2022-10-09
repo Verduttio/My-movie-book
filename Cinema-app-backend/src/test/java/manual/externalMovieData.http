@@ -3,3 +3,6 @@ GET {{host}}/externalMovieData/filmweb/W%C5%82adca+Pier%C5%9Bcieni%3A+Dru%C5%BCy
 
 ### GET FilmwebINFO Gwiezdny Pył
 GET {{host}}/externalMovieData/filmweb/Gwiezdny+py%C5%82-2007-273934
+
+### GET FilmwebINFO Szkoła uczuć
+GET {{host}}/externalMovieData/filmweb/Szkoła+uczuć-2002-33295

@@ -44,6 +44,25 @@ Content-Type: application/json
   "posterFileName": "sw_3.jpg"
 }
 
+### POST Movie 4
+POST {{host}}/movies
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJWZXJkdXR0aW8iLCJpYXQiOjE2NjUzMzU1ODEsImV4cCI6MTY2NTQyMTk4MX0.YTYZRdNhbGu5GIHOIpR4sDtjOYgO3qK7Ic3qqr_MBuUVkCgkkPocHOnrO-KAd_P-xcse88EeCzsBQJQlxaKWAg
+
+{
+  "title": "The Lord of the Rings: The Fellowship of the Ring",
+  "releaseYear": 2001,
+  "filmwebRating": 8.0,
+  "filmwebNumberOfVotes": 717513,
+  "imdbRating": 8.8,
+  "imdbNumberOfVotes": 1800000,
+  "genres": ["Akcja", "Sci-Fi"],
+  "director": "Peter Jackson",
+  "posterFileName": "lotr_1.jpg",
+  "description": "A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.",
+  "userId": 1
+}
+
 ### PATCH Movie
 PATCH {{host}}/movies/2
 Content-Type: application/json

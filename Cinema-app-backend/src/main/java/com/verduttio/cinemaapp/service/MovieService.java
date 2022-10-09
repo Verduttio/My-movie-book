@@ -1,6 +1,9 @@
 package com.verduttio.cinemaapp.service;
 
+import com.verduttio.cinemaapp.entity.Genre;
 import com.verduttio.cinemaapp.entity.Movie;
+import com.verduttio.cinemaapp.entity.MovieRequest;
+import com.verduttio.cinemaapp.repository.GenreRepository;
 import com.verduttio.cinemaapp.repository.MovieRepository;
 import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
 import com.verduttio.cinemaapp.service.storage.FileNameGenerator;
@@ -14,22 +17,28 @@ import org.springframework.util.ReflectionUtils;
 import org.thymeleaf.spring5.context.SpringContextUtils;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
 
     @Autowired
-    public MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository, GenreRepository genreRepository) {
         this.movieRepository = movieRepository;
+        this.genreRepository = genreRepository;
     }
 
-    public Movie saveMovie(Movie movie) {
+    public Movie saveMovie(MovieRequest movieRequest) {
+        Movie movie = MovieRequest.buildMovie(movieRequest);
+        Set<Genre> genres = movieRequest.getGenres().stream().map(
+                genre -> genreRepository.findByName(genre).get()
+        ).collect(Collectors.toSet());
+        movie.setGenres(genres);
         // If user upload an image and then change it before saving a movie,
         // we have unused files uploaded to files/images/userId/temp.
 
