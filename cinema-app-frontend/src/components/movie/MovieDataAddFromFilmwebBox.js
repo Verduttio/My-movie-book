@@ -38,7 +38,8 @@ export default function MovieDataAddFromFilmwebBox(props) {
             userId = currentUser.id;
         }
 
-        const movie = {title, releaseYear, genre, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
+        let genres = genre.split(",");
+        const movie = {title, releaseYear, genres, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         // Create new record
         movieService.create(movie)
             .then(response => {

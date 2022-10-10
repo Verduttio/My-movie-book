@@ -50,7 +50,13 @@ export default function AddMovie() {
         filmwebFetcher.fetchData(movieLink)
             .then(movie => {
                 setTitle(movie.data.title);
-                setGenre(movie.data.genre);
+
+                let genres = "";
+                (movie.data.genres).map(gen => {genres += (gen.name + ",")});
+                genres = genres.substring(0, genres.length-1);  //remove last ','
+                setGenre(genres);
+                console.log(genres.split(","))
+
                 setReleaseYear(movie.data.releaseYear);
                 setDirector(movie.data.director);
                 setFilmwebRating(movie.data.filmwebRating);

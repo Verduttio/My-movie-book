@@ -169,7 +169,7 @@ public class FilmwebDataFetcher {
 //        LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
 //        regexResults.forEach(genre -> {genres.add(new Genre(findGenre(genre)));});
         return regexResults.stream().map(
-                genre -> genreRepository.findByName(genre).get()
+                genre -> genreRepository.findByName(findGenre(genre)).get()
         ).collect(Collectors.toSet());
     }
 
