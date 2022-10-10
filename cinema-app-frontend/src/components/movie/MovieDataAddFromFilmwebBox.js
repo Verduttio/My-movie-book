@@ -7,7 +7,7 @@ import InputBoxesRegisterMovie from "./InputBoxesRegisterMovie";
 import AuthService from "../../services/authService";
 
 export default function MovieDataAddFromFilmwebBox(props) {
-    const {titleF, releaseYearF, genreF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF, posterURLF} = props.movie;
+    const {titleF, releaseYearF, genresF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF, posterURLF} = props.movie;
 
     const[title, setTitle] = useState(titleF.toString());
     const[filmwebRating, setFilmwebRating] = useState(filmwebRatingF.toString());
@@ -15,7 +15,7 @@ export default function MovieDataAddFromFilmwebBox(props) {
     const[imdbRating, setImdbRating] = useState('');
     const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState('');
     const[releaseYear, setReleaseYear] = useState(releaseYearF.toString());
-    const[genre, setGenre] = useState(genreF.toString());
+    const[genres, setGenres] = useState(genresF.toString());
     const[director, setDirector] = useState(directorF.toString());
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState(posterURLF.toString());
@@ -38,8 +38,8 @@ export default function MovieDataAddFromFilmwebBox(props) {
             userId = currentUser.id;
         }
 
-        let genres = genre.split(",");
-        const movie = {title, releaseYear, genres, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
+        let genresList = genres.split(",");
+        const movie = {title, releaseYear, genres: genresList, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         // Create new record
         movieService.create(movie)
             .then(response => {
@@ -64,7 +64,7 @@ export default function MovieDataAddFromFilmwebBox(props) {
                             imdbRating={imdbRating} setImdbRating={setImdbRating}
                             imdbNumberOfVotes={imdbNumberOfVotes} setImdbNumberOfVotes={setImdbNumberOfVotes}
                             releaseYear={releaseYear} setReleaseYear={setReleaseYear}
-                            genre={genre} setGenre={setGenre}
+                            genres={genres} setGenres={setGenres}
                             director={director} setDirector={setDirector}
                             description={description} setDescription={setDescription}
                         />

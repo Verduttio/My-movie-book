@@ -13,7 +13,7 @@ export default function MovieDataAddBox(params) {
     const[imdbRating, setImdbRating] = useState('');
     const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState('');
     const[releaseYear, setReleaseYear] = useState('');
-    const[genre, setGenre] = useState('');
+    const[genres, setGenres] = useState('');
     const[director, setDirector] = useState('');
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState('');
@@ -38,7 +38,8 @@ export default function MovieDataAddBox(params) {
             userId = currentUser.id;
         }
 
-        const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
+        let genresList = genres.split(",");
+        const movie = {title, releaseYear, genres: genresList, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         // Create new record
         movieService.create(movie)
             .then(response => {
@@ -60,7 +61,7 @@ export default function MovieDataAddBox(params) {
                     imdbRating={imdbRating} setImdbRating={setImdbRating}
                     imdbNumberOfVotes={imdbNumberOfVotes} setImdbNumberOfVotes={setImdbNumberOfVotes}
                     releaseYear={releaseYear} setReleaseYear={setReleaseYear}
-                    genre={genre} setGenre={setGenre}
+                    genres={genres} setGenres={setGenres}
                     director={director} setDirector={setDirector}
                     description={description} setDescription={setDescription}
                 />

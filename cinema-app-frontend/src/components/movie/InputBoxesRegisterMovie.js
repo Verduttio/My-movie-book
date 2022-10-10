@@ -8,7 +8,7 @@ export default function InputBoxesRegisterMovie(props) {
         imdbRating, setImdbRating,
         imdbNumberOfVotes, setImdbNumberOfVotes,
         releaseYear, setReleaseYear,
-        genre, setGenre,
+        genres, setGenres,
         director, setDirector,
         description, setDescription
     } = props;
@@ -40,10 +40,10 @@ export default function InputBoxesRegisterMovie(props) {
               <input
                   type={"text"}
                   className={"form-control col-4"}
-                  id={"genre"}
-                  value={genre}
-                  onChange={(e) => setGenre(e.target.value)}
-                  placeholder={"Genre"}
+                  id={"genres"}
+                  value={genres}
+                  onChange={(e) => setGenres(e.target.value)}
+                  placeholder={"Genres"}
               />
           </div>
           <div className={"mb-3"}>

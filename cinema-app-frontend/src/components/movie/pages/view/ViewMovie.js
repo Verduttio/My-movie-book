@@ -5,6 +5,7 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import movieService from "../../../../services/movieService";
 import "../main/MovieList.css";
 import authService from "../../../../services/authService";
+import {formatGenresToDisplay} from "../../../../functionalities/GenreFormatter";
 
 function numberWithSpaces (x){
     return x !== undefined ? x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : x;
@@ -131,10 +132,10 @@ export default function MovieList() {
                                         </div>
                                         <div className="row">
                                             <div className="col-3" style={{paddingBottom: "10px"}}>
-                                                <p className="card-text">Genre</p>
+                                                <p className="card-text">Genres</p>
                                             </div>
                                             <div className="col">
-                                                <p className="card-text">{movie.genre}</p>
+                                                <p className="card-text">{formatGenresToDisplay(movie.genres)}</p>
                                             </div>
                                         </div>
                                         <div className="row">

@@ -6,6 +6,7 @@ import {useEffect} from "react";
 import UploadImage from "./UploadImage";
 import InputBoxesRegisterMovie from "./InputBoxesRegisterMovie";
 import authService from "../../services/authService";
+import {formatGenresToEdit} from "../../functionalities/GenreFormatter";
 
 export default function MovieDataEditBox(params) {
     const[title, setTitle] = useState('');
@@ -14,7 +15,7 @@ export default function MovieDataEditBox(params) {
     const[imdbRating, setImdbRating] = useState('');
     const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState('');
     const[releaseYear, setReleaseYear] = useState('');
-    const[genre, setGenre] = useState('');
+    const[genres, setGenres] = useState('');
     const[director, setDirector] = useState('');
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState('');
@@ -31,7 +32,8 @@ export default function MovieDataEditBox(params) {
     const editMovie = (e) => {
         e.preventDefault();
 
-        const movie = {title, releaseYear, genre, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, note, watched, userId: authService.getCurrentUser().id};
+        let genresList = genres.split(",");
+        const movie = {title, releaseYear, genres: genresList, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, note, watched, userId: authService.getCurrentUser().id};
         // Update record
         movieService.update(movie)
             .then(response => {
@@ -47,7 +49,7 @@ export default function MovieDataEditBox(params) {
         movieService.get(id)
             .then(movie => {
                 setTitle(movie.data.title);
-                setGenre(movie.data.genre);
+                setGenres(formatGenresToEdit(movie.data.genres));
                 setReleaseYear(movie.data.releaseYear);
                 setDirector(movie.data.director);
                 setPosterFileName(movie.data.posterFileName);
@@ -76,7 +78,7 @@ export default function MovieDataEditBox(params) {
                     imdbRating={imdbRating} setImdbRating={setImdbRating}
                     imdbNumberOfVotes={imdbNumberOfVotes} setImdbNumberOfVotes={setImdbNumberOfVotes}
                     releaseYear={releaseYear} setReleaseYear={setReleaseYear}
-                    genre={genre} setGenre={setGenre}
+                    genres={genres} setGenres={setGenres}
                     director={director} setDirector={setDirector}
                     description={description} setDescription={setDescription}
                 />

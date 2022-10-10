@@ -6,6 +6,7 @@ import MovieDataAddFromFilmwebBox from "../../MovieDataAddFromFilmwebBox";
 import MovieDataAddBox from "../../MovieDataAddBox";
 import HeaderUploadMovie from "../../HeaderUploadMovie";
 import {cutLink} from "../../../../functionalities/filmwebLinkCutter";
+import {formatGenresToEdit} from "../../../../functionalities/GenreFormatter";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -14,7 +15,7 @@ export default function AddMovie() {
     const[imdbRating, setImdbRating] = useState('');
     const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState('');
     const[releaseYear, setReleaseYear] = useState('');
-    const[genre, setGenre] = useState('');
+    const[genres, setGenres] = useState('');
     const[director, setDirector] = useState('');
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState('');
@@ -34,7 +35,7 @@ export default function AddMovie() {
     const movieFetchedFilmweb = {
         titleF: title,
         releaseYearF: releaseYear,
-        genreF: genre,
+        genresF: genres,
         directorF: director,
         filmwebRatingF: filmwebRating,
         filmwebNumberOfVotesF: filmwebNumberOfVotes,
@@ -51,11 +52,7 @@ export default function AddMovie() {
             .then(movie => {
                 setTitle(movie.data.title);
 
-                let genres = "";
-                (movie.data.genres).map(gen => {genres += (gen.name + ",")});
-                genres = genres.substring(0, genres.length-1);  //remove last ','
-                setGenre(genres);
-                console.log(genres.split(","))
+                setGenres(formatGenresToEdit(movie.data.genres));
 
                 setReleaseYear(movie.data.releaseYear);
                 setDirector(movie.data.director);
