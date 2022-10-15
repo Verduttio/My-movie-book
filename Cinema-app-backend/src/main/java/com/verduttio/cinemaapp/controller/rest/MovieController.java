@@ -44,11 +44,6 @@ public class MovieController {
         return movieService.getAllMovies();
     }
 
-    @PutMapping
-    @CrossOrigin
-    ////TODO: Keep an eye on it, PUT can create a new movie if it does not exist (security concern)
-    public Movie updateMovie(@RequestBody Movie movie) {return movieService.updateMovie(movie);}
-
     @PatchMapping("/{id}")
     public Movie modifyMovie(@PathVariable("id") int movieId, @RequestBody Map<Object, Object> fields) {return movieService.modifyMovie(movieId, fields);}
 

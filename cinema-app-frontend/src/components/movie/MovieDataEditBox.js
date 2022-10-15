@@ -20,8 +20,6 @@ export default function MovieDataEditBox(params) {
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState('');
     const[description, setDescription] = useState('');
-    const[note, setNote] = useState('');
-    const[watched, setWatched] = useState('');
 
     const[changePoster, setChangePoster] = useState(false);
 
@@ -33,9 +31,11 @@ export default function MovieDataEditBox(params) {
         e.preventDefault();
 
         let genresList = genres.split(",");
-        const movie = {title, releaseYear, genres: genresList, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, note, watched, userId: authService.getCurrentUser().id};
+
+        const movie = {title, releaseYear, genres: genresList, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description};
+        console.log(movie);
         // Update record
-        movieService.update(movie)
+        movieService.modify(id, movie)
             .then(response => {
                 console.log("Movie data updated successfully.", response.data);
                 navigate('/movies');
@@ -58,8 +58,6 @@ export default function MovieDataEditBox(params) {
                 setImdbRating(movie.data.imdbRating);
                 setImdbNumberOfVotes(movie.data.imdbNumberOfVotes);
                 setDescription(movie.data.description);
-                setNote(movie.data.note);
-                setWatched(movie.data.watched);
             })
             .catch(error => {
                 console.log('And error occurred while getting movie data.', error);

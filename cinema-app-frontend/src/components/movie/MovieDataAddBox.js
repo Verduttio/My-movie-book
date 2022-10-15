@@ -39,7 +39,9 @@ export default function MovieDataAddBox(params) {
         }
 
         let genresList = genres.split(",");
+
         const movie = {title, releaseYear, genres: genresList, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
+        console.log(movie);
         // Create new record
         movieService.create(movie)
             .then(response => {

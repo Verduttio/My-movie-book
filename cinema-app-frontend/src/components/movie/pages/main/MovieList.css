@@ -5,7 +5,7 @@ td {
 
 
 .card#home_list {
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
@@ -13,5 +13,5 @@ td {
 
 .card:hover#home_list {
     background-color: #D7E1E9;
-    /*transform: scale(1.1);*/
+    transform: scale(1.05);
 }

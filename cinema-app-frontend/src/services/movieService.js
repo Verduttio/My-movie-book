@@ -33,12 +33,8 @@ const get = id => {
     return httpClientAuth.get("/movies/"+id);
 }
 
-const update = data => {
-    return httpClientAuth.put("/movies", data);
-}
-
 const modify = (id, data) => {
     return httpClientAuth.patch("/movies/" + id, data);
 }
 
-export default {getAll, create, uploadPosterImage, get, update, deleteMovie, deletePosterImage, modify};
+export default {getAll, create, uploadPosterImage, get, deleteMovie, deletePosterImage, modify};
