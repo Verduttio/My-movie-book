@@ -45,10 +45,14 @@ public class MovieService {
         // So that firstly, we move the movie image to files/images/userId,
         // and then we delete all files inside files/images/userId/temp.
         String uploadPosterFileName = movie.posterFileName();
-        movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
-        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userId = userDetails.getId();
-        FilesCleaner.cleanAfterUploadImage(userId, uploadPosterFileName, movie.posterFileName());
+        if(!uploadPosterFileName.equals("")) {
+            movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
+            UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            int userId = userDetails.getId();
+            FilesCleaner.cleanAfterUploadImage(userId, uploadPosterFileName, movie.posterFileName());
+        } else {
+            movie.setPosterFileName("no_poster");
+        }
         Movie response = movieRepository.save(movie);
         logger.debug("saveMovie() - movie: {} - SAVED", movie);
         return response;
