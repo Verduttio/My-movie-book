@@ -30,7 +30,8 @@ export default function MovieDataEditBox(params) {
     const editMovie = (e) => {
         e.preventDefault();
 
-        let genresList = genres.split(",");
+        let genresList = genres.map(function(genre){return genre.value;})
+        // let genresList = genres.split(",");
 
         const movie = {title, releaseYear, genres: genresList, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description};
         console.log(movie);

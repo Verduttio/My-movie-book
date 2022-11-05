@@ -38,7 +38,7 @@ export default function MovieDataAddBox(params) {
             userId = currentUser.id;
         }
 
-        let genresList = genres.split(",");
+        let genresList = genres.map(function(genre){return genre.value;})
 
         const movie = {title, releaseYear, genres: genresList, director, posterFileName, id, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         console.log(movie);
@@ -46,7 +46,7 @@ export default function MovieDataAddBox(params) {
         movieService.create(movie)
             .then(response => {
                 console.log("Movie uploaded successfully.", response.data);
-                navigate('/movies');
+                //navigate('/movies');
             })
             .catch(error => {
                 console.log('An error occurred while uploading the movie.', error);

@@ -1,5 +1,7 @@
 export const formatGenresToEdit = (genres) => {
-    return genreFormatter(genres, ",");
+    return genres.map(function(genre){
+        return {value : genre.name, label : genre.name};
+    })
 }
 
 export const formatGenresToDisplay = (genres) => {

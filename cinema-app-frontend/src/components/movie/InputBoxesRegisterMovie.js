@@ -1,4 +1,8 @@
 import * as React from "react";
+import Select from "react-select";
+import genreService from "../../services/genreService";
+import {useEffect, useState} from "react";
+import movieService from "../../services/movieService";
 
 export default function InputBoxesRegisterMovie(props) {
     const {
@@ -12,6 +16,29 @@ export default function InputBoxesRegisterMovie(props) {
         director, setDirector,
         description, setDescription
     } = props;
+
+    const [genreOptions, setGenreOptions] = useState([]);
+
+    // const options_genres = [
+    //     { value: 'chocolate', label: 'Chocolate' },
+    //     { value: 'strawberry', label: 'Strawberry' },
+    //     { value: 'vanilla', label: 'Vanilla' }
+    // ]
+
+    useEffect(()=> {
+        genreService.getAll()
+            .then(response => {
+                console.log('Printing all genres', response.data);
+                setGenreOptions(response.data)
+            })
+            .catch(error => {
+                console.log('An error occurred while getting all genres.', error);
+            });
+    },[])
+
+    const options_genres = genreOptions.map(function(genre){
+        return {value : genre.name, label : genre.name};
+    })
 
 
     return (
@@ -37,13 +64,17 @@ export default function InputBoxesRegisterMovie(props) {
               />
           </div>
           <div className={"mb-3"}>
-              <input
-                  type={"text"}
-                  className={"form-control col-4"}
-                  id={"genres"}
+              <Select
+                  defaultValue={genres}
+                  isMulti
+                  name="colors"
+                  options={options_genres}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  placeholder="Genres"
                   value={genres}
-                  onChange={(e) => setGenres(e.target.value)}
-                  placeholder={"Genres"}
+                  onChange={setGenres}
+                  id={"genres"}
               />
           </div>
           <div className={"mb-3"}>

@@ -15,7 +15,7 @@ export default function MovieDataAddFromFilmwebBox(props) {
     const[imdbRating, setImdbRating] = useState('');
     const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState('');
     const[releaseYear, setReleaseYear] = useState(releaseYearF.toString());
-    const[genres, setGenres] = useState(genresF.toString());
+    const[genres, setGenres] = useState(genresF);
     const[director, setDirector] = useState(directorF.toString());
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState(posterURLF.toString());
@@ -38,7 +38,8 @@ export default function MovieDataAddFromFilmwebBox(props) {
             userId = currentUser.id;
         }
 
-        let genresList = genres.split(",");
+        let genresList = genres.map(function(genre){return genre.value;})
+
         const movie = {title, releaseYear, genres: genresList, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         // Create new record
         movieService.create(movie)

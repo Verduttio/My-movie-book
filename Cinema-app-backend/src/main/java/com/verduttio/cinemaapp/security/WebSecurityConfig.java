@@ -65,6 +65,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/files/images/**").permitAll()
                 .antMatchers("/externalMovieData/**").permitAll()
+                .antMatchers("/genres").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
