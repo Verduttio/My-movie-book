@@ -1,4 +1,4 @@
-package com.verduttio.cinemaapp.service.dataFetchingUtils;
+package com.verduttio.cinemaapp.service.imdbFetcher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +44,10 @@ public class ImdbURLFinder {
         String movieTitleYear = getMovieTitleYear(filmwebURL);
         logger.debug("movieTitleYear: " + movieTitleYear);
 
-        String imdbFindMovieHTMLContext = getImdbFindMovieHTMLContext(movieTitleYear);
+        String encodedMovieTitleYear = URLEncoder.encode(movieTitleYear, StandardCharsets.UTF_8);
+        logger.debug("encodedMovieTitleYear: " + encodedMovieTitleYear);
+
+        String imdbFindMovieHTMLContext = getImdbFindMovieHTMLContext(encodedMovieTitleYear);
         logger.debug("imdbFindMovieHTMLContext: " + imdbFindMovieHTMLContext);
 
         String firstFoundMovieFromListsHTML = getFirstFoundMovieFromListHTML(imdbFindMovieHTMLContext);

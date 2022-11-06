@@ -1,4 +1,4 @@
-package com.verduttio.cinemaapp.service;
+package com.verduttio.cinemaapp.service.filmwebFetcher;
 
 import com.verduttio.cinemaapp.entity.Genre;
 import com.verduttio.cinemaapp.entity.Movie;

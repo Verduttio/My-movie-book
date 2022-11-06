@@ -7,3 +7,13 @@ GET {{host}}/externalMovieData/filmweb/Gwiezdny+py%C5%82-2007-273934
 ### GET FilmwebINFO Szkoła uczuć
 GET {{host}}/externalMovieData/filmweb/Szkoła+uczuć-2002-33295
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJWZXJkdXR0aW8iLCJpYXQiOjE2NjUzMzU1ODEsImV4cCI6MTY2NTQyMTk4MX0.YTYZRdNhbGu5GIHOIpR4sDtjOYgO3qK7Ic3qqr_MBuUVkCgkkPocHOnrO-KAd_P-xcse88EeCzsBQJQlxaKWAg
+
+
+### GET imdbRating Władca Pierścieni EP_1
+GET {{host}}/externalMovieData/imdb/rating/W%C5%82adca+Pier%C5%9Bcieni%3A+Dru%C5%BCyna+Pier%C5%9Bcienia-2001-1065
+
+### GET imdbRating Szkoła uczuć
+GET {{host}}/externalMovieData/imdb/rating/Szkoła+uczuć-2002-33295
+
+### GET imdbRating Gwiezdny pył
+GET {{host}}/externalMovieData/imdb/rating/Gwiezdny+py%C5%82-2007-273934
