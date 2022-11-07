@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import filmwebFetcher from "../../../../services/filmwebFetcher";
 import imdbFetcher from "../../../../services/imdbFetcher";
@@ -8,6 +8,7 @@ import MovieDataAddBox from "../../MovieDataAddBox";
 import HeaderUploadMovie from "../../HeaderUploadMovie";
 import {cutLink} from "../../../../functionalities/filmwebLinkCutter";
 import {formatGenresToEdit} from "../../../../functionalities/GenreFormatter";
+import movieService from "../../../../services/movieService";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -23,8 +24,13 @@ export default function AddMovie() {
     const[description, setDescription] = useState('');
 
     const[filmwebLink, setFilmwebLink] = useState('');
-    const[filmwebFetchedData, setFilmwebFetchedData] = useState(false);
-    const[imdbFetchedData, setImdbFetchedData] = useState(false);
+
+    // Fetching status
+    // 0 - not started
+    // 1 - fetching
+    // 2 - fetched
+    const[filmwebFetchingData, setFilmwebFetchingData] = useState(0);
+    const[imdbFetchingData, setImdbFetchingData] = useState(0);
 
     const[enterMovieDataOption, setEnterMovieDataOption] = useState(0);
     // 0 - basic (user has not chosen yet)
@@ -32,7 +38,6 @@ export default function AddMovie() {
     // 2 - fill in manually
 
     const[posterURL, setPosterURL] = useState('');
-
 
     const movieFetchedFilmweb = {
         titleF: title,
@@ -50,6 +55,8 @@ export default function AddMovie() {
     const fetchFromFilmweb = ((e) => {
         e.preventDefault();
 
+        setFilmwebFetchingData(1);
+
         const movieLink = cutLink(filmwebLink);
 
         filmwebFetcher.fetchData(movieLink)
@@ -64,7 +71,7 @@ export default function AddMovie() {
                 setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
                 setDescription(movie.data.description);
                 setPosterURL(movie.data.posterFileName);
-                setFilmwebFetchedData(true);
+                setFilmwebFetchingData(2);
             })
             .catch(error => {
                 console.log('And error occurred while fetching data from filmweb.', error);
@@ -74,13 +81,15 @@ export default function AddMovie() {
     const fetchRatingFromIMDb = ((e) => {
         e.preventDefault();
 
+        setImdbFetchingData(1);
+
         const movieLink = cutLink(filmwebLink);
 
         imdbFetcher.fetchRating(movieLink)
             .then(ratingInfo => {
                 setImdbRating(ratingInfo.data.rating);
                 setImdbNumberOfVotes(ratingInfo.data.numberOfVotes);
-                setImdbFetchedData(true);
+                setImdbFetchingData(2);
                 console.log("Fetched imdb rating: ", ratingInfo.data.rating);
                 console.log("Fetched imdb numberOfVotes: ", ratingInfo.data.numberOfVotes);
             })
@@ -105,7 +114,7 @@ export default function AddMovie() {
         );
     } else if (enterMovieDataOption === 1) {
         // Fetch from filmweb
-        if(!filmwebFetchedData || !imdbFetchedData) {
+        if(filmwebFetchingData !== 2 || imdbFetchingData !== 2) {
             // User has not fetched data yet,
             // so display only link box.
             return (
@@ -122,8 +131,26 @@ export default function AddMovie() {
                             />
                         </div>
                         <div className={"text-center"}>
-                            <button className={"btn btn-primary"} onClick={(e) => {fetchRatingFromIMDb(e); fetchFromFilmweb(e);}}>Load data from
-                                filmweb
+                            <button
+                                className={"btn btn-primary"}
+                                onClick={(e) => {fetchRatingFromIMDb(e); fetchFromFilmweb(e);}}
+                                disabled={filmwebFetchingData > 0 || imdbFetchingData > 0}
+                            >
+                                {filmwebFetchingData === 1 && (
+                                    <span>
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                        <span>Fetching from filmweb...</span>
+                                    </span>
+                                )}
+                                {imdbFetchingData === 1 && (
+                                    <span>
+                                        <span className="spinner-border spinner-border-sm"></span>
+                                        <span>Fetching from imdb...</span>
+                                    </span>
+                                )}
+                                {filmwebFetchingData === 0 && imdbFetchingData === 0 && (
+                                    <span>Load data from filmweb</span>
+                                )}
                             </button>
                         </div>
                     </form>
