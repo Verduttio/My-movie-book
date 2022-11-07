@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import filmwebFetcher from "../../../../services/filmwebFetcher";
+import imdbFetcher from "../../../../services/imdbFetcher";
 import MovieDataAddFromFilmwebBox from "../../MovieDataAddFromFilmwebBox";
 import MovieDataAddBox from "../../MovieDataAddBox";
 import HeaderUploadMovie from "../../HeaderUploadMovie";
@@ -23,6 +24,7 @@ export default function AddMovie() {
 
     const[filmwebLink, setFilmwebLink] = useState('');
     const[filmwebFetchedData, setFilmwebFetchedData] = useState(false);
+    const[imdbFetchedData, setImdbFetchedData] = useState(false);
 
     const[enterMovieDataOption, setEnterMovieDataOption] = useState(0);
     // 0 - basic (user has not chosen yet)
@@ -40,7 +42,9 @@ export default function AddMovie() {
         filmwebRatingF: filmwebRating,
         filmwebNumberOfVotesF: filmwebNumberOfVotes,
         descriptionF: description,
-        posterURLF: posterURL
+        posterURLF: posterURL,
+        imdbRatingF: imdbRating,
+        imdbNumberOfVotesF: imdbNumberOfVotes,
     }
 
     const fetchFromFilmweb = ((e) => {
@@ -67,6 +71,24 @@ export default function AddMovie() {
             })
     })
 
+    const fetchRatingFromIMDb = ((e) => {
+        e.preventDefault();
+
+        const movieLink = cutLink(filmwebLink);
+
+        imdbFetcher.fetchRating(movieLink)
+            .then(ratingInfo => {
+                setImdbRating(ratingInfo.data.rating);
+                setImdbNumberOfVotes(ratingInfo.data.numberOfVotes);
+                setImdbFetchedData(true);
+                console.log("Fetched imdb rating: ", ratingInfo.data.rating);
+                console.log("Fetched imdb numberOfVotes: ", ratingInfo.data.numberOfVotes);
+            })
+            .catch(error => {
+                console.log('And error occurred while fetching imdb rating.', error);
+            })
+    })
+
 
     if (enterMovieDataOption === 0) {
         return (
@@ -83,7 +105,7 @@ export default function AddMovie() {
         );
     } else if (enterMovieDataOption === 1) {
         // Fetch from filmweb
-        if(!filmwebFetchedData) {
+        if(!filmwebFetchedData || !imdbFetchedData) {
             // User has not fetched data yet,
             // so display only link box.
             return (
@@ -100,7 +122,7 @@ export default function AddMovie() {
                             />
                         </div>
                         <div className={"text-center"}>
-                            <button className={"btn btn-primary"} onClick={(e) => fetchFromFilmweb(e)}>Load data from
+                            <button className={"btn btn-primary"} onClick={(e) => {fetchRatingFromIMDb(e); fetchFromFilmweb(e);}}>Load data from
                                 filmweb
                             </button>
                         </div>

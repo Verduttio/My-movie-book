@@ -7,13 +7,13 @@ import InputBoxesRegisterMovie from "./InputBoxesRegisterMovie";
 import AuthService from "../../services/authService";
 
 export default function MovieDataAddFromFilmwebBox(props) {
-    const {titleF, releaseYearF, genresF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF, posterURLF} = props.movie;
+    const {titleF, releaseYearF, genresF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF, posterURLF, imdbRatingF, imdbNumberOfVotesF} = props.movie;
 
     const[title, setTitle] = useState(titleF.toString());
     const[filmwebRating, setFilmwebRating] = useState(filmwebRatingF.toString());
     const[filmwebNumberOfVotes, setFilmwebNumberOfVotes] = useState(filmwebNumberOfVotesF.toString());
-    const[imdbRating, setImdbRating] = useState('');
-    const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState('');
+    const[imdbRating, setImdbRating] = useState(imdbRatingF.toString());
+    const[imdbNumberOfVotes, setImdbNumberOfVotes] = useState(imdbNumberOfVotesF.toString());
     const[releaseYear, setReleaseYear] = useState(releaseYearF.toString());
     const[genres, setGenres] = useState(genresF);
     const[director, setDirector] = useState(directorF.toString());
