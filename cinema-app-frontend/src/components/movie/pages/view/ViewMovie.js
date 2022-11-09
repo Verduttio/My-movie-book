@@ -17,6 +17,8 @@ export default function MovieList() {
     const [editNote, setEditNote] = useState(false);
     const {id} = useParams();
 
+    const [removeMovieButtonVisibility, setRemoveMovieButtonVisibility] = useState(true);
+
 
     const userId = authService.getCurrentUser().id;
 
@@ -86,10 +88,13 @@ export default function MovieList() {
                     <Link className={"btn btn-warning"} to={"/movies/edit/" + movie.id}>Update</Link>
                 </span>
                 <span style={{display:"block", float:"right", paddingRight:"20px"}}>
-                    <button className={"btn btn-danger"} onClick={() => {
-                        movieService.deleteMovie(movie.id);
+                    <button className={"btn btn-danger"} disabled={!removeMovieButtonVisibility} onClick={() => {
+                        setRemoveMovieButtonVisibility(false);
+                        movieService.deleteMovie(movie.id)
+                            .then(response => {
+                                navigate("/movies");
+                            });
                         movieService.deletePosterImage(movie.posterFileName);
-                        navigate("/movies");
                     }}>Delete</button>
                 </span>
             </div>
