@@ -25,8 +25,8 @@ const uploadPosterImage = (image) => {
     });
 }
 
-const deletePosterImage = (id, userId) => {
-    return httpClient.delete("/files/images/" + userId+ "/" + id);
+const deletePosterImage = (id) => {
+    return httpClientAuth.delete("/files/images/" + id);
 }
 
 const get = id => {

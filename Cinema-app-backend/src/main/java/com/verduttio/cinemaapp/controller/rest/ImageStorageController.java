@@ -74,7 +74,7 @@ public class ImageStorageController {
 
     @DeleteMapping("/{filename:.+}")
     public ResponseEntity<?> removeFile(@PathVariable String filename) {
-        storageService.delete(filename);
+        storageService.delete(filename);   // It takes the id of current user and remove the file from user's files
         ///We should change it to return object state based on the result of the deletion
         return ResponseEntity.ok().build();
     }
