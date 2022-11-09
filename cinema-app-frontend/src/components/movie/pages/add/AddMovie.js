@@ -92,6 +92,11 @@ export default function AddMovie() {
                 setImdbFetchingData(2);
                 console.log("Fetched imdb rating: ", ratingInfo.data.rating);
                 console.log("Fetched imdb numberOfVotes: ", ratingInfo.data.numberOfVotes);
+
+                if(ratingInfo.data.rating === 0 && ratingInfo.data.numberOfVotes === 0) {
+                    console.log("We should see an alert box.");
+                    alert("Could not fetch rating info from IMDb");
+                }
             })
             .catch(error => {
                 console.log('And error occurred while fetching imdb rating.', error);

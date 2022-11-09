@@ -1,6 +1,7 @@
 package com.verduttio.cinemaapp.service.imdbFetcher;
 
 import com.verduttio.cinemaapp.entity.RatingInfo;
+import com.verduttio.cinemaapp.entity.RatingInfoNotFound;
 import com.verduttio.cinemaapp.repository.GenreRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ public class ImdbDataFetcher {
         logger.debug("regexResult: " + regexResult);
 
         String rating = findRate(regexResult);
-        logger.debug("rating: " + rating);
+        logger.info("rating: " + rating);
 
         return Double.parseDouble(rating);
     }
@@ -85,7 +86,7 @@ public class ImdbDataFetcher {
         logger.debug("regexResult: " + regexResult);
 
         String numberOfViews = findNumberOfViews(regexResult);
-        logger.debug("numberOfViews: " + numberOfViews);
+        logger.info("numberOfViews: " + numberOfViews);
 
         return Integer.parseInt(numberOfViews);
     }
@@ -116,7 +117,18 @@ public class ImdbDataFetcher {
     }
 
     public RatingInfo fetchRatingInfo(String filmwebMovieName) {
-        return getRatingInfo(imdbURLFinder.getMovieImdbURL(filmwebMovieName));
+        // It shouldn't be done here.
+        // Better option is to catch an exception directly where it comes from (ie. ImdbURLFinder.java),
+        // but this solution is much easier.
+
+        //TODO: Catch en exception in ImdbURLFinder.java, not here!
+        try {
+            return getRatingInfo(imdbURLFinder.getMovieImdbURL(filmwebMovieName));
+        }
+        catch(Exception e) {
+            logger.warn("Could not fetch rating from IMDb!");
+            return new RatingInfoNotFound();
+        }
     }
 
 //    public static void main(String[] args) {

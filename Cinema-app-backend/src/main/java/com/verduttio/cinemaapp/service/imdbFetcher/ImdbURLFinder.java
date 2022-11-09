@@ -48,10 +48,10 @@ public class ImdbURLFinder {
         logger.debug("encodedMovieTitleYear: " + encodedMovieTitleYear);
 
         String imdbFindMovieHTMLContext = getImdbFindMovieHTMLContext(encodedMovieTitleYear);
-        logger.debug("imdbFindMovieHTMLContext: " + imdbFindMovieHTMLContext);
+//        logger.debug("imdbFindMovieHTMLContext: " + imdbFindMovieHTMLContext);
 
         String firstFoundMovieFromListsHTML = getFirstFoundMovieFromListHTML(imdbFindMovieHTMLContext);
-        logger.debug("firstFoundMovieFromListsHTML: " + firstFoundMovieFromListsHTML);
+//        logger.debug("firstFoundMovieFromListsHTML: " + firstFoundMovieFromListsHTML);
 
         return processMovieImdbURL(firstFoundMovieFromListsHTML);
     }
