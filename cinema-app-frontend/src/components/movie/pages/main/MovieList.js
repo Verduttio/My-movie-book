@@ -67,7 +67,7 @@ export default function MovieList() {
                                         </Link>
                                         <p className="card-text">{movie.releaseYear}</p>
                                         <p className="card-text">{formatGenresToDisplay(movie.genres)}</p>
-                                        <p className="card-text">{movie.filmwebRating} <BsStarFill style={{color: "gold"}}/></p>
+                                        <p className="card-text">{movie.filmwebRating === undefined ? ("") : (movie.filmwebRating.toFixed(1))} <BsStarFill style={{color: "gold"}}/></p>
                                         <p className="card-text">{numberWithSpaces(movie.filmwebNumberOfVotes)} <BsStars style={{color: "gray"}}/></p>
                                         <p className="card-text"><small className="text-muted">{truncate(movie.description)}</small>
                                         </p>
