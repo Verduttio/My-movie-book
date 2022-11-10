@@ -9,6 +9,7 @@ import Login from "./components/movie/pages/auth/Login";
 import Register from "./components/movie/pages/auth/Register";
 import Profile from "./components/movie/pages/auth/Profile";
 import React from "react";
+import authService from "./services/authService";
 
 function App() {
   return (
@@ -21,7 +22,11 @@ function App() {
               <Route path='/movies/edit/:id' element={<EditMovie/>}/>
               <Route path='/movies/:id' element={<ViewMovie/>}/>
               <Route path='*' element={<NotFound/>}/>
-              {/*<Route path="/" element={<Navigate replace to="/movies"/>}/>*/}
+              {authService.getCurrentUser() ? (
+                  <Route path="/" element={<Navigate replace to="/movies"/>}/>
+              ) : (
+                  <Route path="/" element={<Navigate replace to="/login"/>}/>
+              )}
               <Route path="/login" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/profile" element={<Profile/>} />
