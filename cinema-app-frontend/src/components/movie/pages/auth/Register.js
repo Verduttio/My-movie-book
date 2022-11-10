@@ -161,7 +161,7 @@ const Register = () => {
                                             </div>
 
                                             <div className="pt-1 mb-4">
-                                                <button className="btn btn-info btn-lg btn-block" type="button">
+                                                <button className="btn btn-info btn-lg btn-block" type="button" onClick={e => handleRegister(e)}>
                                                     Sign Up
                                                 </button>
                                             </div>

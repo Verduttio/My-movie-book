@@ -1,8 +1,13 @@
 import React from "react";
 import AuthService from "../../../../services/authService";
+import userService from "../../../../services/userService";
+import authService from "../../../../services/authService";
+import {Link, useNavigate} from "react-router-dom";
 
 const Profile = () => {
     const currentUser = AuthService.getCurrentUser();
+
+    const navigate = useNavigate();
 
     return (
         <div className="container">
@@ -26,6 +31,14 @@ const Profile = () => {
                 {currentUser.roles &&
                     currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
             </ul>
+            <Link to={"/login"}>
+                <button className={"btn btn-danger"} onClick={() => {
+                    userService.deleteUser(authService.getCurrentUser().id);
+                    authService.logout();
+                    navigate("/login");
+                    window.location.reload();
+                }}>Delete account</button>
+            </Link>
         </div>
     );
 };

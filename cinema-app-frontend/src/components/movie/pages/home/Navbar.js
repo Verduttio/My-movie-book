@@ -10,7 +10,6 @@ const Navbar = () => {
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
-
         if (user) {
             setCurrentUser(user);
         }
@@ -45,15 +44,6 @@ const Navbar = () => {
                     ) : (
                         <div></div>
                     )}
-
-
-                {/*<div className="container mt-3">*/}
-                {/*    <Routes>*/}
-                {/*        /!*<Route path="/login" element={<Login/>} />*!/*/}
-                {/*        /!*<Route path="/register" element={<Register/>} />*!/*/}
-                {/*        /!*<Route path="/profile" element={<Profile/>} />*!/*/}
-                {/*    </Routes>*/}
-                {/*</div>*/}
             </div>
     );
 };
