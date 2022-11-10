@@ -91,6 +91,15 @@ public class MovieService {
         }
     }
 
+    public void removeAllUserMovies(int userId) {
+        logger.info("removeALlUserMovies() - userId:{}", userId);
+        if(getCurrentUserDetailsImpl().getId() == userId) {
+            movieRepository.deleteByUserId(userId);
+        } else {
+            logger.warn("Access denied! User of Id: {}, wants to remove user of Id: {}", getCurrentUserDetailsImpl().getId(), userId);
+        }
+    }
+
     public Movie modifyMovie(int movieId, Map<Object, Object> fields) {
         if(getCurrentUserDetailsImpl().getId() == getUserIdByMovieId(movieId)) {
             ////TODO: Maybe some update queries would be better than loading whole movie, then changing values and uploading object.

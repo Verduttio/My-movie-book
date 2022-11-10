@@ -51,4 +51,9 @@ public class FilesCleaner {
         file.renameTo(new File("files/images/temp/" + newFileName));
     }
 
+    public static void deleteAllUserFiles(int userId) {
+        logger.info("deleteAllUserFiles({})", userId);
+        FileSystemUtils.deleteRecursively(new File("files/images/" + userId));
+    }
+
 }

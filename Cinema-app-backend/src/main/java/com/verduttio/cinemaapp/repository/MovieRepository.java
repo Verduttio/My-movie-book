@@ -20,4 +20,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     @Query("SELECT userId from Movie WHERE id = ?1")
     int getUserIdByMovieId(int movieId);
+
+    @Transactional
+    void deleteByUserId(int userId);
 }

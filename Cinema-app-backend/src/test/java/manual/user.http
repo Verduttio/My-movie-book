@@ -1,0 +1,13 @@
+### POST User Bilboo signin
+POST {{host}}/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "Bilboo",
+  "password": "FrodoBaggins"
+}
+
+
+### DELETE User Bilboo
+DELETE {{host}}/user/2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCaWxib28iLCJpYXQiOjE2NjgwODgxNjgsImV4cCI6MTY2ODE3NDU2OH0.jsm1xQ6iaL41rOZO49xBjTy3Wp9_XFIcAJDoohBIEMGMvpVFqzuKJIMGyPFr8vTY2vCvHJiTlply-cC-q3qoPg
