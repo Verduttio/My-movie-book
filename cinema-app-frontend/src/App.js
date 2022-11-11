@@ -8,6 +8,7 @@ import Navbar from "./components/movie/pages/home/Navbar";
 import Login from "./components/movie/pages/auth/Login";
 import Register from "./components/movie/pages/auth/Register";
 import Profile from "./components/movie/pages/auth/Profile";
+import AdminBoard from "./components/movie/pages/admin/AdminBoard";
 import React from "react";
 import authService from "./services/authService";
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/profile" element={<Profile/>} />
+              <Route path="/adminBoard" element={<AdminBoard/>} />
           </Routes>
         </div>
       </BrowserRouter>

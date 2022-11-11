@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Navbar.css";
 
 import AuthService from "../../../../services/authService";
+import authService from "../../../../services/authService";
 
 const Navbar = () => {
     const [currentUser, setCurrentUser] = useState(undefined);
@@ -34,6 +35,13 @@ const Navbar = () => {
                                         {currentUser.username}
                                     </Link>
                                 </li>
+                                {authService.isAdmin(currentUser) && (
+                                    <li className="nav-item">
+                                        <Link to={"/adminBoard"} className="nav-link">
+                                            Admin board
+                                        </Link>
+                                    </li>
+                                )}
                                 <li className="nav-item">
                                     <a href="/login" className="nav-link" onClick={logOut}>
                                         LogOut

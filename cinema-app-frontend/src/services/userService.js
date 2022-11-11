@@ -8,14 +8,9 @@ const getPublicContent = () => {
     return axios.get(API_URL + "all");
 };
 
-const getUserBoard = () => {
-    return axios.get(API_URL + "user", { headers: authHeader() });
-};
-
-
-const getAdminBoard = () => {
-    return axios.get(API_URL + "admin", { headers: authHeader() });
-};
+const getAllUsersSafeData = () => {
+    return httpClientAuth.get("/user");
+}
 
 const deleteUser = (userId) => {
     return httpClientAuth.delete("/user/" + userId);
@@ -23,9 +18,8 @@ const deleteUser = (userId) => {
 
 const UserService = {
     getPublicContent,
-    getUserBoard,
-    getAdminBoard,
     deleteUser,
+    getAllUsersSafeData,
 };
 
 export default UserService;
