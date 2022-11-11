@@ -20,6 +20,7 @@ const truncate = (input) =>
 
 export default function MovieList() {
     const [movies, setMovies] = useState([]);
+    const [moviesAreFetched, setMoviesAreFetched] = useState(false);
 
     const userId = authService.getCurrentUser().id;
 
@@ -31,6 +32,7 @@ export default function MovieList() {
                 .then(response => {
                     console.log('Printing the movies data', response.data);
                     setMovies(response.data);
+                    setMoviesAreFetched(true);
                 })
                 .catch(error => {
                     console.log('An error occurred.', error);
@@ -46,39 +48,46 @@ export default function MovieList() {
                 </Link>
                 <h3 style={{textAlign: "center"}}>My watch list</h3>
             </div>
-            <div>
-                <div className="row row-cols-auto row-cols-md-2">
-                {movies.map(movie => (
-                    <div className={"col"}>
-                        <div className="card mb-3" id={"home_list"} style={{maxWidth: "700px"}}>
-                            <div className="row g-0">
-                                <div className="col-md-4">
-                                    {movie.posterFileName !== undefined ? (
-                                                                <img className="img-fluid rounded-start"
-                                                                src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + userId + "/" + movie.posterFileName}
-                                                                alt={movie.posterFileName}
-                                                                />
-                                                        ) : null}
-                                </div>
-                                <div className="col-md-8">
-                                    <div className="card-body">
-                                        <Link to={"/movies/"+movie.id} className={"stretched-link text-decoration-none"}>
-                                            {movie.title}
-                                        </Link>
-                                        <p className="card-text">{movie.releaseYear}</p>
-                                        <p className="card-text">{formatGenresToDisplay(movie.genres)}</p>
-                                        <p className="card-text">{movie.filmwebRating === undefined ? ("") : (movie.filmwebRating.toFixed(1))} <BsStarFill style={{color: "gold"}}/></p>
-                                        <p className="card-text">{numberWithSpaces(movie.filmwebNumberOfVotes)} <BsStars style={{color: "gray"}}/></p>
-                                        <p className="card-text"><small className="text-muted">{truncate(movie.description)}</small>
-                                        </p>
+            {moviesAreFetched ? (
+                <div>
+                    <div className="row row-cols-auto row-cols-md-2">
+                        {movies.map(movie => (
+                            <div className={"col"}>
+                                <div className="card mb-3" id={"home_list"} style={{maxWidth: "700px"}}>
+                                    <div className="row g-0">
+                                        <div className="col-md-4">
+                                            {movie.posterFileName !== undefined ? (
+                                                <img className="img-fluid rounded-start"
+                                                     src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + userId + "/" + movie.posterFileName}
+                                                     alt={movie.posterFileName}
+                                                />
+                                            ) : null}
+                                        </div>
+                                        <div className="col-md-8">
+                                            <div className="card-body">
+                                                <Link to={"/movies/"+movie.id} className={"stretched-link text-decoration-none"}>
+                                                    {movie.title}
+                                                </Link>
+                                                <p className="card-text">{movie.releaseYear}</p>
+                                                <p className="card-text">{formatGenresToDisplay(movie.genres)}</p>
+                                                <p className="card-text">{movie.filmwebRating === undefined ? ("") : (movie.filmwebRating.toFixed(1))} <BsStarFill style={{color: "gold"}}/></p>
+                                                <p className="card-text">{numberWithSpaces(movie.filmwebNumberOfVotes)} <BsStars style={{color: "gray"}}/></p>
+                                                <p className="card-text"><small className="text-muted">{truncate(movie.description)}</small>
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
-                ))}
                 </div>
-            </div>
+            ): (
+                <h1 style={{textAlign: "center"}}>
+                    Loading your movies...
+                </h1>
+            )}
+
         </div>
     );
 }
