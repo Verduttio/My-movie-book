@@ -11,3 +11,12 @@ Content-Type: application/json
 ### DELETE User Bilboo
 DELETE {{host}}/user/2
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJCaWxib28iLCJpYXQiOjE2NjgwODgxNjgsImV4cCI6MTY2ODE3NDU2OH0.jsm1xQ6iaL41rOZO49xBjTy3Wp9_XFIcAJDoohBIEMGMvpVFqzuKJIMGyPFr8vTY2vCvHJiTlply-cC-q3qoPg
+
+
+### GET All users
+GET {{host}}/user
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJWZXJkdXR0aW8iLCJpYXQiOjE2NjgxNzQ5NzUsImV4cCI6MTY2ODI2MTM3NX0.f4jwpY2cYs6YQvdVbCeaSzzQ7BDiHeWdOdxEmP7wzkLe_nqcX8ZqGLkus3XUwyzEFAr7zzOC_4mp4QJDQmhU1Q
+
+### GET All user (not admin request)
+GET {{host}}/user
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTYW0iLCJpYXQiOjE2NjgxNzY5NzMsImV4cCI6MTY2ODI2MzM3M30._X1h8Bg_nWzQTC2yBB1kcaJCBKsX8OmdM3gEr0sDzb4mfRjbpTpCKLS22mpraFFvtqgSIbifCoVEvGOBDFHSPw

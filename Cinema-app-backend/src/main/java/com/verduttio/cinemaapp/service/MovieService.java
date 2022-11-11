@@ -96,7 +96,7 @@ public class MovieService {
         if(getCurrentUserDetailsImpl().getId() == userId) {
             movieRepository.deleteByUserId(userId);
         } else {
-            logger.warn("Access denied! User of Id: {}, wants to remove user of Id: {}", getCurrentUserDetailsImpl().getId(), userId);
+            logger.warn("Access denied! User of Id: {}, wants to remove all movies of user of Id: {}", getCurrentUserDetailsImpl().getId(), userId);
         }
     }
 

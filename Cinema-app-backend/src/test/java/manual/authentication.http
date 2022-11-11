@@ -41,12 +41,21 @@ Content-Type: application/json
   "password": "FrodoBaggins"
 }
 
-### POST User Frodo signin
+### POST User Bilbo signin
 POST {{host}}/api/auth/signin
 Content-Type: application/json
 
 {
   "username": "Bilbo",
+  "password": "FrodoBaggins"
+}
+
+### POST User Sam signin
+POST {{host}}/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "Sam",
   "password": "FrodoBaggins"
 }
 
