@@ -23,15 +23,24 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: GradleJAR
+          path: Cinema-app-backend/build/libs/Cinema-app-0.0.1-SNAPSHOT.jar
+  deploy:
+    name: Deploy to heroku
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Loading JAR
+        uses: actions/download-artifact@v3
+        with:
+          name: GradleJAR
           path: Cinema-app-backend/build/libs
-#  deploy:
-#    name: Deploy to heroku
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#      - name: Loading JAR
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: GradleJAR
-#          path: build/libs
+      - name: Build and push Docker to Heroku
+        working-directory: Cinema-app-backend
+        env:
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+          HEROKU_USER: ${{ secrets.HEROKU_USER }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: | 
+          docker login --username=HEROKU_USER --password=HEROKU_API_KEY registry.heroku.com
+          docker build --tag registry.heroku.com/HEROKU_APP_NAME/web .
