@@ -1,0 +1,38 @@
+name: Build and deploy the app to heroku
+on: push
+
+jobs:
+  build:
+    name: Build JAR
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Cinema-app-backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: build
+      - name: Saving JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: GradleJAR
+          path: build/libs
+#  deploy:
+#    name: Deploy to heroku
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#      - name: Loading JAR
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: GradleJAR
+#          path: build/libs
