@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: GradleJAR
-          path: build/libs
+          path: Cinema-app-backend/build/libs
 #  deploy:
 #    name: Deploy to heroku
 #    runs-on: ubuntu-latest
