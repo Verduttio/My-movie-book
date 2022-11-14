@@ -13,9 +13,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Make Gradle executable
+        working-directory: Cinema-app-backend
+        run: chmod +x ./gradlew
       - name: Build with Gradle
         working-directory: Cinema-app-backend
-        run: pwd && ls -l && sudo ./gradlew build
+        run: pwd && ls -l && ./gradlew build
       - name: Saving JAR
         uses: actions/upload-artifact@v3
         with:
