@@ -18,7 +18,7 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with Gradle
         working-directory: Cinema-app-backend
-        run: pwd && ls -l && ./gradlew build
+        run: pwd && ls -l && ./gradlew build -x test
       - name: Saving JAR
         uses: actions/upload-artifact@v3
         with:
