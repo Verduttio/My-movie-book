@@ -17,7 +17,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: sudo ./gradlew build -x test
       - name: Saving JAR
         uses: actions/upload-artifact@v3
         with:
