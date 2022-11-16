@@ -1,4 +1,4 @@
-name: Build and deploy the app to heroku
+name: Build and deploy to heroku
 on: push
 
 jobs:
