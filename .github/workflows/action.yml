@@ -1,5 +1,8 @@
 name: Deploy
-on: push
+on:
+  push:
+    paths:
+      - backend/**
 
 jobs:
   buildJAR:
@@ -14,16 +17,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Make Gradle executable
-        working-directory: Cinema-app-backend
+        working-directory: backend
         run: chmod +x ./gradlew
       - name: Build with Gradle
-        working-directory: Cinema-app-backend
+        working-directory: backend
         run: pwd && ls -l && ./gradlew build -x test
       - name: Saving JAR
         uses: actions/upload-artifact@v3
         with:
           name: GradleJAR
-          path: Cinema-app-backend/build/libs/Cinema-app-0.0.1-SNAPSHOT.jar
+          path: backend/build/libs/Cinema-app-0.0.1-SNAPSHOT.jar
   deploy_backend:
     name: Deploy backend to heroku
     runs-on: ubuntu-latest
@@ -35,9 +38,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: GradleJAR
-          path: Cinema-app-backend/build/libs
+          path: backend/build/libs
       - name: Build and push Docker to Heroku [BACKEND]
-        working-directory: Cinema-app-backend
+        working-directory: backend
         env:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
           HEROKU_USER: ${{ secrets.HEROKU_USER }}
