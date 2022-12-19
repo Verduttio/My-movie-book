@@ -1,13 +1,18 @@
 FROM node:17-alpine
-
 WORKDIR /app
-
 COPY package.json .
-
 RUN npm install
 
 COPY . .
 
 EXPOSE 3000
+ARG BACKEND_URL
+ARG HTTP_PROTOCOL
+
+ENV REACT_APP_HOST $BACKEND_URL
+ENV REACT_APP_HTTP_PROTOCOL $HTTP_PROTOCOL
+ENV NODE_OPTIONS "--max-old-space-size=512"
+
+#EXPOSE 3000
 
 CMD ["npm", "start"]
