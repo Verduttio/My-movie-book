@@ -26,7 +26,7 @@ public class ImdbURLFinder {
     }
 
     private String getImdbFindMovieHTMLContext(String movieTitleYear) {
-        String imdbURLFind = "https://www.imdb.com/find?q=" + movieTitleYear;
+        String imdbURLFind = "https://www.imdb.com/find/?q=" + movieTitleYear;
         return getPageContent(imdbURLFind);
     }
 
@@ -63,6 +63,9 @@ public class ImdbURLFinder {
         URLConnection connection = null;
         try {
             connection =  new URL(pageUrl).openConnection();
+            connection.setRequestProperty("User-Agent",
+                    "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36");
+            connection.connect();
             Scanner scanner = new Scanner(connection.getInputStream());
             scanner.useDelimiter("\\Z");
             content = scanner.next();
@@ -87,9 +90,11 @@ public class ImdbURLFinder {
 //    public static void main(String[] args) {
 //        ImdbURLFinder imdbURLFinder = new ImdbURLFinder();
 //
-//        String filmwebURL = URLEncoder.encode("101+dalmatyńczyków-1996-633", StandardCharsets.UTF_8);
-//        String imdbURL = imdbURLFinder.getMovieImdbURL(filmwebURL);
-//        System.out.println("imdbURL: " + imdbURL);
+//        System.out.println(imdbURLFinder.getPageContent("https://www.imdb.com/find/?q=Joker-2019"));
+//
+////        String filmwebURL = URLEncoder.encode("101+dalmatyńczyków-1996-633", StandardCharsets.UTF_8);
+////        String imdbURL = imdbURLFinder.getMovieImdbURL(filmwebURL);
+////        System.out.println("imdbURL: " + imdbURL);
 //    }
 }
 
