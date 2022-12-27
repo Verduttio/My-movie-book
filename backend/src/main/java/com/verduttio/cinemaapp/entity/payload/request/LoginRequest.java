@@ -1,4 +1,4 @@
-package com.verduttio.cinemaapp.payload.request;
+package com.verduttio.cinemaapp.entity.payload.request;
 
 import javax.validation.constraints.NotBlank;
 

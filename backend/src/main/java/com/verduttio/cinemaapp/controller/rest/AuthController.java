@@ -1,7 +1,7 @@
 package com.verduttio.cinemaapp.controller.rest;
 
-import com.verduttio.cinemaapp.payload.request.LoginRequest;
-import com.verduttio.cinemaapp.payload.request.SignupRequest;
+import com.verduttio.cinemaapp.entity.payload.request.LoginRequest;
+import com.verduttio.cinemaapp.entity.payload.request.SignupRequest;
 import com.verduttio.cinemaapp.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

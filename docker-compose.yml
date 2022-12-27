@@ -3,7 +3,7 @@ version: "3.8"
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: cinema-app-postgres
+    container_name: my-movie-book-postgres
     #volumes:
     #  - postgres-data:/var/lib/postgresql/data
     ports:
@@ -13,21 +13,23 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=java
   backend:
-    build: ./cinema-app-backend
-    container_name: cinema-app-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile-dev
+    container_name: my-movie-book-backend
     environment:
-      - DB_SERVER=postgres
-      #- SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/my_movie_book
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/my_movie_book
     ports:
       - "8080:8080"
     depends_on:
       - postgres
 
   frontend:
-    build: ./cinema-app-frontend
-    container_name: cinema-app-frontend
+    build: ./frontend
+    container_name: my-movie-book-frontend
     environment:
-      - REACT_APP_HOST=localhost:8080
+      - REACT_APP_HOST=192.168.0.107:8080     #Change it to your machine IP or localhost:8080
+      - REACT_APP_HTTP_PROTOCOL=http
     ports:
       - "3000:3000"
     stdin_open: true

@@ -1,4 +1,4 @@
-package com.verduttio.cinemaapp.payload.response;
+package com.verduttio.cinemaapp.entity.payload.response;
 
 import java.util.List;
 
