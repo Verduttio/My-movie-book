@@ -11,7 +11,11 @@ Its main feature is to store info about your favurite movies and these ones whic
 
 Everything simple and in one place. Thanks to it, you will never forget what you wanted to watch!
 
-## Prerequisites
+**DEMO:** `my-movie-book.herokuapp.com`
+
+Note that the website might not load instantly, it can take up to 1 minute to startup the server!
+
+## Prerequisites to run on your own machine
   * docker
   * docker-compose
 
