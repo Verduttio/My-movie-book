@@ -1,0 +1,27 @@
+name: Deploy frontend
+on:
+  push:
+    paths:
+      - 'frontend/**'
+
+jobs:
+  deploy_frontend:
+    name: Deploy frontend to heroku
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build and push Docker to Heroku [FRONTEND]
+        working-directory: frontend
+        env:
+          HEROKU_APP_NAME_FRONTEND: ${{ secrets.HEROKU_APP_NAME_FRONTEND }}
+          HEROKU_BACKEND_URL: ${{ secrets.HEROKU_BACKEND_URL }}
+          HEROKU_USER: ${{ secrets.HEROKU_USER }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          pwd
+          docker login --username=$HEROKU_USER --password=$HEROKU_API_KEY registry.heroku.com
+          docker build --build-arg BACKEND_URL=$HEROKU_BACKEND_URL --build-arg HTTP_PROTOCOL=https --tag registry.heroku.com/$HEROKU_APP_NAME_FRONTEND/web .
+          docker push registry.heroku.com/$HEROKU_APP_NAME_FRONTEND/web
+          chmod +x ./release-docker-in-heroku.sh
+          ./release-docker-in-heroku.sh $HEROKU_APP_NAME_FRONTEND $HEROKU_API_KEY
