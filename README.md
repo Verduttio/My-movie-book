@@ -1,6 +1,7 @@
 # My-movie-book
 
-[![Build and deploy](https://github.com/Verduttio/Cinema-app/actions/workflows/action.yml/badge.svg)](https://github.com/Verduttio/Cinema-app/actions/workflows/action.yml)
+[![Deploy backend](https://github.com/Verduttio/My-movie-book/actions/workflows/action-backend.yml/badge.svg)](https://github.com/Verduttio/My-movie-book/actions/workflows/action-backend.yml)
+[![Deploy frontend](https://github.com/Verduttio/My-movie-book/actions/workflows/action-frontend.yml/badge.svg)](https://github.com/Verduttio/My-movie-book/actions/workflows/action-frontend.yml)
 
 ## App info
 
@@ -41,7 +42,7 @@ In case of any errors while executing docker commands, try using them with prece
 Like: `sudo docker compose build`.
 
 ## Screenshots
-![demo_1](https://user-images.githubusercontent.com/72033031/209666893-51150677-a9dc-499f-a1b8-444dcea98c9b.png)
+![demo_1_1](https://user-images.githubusercontent.com/72033031/210176631-2ed5dc92-4c8e-41dd-ac29-995fb682eb72.png)
 ![demo_2](https://user-images.githubusercontent.com/72033031/209668184-0345d870-bc82-4f42-a5db-6c3f7bd4e36d.png)
 ![demo_3](https://user-images.githubusercontent.com/72033031/209668234-e2f21c75-ebda-4968-bee4-7bdd32816839.png)
 
