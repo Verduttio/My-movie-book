@@ -48,10 +48,11 @@ jobs:
           DATABASE_URL_D: ${{ secrets.DATABASE_URL }}
           DATABASE_USERNAME_D: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD_D: ${{ secrets.DATABASE_PASSWORD }}
+          JWT_SECRET_D: ${{secrets.JWT_SECRET}}
         run: |
           pwd
           docker login --username=$HEROKU_USER --password=$HEROKU_API_KEY registry.heroku.com
-          docker build --build-arg DATABASE_URL=$DATABASE_URL_D --build-arg DATABASE_USERNAME=$DATABASE_USERNAME_D --build-arg DATABASE_PASSWORD=$DATABASE_PASSWORD_D --tag registry.heroku.com/$HEROKU_APP_NAME/web .
+          docker build --build-arg JWT_SECRET=$JWT_SECRET_D --build-arg DATABASE_URL=$DATABASE_URL_D --build-arg DATABASE_USERNAME=$DATABASE_USERNAME_D --build-arg DATABASE_PASSWORD=$DATABASE_PASSWORD_D --tag registry.heroku.com/$HEROKU_APP_NAME/web .
           docker push registry.heroku.com/$HEROKU_APP_NAME/web
           chmod +x ./release-docker-in-heroku.sh
           ./release-docker-in-heroku.sh $HEROKU_APP_NAME $HEROKU_API_KEY

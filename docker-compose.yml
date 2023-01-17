@@ -28,7 +28,7 @@ services:
     build: ./frontend
     container_name: my-movie-book-frontend
     environment:
-      - REACT_APP_HOST=192.168.0.107:8080     #Change it to your machine IP or localhost:8080
+      - REACT_APP_HOST=10.60.255.104:8080     #Change it to your machine IP or localhost:8080
       - REACT_APP_HTTP_PROTOCOL=http
     ports:
       - "3000:3000"
