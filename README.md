@@ -27,15 +27,22 @@ my-movie-book.herokuapp.com
 
 ## Usage
 
-Initially, you need to change the REACT_APP_HOST variable in docker-compose.yml in root directory. You can either provide localhost:8080 or your machine IP (you can find your machine IP using `ifconfig` on Linux or `ipconfig` on Windows.
+Initially, you need to **change** the `REACT_APP_HOST` variable in `docker-compose.yml` in root directory. You can either provide:
+```
+REACT_APP_HOST=localhost:8080
+```
+or your machine IP (**you can find your machine IP using `ifconfig` on Linux or `ipconfig` on Windows**):
+```
+REACT_APP_HOST=192.168.0.154:8080
+```
 
-Firstly, you have to build .jar file of Spring boot app. To do this, simply execute the following command in backend directory:
+Then, you have to build .jar file of Spring boot app. To do this, simply execute the following command in `/backend` directory:
 ```bash
 ./gradlew build
 ```
 The JAR should now be created in /backend/build/libs.
 
-Now, to run the application, firstly build the containers:
+Now, to run the application, firstly build the containers, exeucute the command in the root of the project's folder:
 
 ```bash
 docker compose build
@@ -46,12 +53,16 @@ Secondly, run the containers:
 docker compose up
 ```
 
-The application should be running now.
+**The application should be running now.**
+
+To access the app simply go to `http://{REACT_APP_HOST}:3000` so for example `http://localhost:3000`.
 
 In case of any errors while executing docker commands, try using them with preceding command *sudo*.
 Like: `sudo docker compose build`.
 
 ## Screenshots
+
+![demo_0](https://user-images.githubusercontent.com/72033031/213208090-bdfd118e-e36c-49a1-96ec-29fda23d3c48.png)
 ![demo_1_1](https://user-images.githubusercontent.com/72033031/210176631-2ed5dc92-4c8e-41dd-ac29-995fb682eb72.png)
 ![demo_2](https://user-images.githubusercontent.com/72033031/209668184-0345d870-bc82-4f42-a5db-6c3f7bd4e36d.png)
 ![demo_3](https://user-images.githubusercontent.com/72033031/209668234-e2f21c75-ebda-4968-bee4-7bdd32816839.png)
