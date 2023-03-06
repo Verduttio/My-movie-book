@@ -4,8 +4,8 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: my-movie-book-postgres
-    #volumes:
-    #  - postgres-data:/var/lib/postgresql/data
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
@@ -17,6 +17,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile-dev
     container_name: my-movie-book-backend
+    volumes:
+      - users-data:/files
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/my_movie_book
     ports:
@@ -36,3 +38,7 @@ services:
     tty: true
     depends_on:
       - backend
+
+volumes:
+  postgres-data:
+  users-data:
