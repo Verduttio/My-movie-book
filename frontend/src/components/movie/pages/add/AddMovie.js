@@ -6,7 +6,7 @@ import imdbFetcher from "../../../../services/imdbFetcher";
 import MovieDataAddFromFilmwebBox from "../../MovieDataAddFromFilmwebBox";
 import MovieDataAddBox from "../../MovieDataAddBox";
 import HeaderUploadMovie from "../../HeaderUploadMovie";
-import {cutLink} from "../../../../functionalities/filmwebLinkCutter";
+import {cutLinkToIMDbFormat, cutLinkToFilmwebFormat} from "../../../../functionalities/filmwebLinkCutter";
 import {formatGenresToEdit} from "../../../../functionalities/GenreFormatter";
 import movieService from "../../../../services/movieService";
 
@@ -57,7 +57,7 @@ export default function AddMovie() {
 
         setFilmwebFetchingData(1);
 
-        const movieLink = cutLink(filmwebLink);
+        const movieLink = cutLinkToFilmwebFormat(filmwebLink);
 
         filmwebFetcher.fetchData(movieLink)
             .then(movie => {
@@ -83,7 +83,7 @@ export default function AddMovie() {
 
         setImdbFetchingData(1);
 
-        const movieLink = cutLink(filmwebLink);
+        const movieLink = cutLinkToIMDbFormat(filmwebLink);
 
         imdbFetcher.fetchRating(movieLink)
             .then(ratingInfo => {
