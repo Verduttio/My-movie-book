@@ -17,14 +17,6 @@ import java.util.regex.Pattern;
 public class ImdbURLFinder {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private String getMovieTitleYear(String filmwebURL) {
-        // EXAMPLE
-        // filmwebURL : "Na+Zachodzie+bez+zmian-2022-430867"
-        // output: "Na+Zachodzie+bez+zmian-2022"
-
-        return filmwebURL.substring(0, filmwebURL.lastIndexOf("-"));
-    }
-
     private String getImdbFindMovieHTMLContext(String movieTitleYear) {
         String imdbURLFind = "https://www.imdb.com/find/?q=" + movieTitleYear;
         return getPageContent(imdbURLFind);
@@ -40,11 +32,8 @@ public class ImdbURLFinder {
         return "https://www.imdb.com" + titleEndpoint;
     }
 
-    public String getMovieImdbURL(String filmwebURL) {
-        String movieTitleYear = getMovieTitleYear(filmwebURL);
-        logger.debug("movieTitleYear: " + movieTitleYear);
-
-        String encodedMovieTitleYear = URLEncoder.encode(movieTitleYear, StandardCharsets.UTF_8);
+    public String getMovieImdbURL(String filmwebCutURL) {
+        String encodedMovieTitleYear = URLEncoder.encode(filmwebCutURL, StandardCharsets.UTF_8);
         logger.debug("encodedMovieTitleYear: " + encodedMovieTitleYear);
 
         String imdbFindMovieHTMLContext = getImdbFindMovieHTMLContext(encodedMovieTitleYear);
@@ -87,15 +76,16 @@ public class ImdbURLFinder {
     }
 
 
-//    public static void main(String[] args) {
-//        ImdbURLFinder imdbURLFinder = new ImdbURLFinder();
-//
-//        System.out.println(imdbURLFinder.getPageContent("https://www.imdb.com/find/?q=Joker-2019"));
-//
-////        String filmwebURL = URLEncoder.encode("101+dalmatyńczyków-1996-633", StandardCharsets.UTF_8);
-////        String imdbURL = imdbURLFinder.getMovieImdbURL(filmwebURL);
-////        System.out.println("imdbURL: " + imdbURL);
-//    }
+    public static void main(String[] args) {
+        ImdbURLFinder imdbURLFinder = new ImdbURLFinder();
+
+//        System.out.println(imdbURLFinder.getPageContent("https://www.imdb.com/find/?q=Dobry+rok-2006"));
+        System.out.println("imdb URL: " + imdbURLFinder.getMovieImdbURL("Dobry+rok-2006"));
+
+//        String filmwebURL = URLEncoder.encode("101+dalmatyńczyków-1996-633", StandardCharsets.UTF_8);
+//        String imdbURL = imdbURLFinder.getMovieImdbURL(filmwebURL);
+//        System.out.println("imdbURL: " + imdbURL);
+    }
 }
 
 

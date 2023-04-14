@@ -35,8 +35,10 @@ public class ImdbDataFetcher {
     }
 
     private void init(String movieURL_) {
-        this.movieURL = movieURL_+"/ratings";
+        logger.info("init(movieURL_: " + movieURL_);
+        this.movieURL = movieURL_+"/ratings" + "/?ref_=fn_al_tt_1";
         this.pageContent = getPageContent(movieURL);
+        logger.info("this.movieURL: " + this.movieURL);
     }
 
 
@@ -140,18 +142,18 @@ public class ImdbDataFetcher {
         }
     }
 
-//    public static void main(String[] args) {
-//        ImdbDataFetcher imdbDataFetcher = new ImdbDataFetcher(new ImdbURLFinder());
-//        imdbDataFetcher.init("https://www.imdb.com/title/tt1016150");
-//
-//        System.out.println("movie url: " + imdbDataFetcher.movieURL);
-//
-//        System.out.println(imdbDataFetcher.pageContent);
-//
-//        System.out.println("rating: " + imdbDataFetcher.getRating());
-//
-//        System.out.println("numberOfViews: " + imdbDataFetcher.getNumberOfViews());
-//
-//
-//    }
+    public static void main(String[] args) {
+        ImdbDataFetcher imdbDataFetcher = new ImdbDataFetcher(new ImdbURLFinder());
+        imdbDataFetcher.init("https://www.imdb.com/title/tt0401445");
+
+        System.out.println("movie url: " + imdbDataFetcher.movieURL);
+
+        System.out.println(imdbDataFetcher.pageContent);
+
+        System.out.println("rating: " + imdbDataFetcher.getRating());
+
+        System.out.println("numberOfViews: " + imdbDataFetcher.getNumberOfViews());
+
+
+    }
 }
