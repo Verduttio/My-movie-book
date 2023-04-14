@@ -7,7 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -30,7 +35,7 @@ public class ImdbDataFetcher {
     }
 
     private void init(String movieURL_) {
-        this.movieURL = movieURL_;
+        this.movieURL = movieURL_+"/ratings";
         this.pageContent = getPageContent(movieURL);
     }
 
@@ -40,6 +45,9 @@ public class ImdbDataFetcher {
         URLConnection connection = null;
         try {
             connection =  new URL(pageUrl).openConnection();
+            connection.setRequestProperty("User-Agent",
+                    "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36");
+            connection.connect();
             Scanner scanner = new Scanner(connection.getInputStream());
             scanner.useDelimiter("\\Z");
             content = scanner.next();
@@ -63,6 +71,7 @@ public class ImdbDataFetcher {
 
     private double getRating() {
         String regexResult = getRegexResult(" vote of .*? / 10", this.pageContent);
+//        String regexResult = getRegexResult("aggregateRating\":[0-9](\\.[0-9]){0,1},", this.pageContent);
         logger.debug("regexResult: " + regexResult);
 
         String rating = findRate(regexResult);
@@ -107,7 +116,7 @@ public class ImdbDataFetcher {
     }
 
     private RatingInfo getRatingInfo(String movieURL) {
-        init(movieURL  + "/ratings");
+        init(movieURL);
 
         RatingInfo ratingInfo = new RatingInfo();
         ratingInfo.setRating(getRating());
@@ -134,6 +143,8 @@ public class ImdbDataFetcher {
 //    public static void main(String[] args) {
 //        ImdbDataFetcher imdbDataFetcher = new ImdbDataFetcher(new ImdbURLFinder());
 //        imdbDataFetcher.init("https://www.imdb.com/title/tt1016150");
+//
+//        System.out.println("movie url: " + imdbDataFetcher.movieURL);
 //
 //        System.out.println(imdbDataFetcher.pageContent);
 //
