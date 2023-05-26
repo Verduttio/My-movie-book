@@ -1,19 +1,15 @@
 package com.verduttio.cinemaapp.entity;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import static javax.persistence.GenerationType.AUTO;
-
-@Entity
-@Table(name="roles")
+@Document("roles")
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
+
     private ERole name;
 
     public Role() {
@@ -24,9 +20,9 @@ public class Role {
         this.name = name;
     }
 
-    public int getId() {return id;}
+    public String getId() {return id;}
 
-    public void setId(int id) {this.id = id;}
+    public void setId(String id) {this.id = id;}
 
     public ERole getName() {return name;}
 

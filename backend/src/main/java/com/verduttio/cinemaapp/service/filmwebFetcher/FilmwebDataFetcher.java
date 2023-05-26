@@ -2,7 +2,7 @@ package com.verduttio.cinemaapp.service.filmwebFetcher;
 
 import com.verduttio.cinemaapp.entity.Genre;
 import com.verduttio.cinemaapp.entity.Movie;
-import com.verduttio.cinemaapp.repository.GenreRepository;
+import com.verduttio.cinemaapp.repository.mongoDB.GenreRepository;
 import com.verduttio.cinemaapp.service.imageHandling.ImageFetcher;
 import com.verduttio.cinemaapp.service.storage.FileNameGenerator;
 import org.slf4j.Logger;

@@ -18,7 +18,7 @@ public class FilesCleaner {
      *
 //     * @param  fileName Name of the accepted uploaded file.
      */
-    public static void cleanAfterUploadImage(int userId, String uploadedFileName, String generatedFileName) {
+    public static void cleanAfterUploadImage(String userId, String uploadedFileName, String generatedFileName) {
         logger.info("cleanAfterUploadImage()");
         File file = new File("files/images/" + userId +"/temp/" + uploadedFileName);
         file.renameTo(new File("files/images/" + userId + "/"+ generatedFileName));
@@ -37,7 +37,7 @@ public class FilesCleaner {
      * @param oldFileName Name of the old image file.
 //     * @param newFileName Name of the new image file.
      */
-    public static void cleanAfterEditImage(int userId, String oldFileName, String uploadFileName, String generatedFileName) {
+    public static void cleanAfterEditImage(String userId, String oldFileName, String uploadFileName, String generatedFileName) {
         if(!Objects.equals(oldFileName, uploadFileName)) {
             logger.info("cleanAfterEditImage()");
             FileSystemUtils.deleteRecursively(new File("files/images/" + userId + "/" + oldFileName));
@@ -51,7 +51,7 @@ public class FilesCleaner {
         file.renameTo(new File("files/images/temp/" + newFileName));
     }
 
-    public static void deleteAllUserFiles(int userId) {
+    public static void deleteAllUserFiles(String userId) {
         logger.info("deleteAllUserFiles({})", userId);
         FileSystemUtils.deleteRecursively(new File("files/images/" + userId));
     }

@@ -3,7 +3,7 @@ package com.verduttio.cinemaapp.service;
 import com.verduttio.cinemaapp.entity.ERole;
 import com.verduttio.cinemaapp.entity.User;
 import com.verduttio.cinemaapp.entity.UserSafeData;
-import com.verduttio.cinemaapp.repository.UserRepository;
+import com.verduttio.cinemaapp.repository.mongoDB.UserRepository;
 import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
 import com.verduttio.cinemaapp.service.storage.FilesCleaner;
 import org.slf4j.Logger;
@@ -32,8 +32,8 @@ public class UserService {
         return (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public void removeUser(int userId) {
-        if((getCurrentUserDetailsImpl().getId() == userId) || isCurrentUserAdmin()) {
+    public void removeUser(String userId) {
+        if((getCurrentUserDetailsImpl().getId().equals(userId)) || isCurrentUserAdmin()) {
 
             userRepository.deleteById(userId);
 

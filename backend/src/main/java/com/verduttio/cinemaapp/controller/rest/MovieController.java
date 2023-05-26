@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -29,7 +30,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Movie getMovie(@PathVariable("id") int movieId) {
+    public Optional<Movie> getMovie(@PathVariable("id") String movieId) {
         return movieService.getMovieById(movieId);
     }
 
@@ -45,9 +46,9 @@ public class MovieController {
     }
 
     @PatchMapping("/{id}")
-    public Movie modifyMovie(@PathVariable("id") int movieId, @RequestBody Map<Object, Object> fields) {return movieService.modifyMovie(movieId, fields);}
+    public Movie modifyMovie(@PathVariable("id") String movieId, @RequestBody Map<Object, Object> fields) {return movieService.modifyMovie(movieId, fields);}
 
     @DeleteMapping("/{id}")
-    public void removeMovie(@PathVariable("id") int movieId) {movieService.removeMovie(movieId);}
+    public void removeMovie(@PathVariable("id") String movieId) {movieService.removeMovie(movieId);}
 
 }

@@ -3,8 +3,8 @@ package com.verduttio.cinemaapp.service;
 import com.verduttio.cinemaapp.entity.Genre;
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.entity.MovieRequest;
-import com.verduttio.cinemaapp.repository.GenreRepository;
-import com.verduttio.cinemaapp.repository.MovieRepository;
+import com.verduttio.cinemaapp.repository.mongoDB.GenreRepository;
+import com.verduttio.cinemaapp.repository.mongoDB.MovieRepository;
 import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
 import com.verduttio.cinemaapp.service.storage.FileNameGenerator;
 import com.verduttio.cinemaapp.service.storage.FilesCleaner;
@@ -48,7 +48,7 @@ public class MovieService {
         if(!uploadPosterFileName.equals("")) {
             movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
             UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            int userId = userDetails.getId();
+            String userId = userDetails.getId();
             FilesCleaner.cleanAfterUploadImage(userId, uploadPosterFileName, movie.posterFileName());
         } else {
             movie.setPosterFileName("no_poster");
@@ -62,48 +62,49 @@ public class MovieService {
         return (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public Movie getMovieById(int movieId) {
+    public Optional<Movie> getMovieById(String movieId) {
         // Security check
-        if(getCurrentUserDetailsImpl().getId() == getUserIdByMovieId(movieId)) {
+        if(getCurrentUserDetailsImpl().getId().equals(getUserIdByMovieId(movieId))) {
             return movieRepository.findById(movieId);
         } else {
             ////TODO: Make an exception and throw it here
-            logger.info("Access denied! Movie with id: {} does not belong to user with id: {}", movieId, getCurrentUserDetailsImpl().getId());
+            logger.info("Access denied! Movie with id: {} does not belong to user with id: {}. Movie owner: {}", movieId, getCurrentUserDetailsImpl().getId(), getUserIdByMovieId(movieId));
             return null;
         }
     }
 
-    public int getUserIdByMovieId(int movieId) {
-        return movieRepository.getUserIdByMovieId(movieId);
+    public String getUserIdByMovieId(String movieId) {
+        Optional<Movie> movie = movieRepository.findById(movieId);
+        return movie.get().userId();
     }
 
     public List<Movie> getAllMovies(){
         return movieRepository.findAll();
     }
 
-    public void removeMovie(int movieId) {
+    public void removeMovie(String movieId) {
         logger.info("removeMovie() - movieId:{}", movieId);
-        if(getCurrentUserDetailsImpl().getId() == getUserIdByMovieId(movieId)) {
+        if(getCurrentUserDetailsImpl().getId().equals(getUserIdByMovieId(movieId))) {
             movieRepository.deleteById(movieId);
         } else {
             ////TODO: Make an exception and throw it here
-            logger.info("Access denied! Movie with id: {} does not belong to user with id: {}", movieId, getCurrentUserDetailsImpl().getId());
+            logger.info("Access denied! Movie with id: {} does not belong to user with id: {}. Movie owner: {}", movieId, getCurrentUserDetailsImpl().getId(), getUserIdByMovieId(movieId));
         }
     }
 
-    public void removeAllUserMovies(int userId) {
+    public void removeAllUserMovies(String userId) {
         logger.info("removeALlUserMovies() - userId:{}", userId);
-        if(getCurrentUserDetailsImpl().getId() == userId) {
+        if(getCurrentUserDetailsImpl().getId().equals(userId)) {
             movieRepository.deleteByUserId(userId);
         } else {
             logger.warn("Access denied! User of Id: {}, wants to remove all movies of user of Id: {}", getCurrentUserDetailsImpl().getId(), userId);
         }
     }
 
-    public Movie modifyMovie(int movieId, Map<Object, Object> fields) {
-        if(getCurrentUserDetailsImpl().getId() == getUserIdByMovieId(movieId)) {
+    public Movie modifyMovie(String movieId, Map<Object, Object> fields) {
+        if(getCurrentUserDetailsImpl().getId().equals(getUserIdByMovieId(movieId))) {
             ////TODO: Maybe some update queries would be better than loading whole movie, then changing values and uploading object.
-            Movie movie = movieRepository.findById(movieId);
+            Movie movie = movieRepository.findById(movieId).get();
             // Map key is field name, v is value
             fields.forEach((k, v) -> {
                 // Use reflection to get field k on movie and set it value v
@@ -140,7 +141,7 @@ public class MovieService {
                         logger.debug("updateMovie() - oldFileName: {}, newFileName:{}", oldFileName, movie.posterFileName());
 
                         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                        int userId = userDetails.getId();
+                        String userId = userDetails.getId();
                         FilesCleaner.cleanAfterEditImage(userId, oldFileName, uploadFileName, movie.posterFileName());
                     }
 
@@ -162,7 +163,9 @@ public class MovieService {
     }
 
     public List<Movie> getCurrentUserMovies() {
-        return movieRepository.findByUserId(getCurrentUserDetailsImpl().getId());
+        String userId = getCurrentUserDetailsImpl().getId();
+        logger.info("getCurrentUserMovies() - userId:{}", userId);
+        return movieRepository.findByUserId(userId);
     }
 
 }

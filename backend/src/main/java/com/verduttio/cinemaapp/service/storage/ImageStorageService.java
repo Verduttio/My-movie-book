@@ -31,7 +31,7 @@ public class ImageStorageService {
         fileStorage.store(file, pathTemp(String.valueOf(getIdOfCurrentUser())));
     }
 
-    private int getIdOfCurrentUser() {
+    private String getIdOfCurrentUser() {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getId();
     }

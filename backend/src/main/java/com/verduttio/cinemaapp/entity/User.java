@@ -1,41 +1,25 @@
 package com.verduttio.cinemaapp.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.GenerationType.AUTO;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="users",
-        uniqueConstraints = {
-            @UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")
-        })
+@Document("users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
-    @NotBlank
-    @Size(max = 20)
     private String username;
 
-    @NotBlank
-    @Size(max = 50)
-    @Email
     private String email;
 
-    @NotBlank
-    @Size(max = 120)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(	name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @DBRef
     private Set<Role> roles = new HashSet<>();
 
     public User() {
@@ -47,11 +31,11 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

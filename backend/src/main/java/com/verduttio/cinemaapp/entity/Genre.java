@@ -1,16 +1,15 @@
 package com.verduttio.cinemaapp.entity;
 
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="genres")
+
+@Document("genres")
 public class Genre {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
-    @Column(length = 20)
     private String name;
 
     public Genre() {
@@ -21,9 +20,9 @@ public class Genre {
         this.name = name;
     }
 
-    public int getId() {return id;}
+    public String getId() {return id;}
 
-    public void setId(int id) {this.id = id;}
+    public void setId(String id) {this.id = id;}
 
     public String getName() {return name;}
 

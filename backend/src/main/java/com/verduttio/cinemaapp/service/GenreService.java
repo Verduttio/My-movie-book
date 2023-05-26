@@ -1,7 +1,7 @@
 package com.verduttio.cinemaapp.service;
 
 import com.verduttio.cinemaapp.entity.Genre;
-import com.verduttio.cinemaapp.repository.GenreRepository;
+import com.verduttio.cinemaapp.repository.mongoDB.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

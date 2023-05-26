@@ -18,7 +18,7 @@ public class ImageFetcher {
     private static final Logger logger = LoggerFactory.getLogger(ImageFetcher.class);
     public static void fetch(String url, String fileName) throws IOException {
         UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userId = userDetails.getId();
+        String userId = userDetails.getId();
 
         URL imageUrl = new URL(url);
 

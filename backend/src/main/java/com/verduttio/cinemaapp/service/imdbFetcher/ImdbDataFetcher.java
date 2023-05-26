@@ -2,7 +2,7 @@ package com.verduttio.cinemaapp.service.imdbFetcher;
 
 import com.verduttio.cinemaapp.entity.RatingInfo;
 import com.verduttio.cinemaapp.entity.RatingInfoNotFound;
-import com.verduttio.cinemaapp.repository.GenreRepository;
+import com.verduttio.cinemaapp.repository.mongoDB.GenreRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

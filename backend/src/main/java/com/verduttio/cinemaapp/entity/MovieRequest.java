@@ -2,10 +2,7 @@ package com.verduttio.cinemaapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class MovieRequest {
     @JsonProperty("title")
@@ -45,7 +42,7 @@ public class MovieRequest {
 //    private boolean watched;
 
     @JsonProperty("userId")
-    private int userId;
+    private String userId;
 
     public String getTitle() {
         return title;
@@ -127,11 +124,11 @@ public class MovieRequest {
         this.description = description;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
