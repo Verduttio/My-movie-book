@@ -29,7 +29,7 @@ public class ImdbURLFinder {
     private String processMovieImdbURL(String firstFoundMovieFromListsHTML) {
         String regexResult = getRegexResult("href=\".*?\"", firstFoundMovieFromListsHTML);
         String titleEndpoint = regexResult.substring(regexResult.indexOf('"')+1, regexResult.indexOf("?")-1);
-        return "https://www.imdb.com" + titleEndpoint;
+        return "https://www.imdb.com" + titleEndpoint + "/";
     }
 
     public String getMovieImdbURL(String filmwebCutURL) {

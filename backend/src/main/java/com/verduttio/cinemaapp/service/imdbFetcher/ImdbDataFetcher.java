@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -36,7 +37,7 @@ public class ImdbDataFetcher {
 
     private void init(String movieURL_) {
         logger.info("init(movieURL_: " + movieURL_);
-        this.movieURL = movieURL_+"/ratings" + "/?ref_=fn_al_tt_1";
+        this.movieURL = movieURL_;
         this.pageContent = getPageContent(movieURL);
         logger.info("this.movieURL: " + this.movieURL);
     }
@@ -44,11 +45,12 @@ public class ImdbDataFetcher {
 
     private String getPageContent(String pageUrl) {
         String content = null;
-        URLConnection connection = null;
+        HttpURLConnection connection = null;
         try {
-            connection =  new URL(pageUrl).openConnection();
+            connection =  (HttpURLConnection) new URL(pageUrl).openConnection();
             connection.setRequestProperty("User-Agent",
                     "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36");
+            connection.setInstanceFollowRedirects(true);
             connection.connect();
             Scanner scanner = new Scanner(connection.getInputStream());
             scanner.useDelimiter("\\Z");
@@ -72,7 +74,8 @@ public class ImdbDataFetcher {
 
 
     private double getRating() {
-        String regexResult = getRegexResult(" vote of .*? / 10", this.pageContent);
+//        String regexResult = getRegexResult(" vote of .*? / 10", this.pageContent);
+        String regexResult = getRegexResult("aggregateRating\":\\{.*?}", this.pageContent);
 //        String regexResult = getRegexResult("aggregateRating\":[0-9](\\.[0-9]){0,1},", this.pageContent);
         logger.debug("regexResult: " + regexResult);
 
@@ -84,16 +87,17 @@ public class ImdbDataFetcher {
 
     private String findRate(String regexResult) {
         // EXAMPLE
-        // regexResult: " vote of 7,9 / 10"
+        // regexResult: aggregateRating":{"@type":"AggregateRating","ratingCount":97973,"bestRating":10,"worstRating":1,"ratingValue":6.9}
 
-        regexResult = regexResult.substring(0, regexResult.length()-5);
-        // regexResult = " vote of 7,9"
+        regexResult = regexResult.substring(regexResult.indexOf("ratingValue")+13);
+        System.out.println("regexResult: " + regexResult);
 
-        return regexResult.substring(regexResult.length()-3);
+        return regexResult.substring(0, regexResult.indexOf("}"));
     }
 
     private int getNumberOfViews() {
-        String regexResult = getRegexResult("<div class=\"allText\">[^:]*:", this.pageContent);
+//        String regexResult = getRegexResult("<div class=\"allText\">[^:]*:", this.pageContent);
+        String regexResult = getRegexResult("aggregateRating\":\\{.*?}", this.pageContent);
         logger.debug("regexResult: " + regexResult);
 
         String numberOfViews = findNumberOfViews(regexResult);
@@ -103,14 +107,22 @@ public class ImdbDataFetcher {
     }
 
     private String findNumberOfViews(String regexResult) {
-        StringBuilder numberOfViews = new StringBuilder();
-        for(int i = 0; i < regexResult.length(); i++) {
-            if(isDigit(regexResult.charAt(i))) {
-                numberOfViews.append(regexResult.charAt(i));
-            }
-        }
+//        StringBuilder numberOfViews = new StringBuilder();
+//        for(int i = 0; i < regexResult.length(); i++) {
+//            if(isDigit(regexResult.charAt(i))) {
+//                numberOfViews.append(regexResult.charAt(i));
+//            }
+//        }
+//
+//        return numberOfViews.toString();
 
-        return numberOfViews.toString();
+        // EXAMPLE
+        // regexResult: aggregateRating":{"@type":"AggregateRating","ratingCount":97973,"bestRating":10,"worstRating":1,"ratingValue":6.9}
+
+        regexResult = regexResult.substring(regexResult.indexOf("ratingCount")+13);
+        System.out.println("regexResult: " + regexResult);
+
+        return regexResult.substring(0, regexResult.indexOf(","));
     }
 
     private boolean isDigit(char letter) {
@@ -142,9 +154,37 @@ public class ImdbDataFetcher {
         }
     }
 
+    public static String getFinalURL(String url) throws IOException {
+        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+        con.setInstanceFollowRedirects(false);
+        con.setRequestProperty("User-Agent",
+                "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36");
+        con.connect();
+        con.getInputStream();
+
+        System.out.println("con.getResponseCode(): " + con.getResponseCode());
+
+        if (con.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM || con.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP || con.getResponseCode() == 308) {
+            String redirectUrl = con.getHeaderField("Location");
+            System.out.println("redirectUrl: " + redirectUrl);
+            return getFinalURL(redirectUrl);
+        }
+        return url;
+    }
+
+
     public static void main(String[] args) {
         ImdbDataFetcher imdbDataFetcher = new ImdbDataFetcher(new ImdbURLFinder());
-        imdbDataFetcher.init("https://www.imdb.com/title/tt0401445");
+
+//        String fetchedUrl = null;
+//        try {
+//            fetchedUrl = getFinalURL("https://www.imdb.com/title/tt0401445/");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        System.out.println("FetchedURL is:" + fetchedUrl);
+
+        imdbDataFetcher.init("https://www.imdb.com/title/tt0401445/");
 
         System.out.println("movie url: " + imdbDataFetcher.movieURL);
 
