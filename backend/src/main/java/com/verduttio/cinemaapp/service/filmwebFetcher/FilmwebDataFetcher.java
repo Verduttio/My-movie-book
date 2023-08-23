@@ -109,9 +109,9 @@ public class FilmwebDataFetcher {
     }
 
     private String findGenre(String regexResult) {
-        String field = "a href=\"";
-        regexResult = regexResult.substring(regexResult.indexOf(field)+field.length()+1);
-        regexResult = regexResult.substring(regexResult.indexOf('"')+2);
+        String field = "\"filmMainHeader\">";
+        regexResult = regexResult.substring(regexResult.indexOf(field)+field.length());
+//        regexResult = regexResult.substring(regexResult.indexOf('<'));
         return regexResult.substring(0, regexResult.indexOf('<'));
     }
 
@@ -163,14 +163,18 @@ public class FilmwebDataFetcher {
 
         // Get a tags only from the regex
         LinkedHashSet<String> regexResults = getRegexResults("<a href.*?</a>", regexResult);
-//        System.out.println("getGenres: regexResult_v2: ");
-//        regexResults.forEach((el) -> {System.out.println(findGenre(el));});
 
-//        LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
-//        regexResults.forEach(genre -> {genres.add(new Genre(findGenre(genre)));});
+//        regexResults.stream().forEach(System.out::println);
+//        regexResults.stream().forEach(genre -> System.out.println("findGenre: |" + findGenre(genre) + "|"));
+
+
         return regexResults.stream().map(
                 genre -> genreRepository.findByName(findGenre(genre)).get()
         ).collect(Collectors.toSet());
+
+//        var genres = new HashSet<Genre>();
+//        genres.add(new Genre("Test"));
+//        return genres;
     }
 
     private String getGenre() {
@@ -186,8 +190,6 @@ public class FilmwebDataFetcher {
 
 //    public static void main(String[] args) {
 //        FilmwebDataFetcher filmwebDataFetcher = new FilmwebDataFetcher();
-////        filmwebDataFetcher.init("Next-2007-221722");
-////        filmwebDataFetcher.getGenres();
 //        filmwebDataFetcher.fetchMovie("Next-2007-221722");
 //    }
 

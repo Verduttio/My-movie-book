@@ -3,6 +3,7 @@ GET {{host}}/externalMovieData/filmweb/W%C5%82adca+Pier%C5%9Bcieni%3A+Dru%C5%BCy
 
 ### GET FilmwebINFO Gwiezdny Pył
 GET {{host}}/externalMovieData/filmweb/Gwiezdny+py%C5%82-2007-273934
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJWZXJkdXR0aW8iLCJpYXQiOjE2OTI3ODg4OTQsImV4cCI6MTY5Mjg3NTI5NH0.QMuD_NWQorTI-E2rpF7lD2gASiR8FB-1Gpdpb_ecCIU2mQjA4caLKKJ-63K3AAmU3-zJ1ha4gguIQ3LpZ5_bzQ
 
 ### GET FilmwebINFO Szkoła uczuć
 GET {{host}}/externalMovieData/filmweb/Szkoła+uczuć-2002-33295
