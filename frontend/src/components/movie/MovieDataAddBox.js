@@ -46,7 +46,7 @@ export default function MovieDataAddBox(params) {
         movieService.create(movie)
             .then(response => {
                 console.log("Movie uploaded successfully.", response.data);
-                //navigate('/movies');
+                navigate('/movies');
             })
             .catch(error => {
                 console.log('An error occurred while uploading the movie.', error);
