@@ -106,13 +106,15 @@ export default function AddMovie() {
 
     if (enterMovieDataOption === 0) {
         return (
-            <div className={"container"}>
-                <div>
-                    <div className={"text-center"} style={{padding: "30px"}}>
-                        <button className={"btn btn-primary"} onClick={(e) => setEnterMovieDataOption(1)}>Load data from filmweb</button>
-                    </div>
-                    <div className={"text-center"}>
-                        <button className={"btn btn-primary"} onClick={(e) => setEnterMovieDataOption(2)}>Fill in data manually</button>
+            <div className="container d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <div className="card shadow p-3 mb-5 bg-white rounded">
+                    <div className="card-body text-center">
+                        <div className="mb-3">
+                            <button className="btn btn-primary" onClick={(e) => setEnterMovieDataOption(1)}>Load data from filmweb</button>
+                        </div>
+                        <div>
+                            <button className="btn btn-primary" onClick={(e) => setEnterMovieDataOption(2)}>Fill in data manually</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,42 +125,47 @@ export default function AddMovie() {
             // User has not fetched data yet,
             // so display only link box.
             return (
-                <div className={"container"}>
-                    <form>
-                        <div className={"mb-3"}>
-                            <input
-                                type={"text"}
-                                className={"form-control col-4"}
-                                id={"movieName"}
-                                value={filmwebLink}
-                                onChange={(e) => setFilmwebLink(e.target.value)}
-                                placeholder={"Filmweb link"}
-                            />
-                        </div>
-                        <div className={"text-center"}>
-                            <button
-                                className={"btn btn-primary"}
-                                onClick={(e) => {fetchRatingFromIMDb(e); fetchFromFilmweb(e);}}
-                                disabled={filmwebFetchingData > 0 || imdbFetchingData > 0}
-                            >
-                                {filmwebFetchingData === 1 && (
-                                    <span>
-                                        <span className="spinner-border spinner-border-sm"></span>
-                                        <span>Fetching from filmweb...</span>
-                                    </span>
-                                )}
-                                {imdbFetchingData === 1 && (
-                                    <span>
-                                        <span className="spinner-border spinner-border-sm"></span>
-                                        <span>Fetching from imdb...</span>
-                                    </span>
-                                )}
-                                {filmwebFetchingData === 0 && imdbFetchingData === 0 && (
-                                    <span>Load data from filmweb</span>
-                                )}
-                            </button>
-                        </div>
-                    </form>
+                <div className="container d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                    <div className="card shadow p-3 mb-5 bg-white rounded">
+                        <form>
+                            <div className="mb-3 text-center">
+                                <input
+                                    type="text"
+                                    className="form-control col-4"
+                                    id="movieName"
+                                    value={filmwebLink}
+                                    onChange={(e) => setFilmwebLink(e.target.value)}
+                                    placeholder="Filmweb link"
+                                />
+                            </div>
+                            <div className="text-center">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={(e) => {
+                                        fetchRatingFromIMDb(e);
+                                        fetchFromFilmweb(e);
+                                    }}
+                                    disabled={filmwebFetchingData > 0 || imdbFetchingData > 0}
+                                >
+                                    {filmwebFetchingData === 1 && (
+                                        <span>
+                  <span className="spinner-border spinner-border-sm"></span>
+                  <span>Fetching from filmweb...</span>
+                </span>
+                                    )}
+                                    {imdbFetchingData === 1 && (
+                                        <span>
+                  <span className="spinner-border spinner-border-sm"></span>
+                  <span>Fetching from imdb...</span>
+                </span>
+                                    )}
+                                    {filmwebFetchingData === 0 && imdbFetchingData === 0 && (
+                                        <span>Load data from filmweb</span>
+                                    )}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             );
         } else {

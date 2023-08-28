@@ -76,9 +76,9 @@ export default function MovieList() {
     return (
         <div className="container">
             <div id={"buttons"} style={{paddingTop: "20px", paddingBottom: "20px"}}>
-                <span style={{display:"block", float:"left"}}>
-                    <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>
-                </span>
+                {/*<span style={{display:"block", float:"left"}}>*/}
+                {/*    <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>*/}
+                {/*</span>*/}
                 <span style={{display:"block", float:"right"}}>
                     <button className={"btn btn-success"} onClick={(e) => {
                         changeWatchStatus(e);
@@ -100,59 +100,61 @@ export default function MovieList() {
             </div>
             <div style={{paddingTop:"40px"}}>
                 <div className="row">
-                    <div className="col-8">
-                        <div className={movie.watched ? ("card border-success") : ("card border-danger")} style={{minHeight: "406px", maxWidth: "800px"}}>
-                            <div className="row g-0" style={{minHeight: "406px"}}>
+                    <div className="col-12 col-lg-8">
+                        <div className={`card`} style={{
+                            maxWidth: "800px",
+                            border: `1px solid ${movie.watched ? "green" : "red"}`,
+                            boxShadow: `0px 0px 10px ${movie.watched ? "green" : "red"}`
+                        }}>
+                            <div className="row g-0">
                                 <div className="col-md-4">
-                                    <img src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + userId +'/'+movie.posterFileName}
-                                         // className="img-fluid rounded-start"
-                                         alt={movie.posterFileName}
-                                         style={{
-                                             maxWidth: "100%",
-                                             height: "auto",
-                                             position: "relative",
-                                             top: "50%",
-                                             transform: "translateY(-50%)"
-
-                                         }}
+                                    <img
+                                        src={`http://${process.env.REACT_APP_HOST}/files/images/${userId}/${movie.posterFileName}`}
+                                        alt={movie.posterFileName}
+                                        className="rounded-start"
+                                        style={{
+                                            width: "100%", // Skalowanie zdjęcia na szerokość
+                                            height: "auto", // Automatyczna wysokość
+                                            objectFit: "cover", // Wypełnij całą przestrzeń
+                                        }}
                                     />
                                 </div>
                                 <div className="col-md-8">
                                     <div className="card-body">
-                                        <div className="row">
-                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                        <div className="row mb-2">
+                                            <div className="col-3">
                                                 <h5 className="card-title">Title</h5>
                                             </div>
                                             <div className="col">
                                                 <h5 className="card-title">{movie.title}</h5>
                                             </div>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                        <div className="row mb-2">
+                                            <div className="col-3">
                                                 <p className="card-text">Year</p>
                                             </div>
                                             <div className="col">
                                                 <p className="card-text">{movie.releaseYear}</p>
                                             </div>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                        <div className="row mb-2">
+                                            <div className="col-3">
                                                 <p className="card-text">Genres</p>
                                             </div>
                                             <div className="col">
                                                 <p className="card-text">{formatGenresToDisplay(movie.genres)}</p>
                                             </div>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                        <div className="row mb-2">
+                                            <div className="col-3">
                                                 <p className="card-text">Director</p>
                                             </div>
                                             <div className="col">
                                                 <p className="card-text">{movie.director}</p>
                                             </div>
                                         </div>
-                                        <div className="row">
-                                            <div className="col-3" style={{paddingBottom: "10px"}}>
+                                        <div className="row mb-2">
+                                            <div className="col-3">
                                                 <p className="card-text">Description</p>
                                             </div>
                                             <div className="col">
@@ -164,7 +166,7 @@ export default function MovieList() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-12 col-lg-4">
                         <div className="row">
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
