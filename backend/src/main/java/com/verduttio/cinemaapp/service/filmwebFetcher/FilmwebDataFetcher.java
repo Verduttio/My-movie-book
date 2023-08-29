@@ -28,15 +28,6 @@ public class FilmwebDataFetcher {
     private String movieURL;
     private String pageContent;
 
-    private final GenreRepository genreRepository;
-
-    @Autowired
-    public FilmwebDataFetcher(GenreRepository genreRepository) {
-        this.movieURL = null;
-        this.pageContent = null;
-        this.genreRepository = genreRepository;
-    }
-
     private void init(String movieTitle) {
         this.movieURL = "https://www.filmweb.pl/film/" + URLEncoder.encode(movieTitle, StandardCharsets.UTF_8);
         this.pageContent = getPageContent(movieURL);
@@ -157,24 +148,21 @@ public class FilmwebDataFetcher {
         return HtmlEscape.unescapeHtml(director);
     }
 
-    private Set<Genre> getGenres() {
+    private Set<String> getGenres() {
         String regexResult = getRegexResult("<div class=\"filmInfo__info\" itemprop=\"genre\">.*?</div>", this.pageContent);
 //        System.out.println("getGenres: regexResult: |" + regexResult + "|");
 
         // Get a tags only from the regex
         LinkedHashSet<String> regexResults = getRegexResults("<a href.*?</a>", regexResult);
+        return regexResults.stream().map(genre -> findGenre(genre)).collect(Collectors.toCollection(LinkedHashSet::new));
 
 //        regexResults.stream().forEach(System.out::println);
 //        regexResults.stream().forEach(genre -> System.out.println("findGenre: |" + findGenre(genre) + "|"));
 
 
-        return regexResults.stream().map(
-                genre -> genreRepository.findByName(findGenre(genre)).get()
-        ).collect(Collectors.toSet());
-
-//        var genres = new HashSet<Genre>();
-//        genres.add(new Genre("Test"));
-//        return genres;
+//        return regexResults.stream().map(
+//                genre -> genreRepository.findByName(findGenre(genre)).get()
+//        ).collect(Collectors.toSet());
     }
 
     private String getGenre() {
@@ -183,7 +171,7 @@ public class FilmwebDataFetcher {
         return HtmlEscape.unescapeHtml(genre);
     }
 
-    private String getPosterURL() {
+    public String getPosterURL() {
         String regexResult = getRegexResult("<img id=\"filmPoster\" itemprop=\"image\" content=\"[^\"]*\"", this.pageContent);
         return findPosterURL(regexResult);
     }
@@ -193,49 +181,57 @@ public class FilmwebDataFetcher {
 //        filmwebDataFetcher.fetchMovie("Next-2007-221722");
 //    }
 
+//    public FilmwebFetchedData fetchMovie(String movieURL) {
+//        init(movieURL);
+//        FilmwebFetchedData filmwebFetchedData = new FilmwebFetchedData();
+//
+//        filmwebFetchedData.setFilmwebRating(getRating());
+//        filmwebFetchedData.setFilmwebNumberOfVotes(getNumberOfViews());
+//        filmwebFetchedData.setTitle(getTitle());
+//        filmwebFetchedData.setReleaseYear(getReleaseYear());
+//        filmwebFetchedData.setDescription(getDescription());
+//        filmwebFetchedData.setDirector(getDirector());
+//        filmwebFetchedData.setGenres(getGenres());
+//        filmwebFetchedData.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
+//        logger.info("fetchMovie() - Fetched movie: {}", filmwebFetchedData);
+//
+//        return filmwebFetchedData;
+//    }
 
 
-    public Movie fetchMovie(String movieURL) {
+
+    public FilmwebFetchedData fetchMovie(String movieURL) {
         init(movieURL);
 //        System.out.println("\n\n\n");
 //        System.out.println(this.pageContent);
-        Movie movie = new Movie();
-        movie.setFilmwebRating(getRating());
-        movie.setFilmwebNumberOfVotes(getNumberOfViews());
-        movie.setTitle(getTitle());
-        movie.setReleaseYear(getReleaseYear());
-        movie.setDescription(getDescription());
-        movie.setDirector(getDirector());
-        movie.setGenres(getGenres());
-        movie.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
-        logger.info("fetchMovie() - Fetched movie: {}", movieFetchedInfo(movie));
+        FilmwebFetchedData filmwebFetchedData = new FilmwebFetchedData();
+        filmwebFetchedData.setFilmwebRating(getRating());
+        filmwebFetchedData.setFilmwebNumberOfVotes(getNumberOfViews());
+        filmwebFetchedData.setTitle(getTitle());
+        filmwebFetchedData.setReleaseYear(getReleaseYear());
+        filmwebFetchedData.setDescription(getDescription());
+        filmwebFetchedData.setDirector(getDirector());
+        filmwebFetchedData.setGenres(getGenres());
+        filmwebFetchedData.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
+        logger.info("fetchMovie() - Fetched movie: {}", movieFetchedInfo(filmwebFetchedData));
 
-        // Save poster image from filmweb
-        savePoster(getPosterURL(), movie.posterFileName());
-
-        return movie;
+        return filmwebFetchedData;
     }
 
-    private String movieFetchedInfo(Movie movie) {
+    private String movieFetchedInfo(FilmwebFetchedData filmwebFetchedData) {
         return "Movie {" +
-                "\nid = " + movie.id() +
-                ", \ntitle = " + movie.title() +
-                ", \nfilmwebRating = " + movie.filmwebRating() +
-                ", \nfilmwebNumberOfVotes = " + movie.filmwebNumberOfVotes() +
-                ", \nreleaseYear = " + movie.releaseYear() +
-                ", \ngenre = "  + movie.genres().stream().map(Genre::getName).collect(Collectors.joining(",")) +
-                ", \ndirector = " + movie.director() +
-                ", \nposterFileName = " + movie.posterFileName() +
-                ", \ndescription = " + movie.description() +
+                "\nid = " + filmwebFetchedData.getId() +
+                ", \ntitle = " + filmwebFetchedData.getTitle() +
+                ", \nfilmwebRating = " + filmwebFetchedData.getFilmwebRating() +
+                ", \nfilmwebNumberOfVotes = " + filmwebFetchedData.getFilmwebNumberOfVotes() +
+                ", \nreleaseYear = " + filmwebFetchedData.getReleaseYear() +
+                ", \ngenre = "  + filmwebFetchedData.getGenres().stream().collect(Collectors.joining(",")) +
+                ", \ndirector = " + filmwebFetchedData.getDirector() +
+                ", \nposterFileName = " + filmwebFetchedData.getPosterFileName() +
+                ", \ndescription = " + filmwebFetchedData.getDescription() +
                 "\n}";
     }
 
-    private void savePoster(String url, String fileName) {
-        try {
-            ImageFetcher.fetch(url, fileName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
 }
