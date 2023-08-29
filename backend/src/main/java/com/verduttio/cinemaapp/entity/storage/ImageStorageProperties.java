@@ -16,14 +16,4 @@ public class ImageStorageProperties implements StorageProperties{
     public void setLocation(String location) {
         this.location = location;
     }
-
-//    @Override
-//    public String getLocationTemp() {
-//        return locationTemp;
-//    }
-
-//    @Override
-//    public void setLocationTemp(String location) {
-//        this.locationTemp = location;
-//    }
 }

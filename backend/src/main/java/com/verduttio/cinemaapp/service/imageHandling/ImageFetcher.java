@@ -2,6 +2,7 @@ package com.verduttio.cinemaapp.service.imageHandling;
 
 import com.verduttio.cinemaapp.entity.User;
 import com.verduttio.cinemaapp.security.services.UserDetailsImpl;
+import com.verduttio.cinemaapp.service.storage.FilesInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ImageFetcher {
     private static final Logger logger = LoggerFactory.getLogger(ImageFetcher.class);
@@ -25,6 +29,13 @@ public class ImageFetcher {
 
         String path = "files/images/" + userId + "/temp/";
         String destinationFile = path + fileName;
+
+        // TODO: Refactor this code
+        if(!pathExists(destinationFile)) {
+            logger.error("Path {} does not exists", path);
+            logger.info("Making space for user {}", userId);
+            FilesInitializer.makeSpaceForNewUser(userId);
+        }
 
         /********
          * Step 1
@@ -61,6 +72,11 @@ public class ImageFetcher {
         outputStream.close();
 
         logger.info("fetch() - destinationFile: {} - SAVED", destinationFile);
+    }
+
+    private static boolean pathExists(String filePath) {
+        Path path = Paths.get(filePath);
+        return Files.exists(path) && Files.isRegularFile(path);
     }
 
 }

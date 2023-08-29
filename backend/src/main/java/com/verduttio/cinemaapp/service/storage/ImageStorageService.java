@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
@@ -28,7 +29,19 @@ public class ImageStorageService {
     }
 
     public void store(MultipartFile file) {
+        if(pathExists(String.valueOf(getIdOfCurrentUser()))) {
+            logger.info("Path exists for user: {}", getIdOfCurrentUser());
+        } else {
+            logger.error("Path does not exist for user: {}", getIdOfCurrentUser());
+            logger.info("Making space for user {}", getIdOfCurrentUser());
+            FilesInitializer.makeSpaceForNewUser(getIdOfCurrentUser());
+        }
         fileStorage.store(file, pathTemp(String.valueOf(getIdOfCurrentUser())));
+    }
+
+    private boolean pathExists(String filePath) {
+        Path path = Paths.get(filePath);
+        return Files.exists(path) && Files.isRegularFile(path);
     }
 
     private int getIdOfCurrentUser() {
