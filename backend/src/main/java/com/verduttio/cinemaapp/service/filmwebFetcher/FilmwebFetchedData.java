@@ -1,6 +1,5 @@
 package com.verduttio.cinemaapp.service.filmwebFetcher;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class FilmwebFetchedData {

@@ -3,7 +3,6 @@ package com.verduttio.cinemaapp.controller.rest;
 
 import com.verduttio.cinemaapp.entity.Movie;
 import com.verduttio.cinemaapp.entity.RatingInfo;
-import com.verduttio.cinemaapp.service.filmwebFetcher.FilmwebDataFetcher;
 import com.verduttio.cinemaapp.service.filmwebFetcher.FilmwebDataProvider;
 import com.verduttio.cinemaapp.service.imdbFetcher.ImdbDataFetcher;
 import org.springframework.beans.factory.annotation.Autowired;

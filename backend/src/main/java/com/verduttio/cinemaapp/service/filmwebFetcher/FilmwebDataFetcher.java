@@ -159,13 +159,6 @@ public class FilmwebDataFetcher {
         return genres;
     }
 
-    private String getGenre() {
-        String regexResult = getRegexResult("<div class=\"filmInfo__info\" itemprop=\"genre\"><span> <a href=\"[^\"]*\">[^<]*</a>", this.pageContent);
-        String genre = findGenre(regexResult);
-        logger.debug("getGenre() - genre: {}", genre);
-        return HtmlEscape.unescapeHtml(genre);
-    }
-
     public String getPosterURL() {
         String regexResult = getRegexResult("<img id=\"filmPoster\" itemprop=\"image\" content=\"[^\"]*\"", this.pageContent);
         return findPosterURL(regexResult);
