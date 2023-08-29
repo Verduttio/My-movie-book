@@ -8,8 +8,6 @@ public class FilmwebFetchedData {
     private String title;
     private double filmwebRating;
     private int filmwebNumberOfVotes;
-    private double imdbRating;
-    private int imdbNumberOfVotes;
     private int releaseYear;
     private Set<String> genres;
     private String director;
@@ -19,14 +17,11 @@ public class FilmwebFetchedData {
     public FilmwebFetchedData(){}
 
     public FilmwebFetchedData(int id, String title, double filmwebRating, int filmwebNumberOfVotes,
-                 double imdbRating, int imdbNumberOfVotes, int releaseYear,
-                 Set<String> genres, String director, String posterFileName, String description) {
+                 int releaseYear, Set<String> genres, String director, String posterFileName, String description) {
         this.id = id;
         this.title = title;
         this.filmwebRating = filmwebRating;
         this.filmwebNumberOfVotes = filmwebNumberOfVotes;
-        this.imdbRating = imdbRating;
-        this.imdbNumberOfVotes = imdbNumberOfVotes;
         this.releaseYear = releaseYear;
         this.genres = genres;
         this.director = director;
@@ -64,22 +59,6 @@ public class FilmwebFetchedData {
 
     public void setFilmwebNumberOfVotes(int filmwebNumberOfVotes) {
         this.filmwebNumberOfVotes = filmwebNumberOfVotes;
-    }
-
-    public double getImdbRating() {
-        return imdbRating;
-    }
-
-    public void setImdbRating(double imdbRating) {
-        this.imdbRating = imdbRating;
-    }
-
-    public int getImdbNumberOfVotes() {
-        return imdbNumberOfVotes;
-    }
-
-    public void setImdbNumberOfVotes(int imdbNumberOfVotes) {
-        this.imdbNumberOfVotes = imdbNumberOfVotes;
     }
 
     public int getReleaseYear() {
@@ -129,8 +108,6 @@ public class FilmwebFetchedData {
                 ", title='" + title + '\'' +
                 ", filmwebRating=" + filmwebRating +
                 ", filmwebNumberOfVotes=" + filmwebNumberOfVotes +
-                ", imdbRating=" + imdbRating +
-                ", imdbNumberOfVotes=" + imdbNumberOfVotes +
                 ", releaseYear=" + releaseYear +
                 ", genres=" + genres +
                 ", director='" + director + '\'' +

@@ -44,8 +44,6 @@ public class FilmwebDataProvider {
         movie.setTitle(filmwebFetchedData.getTitle());
         movie.setFilmwebRating(filmwebFetchedData.getFilmwebRating());
         movie.setFilmwebNumberOfVotes(filmwebFetchedData.getFilmwebNumberOfVotes());
-        movie.setImdbRating(filmwebFetchedData.getImdbRating());
-        movie.setImdbNumberOfVotes(filmwebFetchedData.getImdbNumberOfVotes());
         movie.setReleaseYear(filmwebFetchedData.getReleaseYear());
         movie.setGenres(genresStringSetToGenresClassSet(filmwebFetchedData.getGenres()));
         movie.setDirector(filmwebFetchedData.getDirector());
