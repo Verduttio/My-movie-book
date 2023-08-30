@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
-@SpringBootTest
 public class ImdbDataFetcherTest {
 
     @Mock

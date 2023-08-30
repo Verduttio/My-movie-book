@@ -11,7 +11,6 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 public class FilmwebDataFetcherTest {
 
     private FilmwebDataFetcher filmwebDataFetcher;
