@@ -18,6 +18,6 @@ public class ImdbURLFinderTest {
     @Test
     public void testFindImdbURL() {
         String imdbURL = imdbURLFinder.getMovieImdbURL("Most+do+Terabithii-2007-200116");
-        assertEquals("https://www.imdb.com/title/tt0398808/", imdbURL);
+        assertEquals("https://www.imdb.com/title/tt039880", imdbURL);
     }
 }
