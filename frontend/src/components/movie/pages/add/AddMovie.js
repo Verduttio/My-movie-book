@@ -9,6 +9,7 @@ import HeaderUploadMovie from "../../HeaderUploadMovie";
 import {cutLinkToIMDbFormat, cutLinkToFilmwebFormat} from "../../../../functionalities/filmwebLinkCutter";
 import {formatGenresToEdit} from "../../../../functionalities/GenreFormatter";
 import movieService from "../../../../services/movieService";
+import {useNavigate} from "react-router-dom";
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -38,6 +39,7 @@ export default function AddMovie() {
     // 2 - fill in manually
 
     const[posterURL, setPosterURL] = useState('');
+    const navigate = useNavigate();
 
     const movieFetchedFilmweb = {
         titleF: title,
@@ -61,20 +63,24 @@ export default function AddMovie() {
 
         filmwebFetcher.fetchData(movieLink)
             .then(movie => {
-                setTitle(movie.data.title);
-
-                setGenres(formatGenresToEdit(movie.data.genres));
-
-                setReleaseYear(movie.data.releaseYear);
-                setDirector(movie.data.director);
-                setFilmwebRating(movie.data.filmwebRating);
-                setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
-                setDescription(movie.data.description);
-                setPosterURL(movie.data.posterFileName);
-                setFilmwebFetchingData(2);
+                if(!movie.data) {
+                    console.log("We should see an alert box.");
+                    alert("Could not fetch data from filmweb");
+                    navigate('/movies');
+                } else {
+                    setTitle(movie.data.title);
+                    setGenres(formatGenresToEdit(movie.data.genres));
+                    setReleaseYear(movie.data.releaseYear);
+                    setDirector(movie.data.director);
+                    setFilmwebRating(movie.data.filmwebRating);
+                    setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
+                    setDescription(movie.data.description);
+                    setPosterURL(movie.data.posterFileName);
+                    setFilmwebFetchingData(2);
+                }
             })
             .catch(error => {
-                console.log('And error occurred while fetching data from filmweb.', error);
+                console.log('An error occurred while fetching data from filmweb.', error);
             })
     })
 

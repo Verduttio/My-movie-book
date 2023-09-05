@@ -26,11 +26,16 @@ public class FilmwebDataProvider {
     }
 
     public Movie getMovie(String movieTitle) {
-        FilmwebFetchedData filmwebFetchedData = filmwebDataFetcher.fetchMovie(movieTitle);
-        Movie movie = convertFilmwebFetchedDataToMovie(filmwebFetchedData);
-        savePhoto(filmwebDataFetcher.getPosterURL(), filmwebFetchedData.getPosterFileName());
+        try {
+            FilmwebFetchedData filmwebFetchedData = filmwebDataFetcher.fetchMovie(movieTitle);
+            Movie movie = convertFilmwebFetchedDataToMovie(filmwebFetchedData);
+            savePhoto(filmwebDataFetcher.getPosterURL(), filmwebFetchedData.getPosterFileName());
 
-        return movie;
+            return movie;
+        } catch (Exception e) {
+            logger.error("Could not fetch movie from filmweb: " + movieTitle);
+            return null;
+        }
     }
 
     private Set<Genre> genresStringSetToGenresClassSet(Set<String> genresStringSet) {
