@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap/dist/js/bootstrap.min.js";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import AddMovie from "./components/movie/pages/add/AddMovie";
 import EditMovie from "./components/movie/pages/edit/EditMovie";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";

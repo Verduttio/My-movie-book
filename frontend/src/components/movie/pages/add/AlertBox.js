@@ -26,6 +26,15 @@ const customStyles = {
         cursor: 'pointer',
         marginTop: '10px',
     },
+    titleContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: '10px',
+    },
+    iconTheme: {
+        fontSize: '26px',
+    }
 };
 
 export default function AlertBox ({ isOpen, onClose, content }) {
@@ -37,9 +46,13 @@ export default function AlertBox ({ isOpen, onClose, content }) {
             style={customStyles}
         >
             <div>
-                <h2>Warning</h2>
+                <div style={customStyles.titleContainer}>
+                    <h2>Warning</h2>
+                    <i className="bi-exclamation-triangle-fill text-warning" style={customStyles.iconTheme}/>
+                </div>
                 <p>{content}</p>
                 <button
+                    className={"btn btn-warning"}
                     onClick={onClose}
                     style={customStyles.closeButton}
                 >
