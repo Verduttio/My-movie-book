@@ -8,8 +8,9 @@ import MovieDataAddBox from "../../MovieDataAddBox";
 import HeaderUploadMovie from "../../HeaderUploadMovie";
 import {cutLinkToIMDbFormat, cutLinkToFilmwebFormat} from "../../../../functionalities/filmwebLinkCutter";
 import {formatGenresToEdit} from "../../../../functionalities/GenreFormatter";
-import movieService from "../../../../services/movieService";
 import {useNavigate} from "react-router-dom";
+import AlertBox from "./AlertBox";
+
 
 export default function AddMovie() {
     const[title, setTitle] = useState('');
@@ -30,6 +31,7 @@ export default function AddMovie() {
     // 0 - not started
     // 1 - fetching
     // 2 - fetched
+    // 3 - error not fetched
     const[filmwebFetchingData, setFilmwebFetchingData] = useState(0);
     const[imdbFetchingData, setImdbFetchingData] = useState(0);
 
@@ -54,6 +56,11 @@ export default function AddMovie() {
         imdbNumberOfVotesF: imdbNumberOfVotes,
     }
 
+    const [isAlertFilmwebOpen, setIsAlertFilmwebOpen] = useState(false);
+    const alertFilmwebHandleClose = () => {setIsAlertFilmwebOpen(false); navigate("/movies")};
+    const [isAlertIMDbOpen, setIsAlertIMDbOpen] = useState(false);
+    const alertIMDbHandleClose = () => {setIsAlertIMDbOpen(false)};
+
     const fetchFromFilmweb = ((e) => {
         e.preventDefault();
 
@@ -65,8 +72,8 @@ export default function AddMovie() {
             .then(movie => {
                 if(!movie.data) {
                     console.log("We should see an alert box.");
-                    alert("Could not fetch data from filmweb");
-                    navigate('/movies');
+                    setFilmwebFetchingData(3);
+                    setIsAlertFilmwebOpen(true);
                 } else {
                     setTitle(movie.data.title);
                     setGenres(formatGenresToEdit(movie.data.genres));
@@ -84,6 +91,8 @@ export default function AddMovie() {
             })
     })
 
+
+
     const fetchRatingFromIMDb = ((e) => {
         e.preventDefault();
 
@@ -100,12 +109,15 @@ export default function AddMovie() {
                 console.log("Fetched imdb numberOfVotes: ", ratingInfo.data.numberOfVotes);
 
                 if(ratingInfo.data.rating === 0 && ratingInfo.data.numberOfVotes === 0) {
-                    console.log("We should see an alert box.");
-                    alert("Could not fetch rating info from IMDb");
+                    console.log("Could not fetch rating info from IMDb, filmwebFetchingData: ", filmwebFetchingData);
+                    if(filmwebFetchingData !== 3) {
+                        console.log("We should see an alert box (IMDb error) only on add movie page, it will not be displayed on home page.");
+                        setIsAlertIMDbOpen(true);
+                    }
                 }
             })
             .catch(error => {
-                console.log('And error occurred while fetching imdb rating.', error);
+                console.log('An error occurred while fetching imdb rating.', error);
             })
     })
 
@@ -132,6 +144,7 @@ export default function AddMovie() {
             // so display only link box.
             return (
                 <div className="container d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                    <AlertBox isOpen={isAlertFilmwebOpen} onClose={alertFilmwebHandleClose} content={"Could not fetch data from filmweb"} />
                     <div className="card shadow p-3 mb-5 bg-white rounded">
                         <form>
                             <div className="mb-3 text-center">
@@ -179,6 +192,7 @@ export default function AddMovie() {
             // so display all movie input fields.
             return(
                 <div className="container">
+                    <AlertBox isOpen={isAlertIMDbOpen} onClose={alertIMDbHandleClose} content={"Could not fetch data from IMDb"} />
                     <HeaderUploadMovie functionality="Add movie"/>
                     <MovieDataAddFromFilmwebBox movie={movieFetchedFilmweb}/>
                 </div>
