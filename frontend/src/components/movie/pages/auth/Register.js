@@ -107,7 +107,7 @@ const Register = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-sm-6 px-0 d-none d-sm-block">
-                            <img src="https://media.gettyimages.com/photos/cinema-background-picture-id174466762?s=2048x2048"
+                            <img src="https://lh3.googleusercontent.com/drive-viewer/AITFw-ypmA6a4FG8HtfPucmRSDCi1T-lKUtFQkWz7hZNMVHq2gJbkePRFAonhwwNc7T3VhD4wxJDzSJ1fQmDzaSqgk2mrI7fAQ=s1600"
                                  className="w-100 vh-auto"
                                  style={{objectFit: "cover", objectPosition: "left"}}/>
                         </div>
