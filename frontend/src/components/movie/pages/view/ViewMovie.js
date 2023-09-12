@@ -76,9 +76,6 @@ export default function MovieList() {
     return (
         <div className="container">
             <div id={"buttons"} style={{paddingTop: "20px", paddingBottom: "20px"}}>
-                {/*<span style={{display:"block", float:"left"}}>*/}
-                {/*    <Link className={"btn btn-primary"} to={"/movies"}>Home page</Link>*/}
-                {/*</span>*/}
                 <span style={{display:"block", float:"right"}}>
                     <button className={"btn btn-success"} onClick={(e) => {
                         changeWatchStatus(e);
@@ -171,7 +168,7 @@ export default function MovieList() {
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
                                     {/*<img src={'http://'+process.env.REACT_APP_HOST+'/files/images/public/filmweb.jpg'}*/}
-                                    <img src={'https://drive.google.com/uc?export=view&id=1GsyKxj4hqEfk2ij4jHPtE0HNdi5h4MXl'}
+                                    <img src={process.env.PUBLIC_URL + "/filmweb.jpg"}
                                          alt={"filmweb"}
                                          style={{
                                              maxHeight: "60px",
@@ -206,7 +203,7 @@ export default function MovieList() {
                         <div className="row" style={{paddingTop: "50px"}}>
                             <div className="card" style={{maxWidth: "800px"}}>
                                 <div className="row bg-secondary">
-                                    <img src={'https://drive.google.com/uc?export=view&id=1DCVA9OAYINgLFaTyNYd1U2RuQF5UIp7w'}
+                                    <img src={process.env.PUBLIC_URL + "/imdb.png"}
                                          className="img-fluid rounded-start"
                                          alt={"imdb"}
                                          style={{maxHeight: "60px", width: "auto", marginLeft: "auto", marginRight: "auto", padding: "10px"}}
