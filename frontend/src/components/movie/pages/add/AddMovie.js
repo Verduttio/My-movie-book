@@ -190,12 +190,17 @@ export default function AddMovie() {
         } else {
             // User has already fetched data
             // so display all movie input fields.
+            setTimeout(() => {
+                // Scroll to the bottom of the page
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 0);
             return(
                 <div className="container">
                     <AlertBox isOpen={isAlertIMDbOpen} onClose={alertIMDbHandleClose} content={"Could not fetch data from IMDb"} />
                     <HeaderUploadMovie functionality="Add movie"/>
                     <MovieDataAddFromFilmwebBox movie={movieFetchedFilmweb}/>
                 </div>
+
             )
         }
     } else if (enterMovieDataOption === 2) {
