@@ -143,7 +143,7 @@ public class FilmwebDataFetcher {
     }
 
     private String getDirector() {
-        String regexResult = getRegexResult("<a href=\"[^\"]*\" title=\"[^\"]*\" itemprop=\"director\" itemscope itemtype=\"http://schema.org/Person\">", this.pageContent);
+        String regexResult = getRegexResult("<a href=\"[^\"]*\" title=\"[^\"]*\" itemprop=\"director\".*?>", this.pageContent);
         String director = findDirector(regexResult);
         logger.debug("getDirector() - director: {}", director);
         return HtmlEscape.unescapeHtml(director);
