@@ -42,11 +42,17 @@ export default function MovieList() {
 
     return (
         <div className="container">
-            <div style={{paddingTop: "20px", paddingBottom: "20px"}}>
-                <Link to={"/movies/add"} className={"btn btn-primary mb-2"} style={{float:"right"}}>
-                    Add Movie
-                </Link>
-                <h3 style={{textAlign: "center"}}>My watch list</h3>
+            <div className={"row"} style={{paddingTop: "20px", paddingBottom: "20px"}}>
+                <div className={"col-10 d-flex justify-content-left"}>
+                    <div className={"shadow-lg p-2 mb-2 bg-opacity-25 bg-primary rounded"}>
+                        <h4>My watch list</h4>
+                    </div>
+                </div>
+                <div className={"col-2"} style={{textAlign: "right"}}>
+                    <Link to={"/movies/add"} className={"btn btn-info mb-2"}>
+                        Add movie
+                    </Link>
+                </div>
             </div>
             {moviesAreFetched ? (
                 <div>
