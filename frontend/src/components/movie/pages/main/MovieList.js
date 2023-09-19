@@ -44,7 +44,7 @@ export default function MovieList() {
         <div className="container">
             <div className={"row"} style={{paddingTop: "20px", paddingBottom: "20px"}}>
                 <div className={"col-10 d-flex justify-content-left"}>
-                    <div className={"shadow-lg p-2 mb-2 bg-opacity-25 bg-primary rounded"}>
+                    <div className={"shadow-lg p-2 mb-2 bg-opacity-25 bg-danger rounded"}>
                         <h4>My watch list</h4>
                     </div>
                 </div>
