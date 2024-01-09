@@ -23,6 +23,7 @@ export default function AddMovie() {
     const[director, setDirector] = useState('');
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState('');
+    const[posterFilmwebUrl, setPosterFilmwebUrl] = useState('');
     const[description, setDescription] = useState('');
 
     const[filmwebLink, setFilmwebLink] = useState('');
@@ -52,6 +53,7 @@ export default function AddMovie() {
         filmwebNumberOfVotesF: filmwebNumberOfVotes,
         descriptionF: description,
         posterURLF: posterURL,
+        posterFilmwebUrlF: posterFilmwebUrl,
         imdbRatingF: imdbRating,
         imdbNumberOfVotesF: imdbNumberOfVotes,
     }
@@ -83,6 +85,7 @@ export default function AddMovie() {
                     setFilmwebNumberOfVotes(movie.data.filmwebNumberOfVotes);
                     setDescription(movie.data.description);
                     setPosterURL(movie.data.posterFileName);
+                    setPosterFilmwebUrl(movie.data.posterFilmwebUrl);
                     setFilmwebFetchingData(2);
                 }
             })

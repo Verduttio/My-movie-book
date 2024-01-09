@@ -7,7 +7,8 @@ import InputBoxesRegisterMovie from "./InputBoxesRegisterMovie";
 import AuthService from "../../services/authService";
 
 export default function MovieDataAddFromFilmwebBox(props) {
-    const {titleF, releaseYearF, genresF, directorF, filmwebRatingF, filmwebNumberOfVotesF, descriptionF, posterURLF, imdbRatingF, imdbNumberOfVotesF} = props.movie;
+    const {titleF, releaseYearF, genresF, directorF, filmwebRatingF, filmwebNumberOfVotesF,
+            descriptionF, posterURLF, imdbRatingF, imdbNumberOfVotesF, posterFilmwebUrlF} = props.movie;
 
     const[title, setTitle] = useState(titleF.toString());
     const[filmwebRating, setFilmwebRating] = useState(filmwebRatingF.toString());
@@ -20,6 +21,7 @@ export default function MovieDataAddFromFilmwebBox(props) {
     const[posterImage, setPosterImage] = useState(null);
     const[posterFileName, setPosterFileName] = useState(posterURLF.toString());
     const[description, setDescription] = useState(descriptionF.toString());
+    const[posterFilmwebUrl, setPosterFilmwebUrl] = useState(posterFilmwebUrlF.toString());
 
     const currentUser = AuthService.getCurrentUser();
 
@@ -40,7 +42,7 @@ export default function MovieDataAddFromFilmwebBox(props) {
 
         let genresList = genres.map(function(genre){return genre.value;})
 
-        const movie = {title, releaseYear, genres: genresList, director, posterFileName, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
+        const movie = {title, releaseYear, genres: genresList, director, posterFileName, posterFilmwebUrl, filmwebRating, filmwebNumberOfVotes, imdbRating, imdbNumberOfVotes, description, userId};
         // Create new record
         movieService.create(movie)
             .then(response => {

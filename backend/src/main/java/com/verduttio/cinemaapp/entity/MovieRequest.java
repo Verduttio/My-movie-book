@@ -35,6 +35,9 @@ public class MovieRequest {
     @JsonProperty("posterFileName")
     private String posterFileName;
 
+    @JsonProperty("posterFilmwebUrl")
+    private String posterFilmwebUrl;
+
     @JsonProperty("description")
     private String description;
 
@@ -95,6 +98,14 @@ public class MovieRequest {
         this.releaseYear = releaseYear;
     }
 
+    public String getPosterFilmwebUrl() {
+        return posterFilmwebUrl;
+    }
+
+    public void setPosterFilmwebUrl(String posterFilmwebUrl) {
+        this.posterFilmwebUrl = posterFilmwebUrl;
+    }
+
     public Set<String> getGenres() {
         return genres;
     }
@@ -146,6 +157,7 @@ public class MovieRequest {
 //        movie.setGenres(movieRequest.getGenres().stream().map(genre -> {Genre genreFromRepo = }).collect(Collectors.toSet()));
         movie.setDirector(movieRequest.getDirector());
         movie.setPosterFileName(movieRequest.getPosterFileName());
+        movie.setPosterFilmwebUrl(movieRequest.getPosterFilmwebUrl());
         movie.setDescription(movieRequest.getDescription());
         movie.setUserId(movieRequest.getUserId());
         return movie;

@@ -17,6 +17,23 @@ function numberWithSpaces (x){
 const truncate = (input) =>
     input.length > 100 ? `${input.substring(0, 100)}...` : input;
 
+const checkHttpStatus = async (url) => {
+    try {
+        const response = await fetch(url);
+
+        if (response.ok) {
+            // console.log(`Adres URL ${url} zwraca kod odpowiedzi HTTP 200 (OK).`);
+            return true;
+        } else {
+            // console.error(`Adres URL ${url} zwraca inny kod odpowiedzi HTTP: ${response.status}`);
+            return false;
+        }
+    } catch (error) {
+        // console.error(`Błąd podczas sprawdzania statusu HTTP dla adresu URL ${url}: ${error.message}`);
+        return false;
+    }
+};
+
 
 export default function MovieList() {
     const [movies, setMovies] = useState([]);
@@ -29,9 +46,23 @@ export default function MovieList() {
             console.log("authService.getCurrentUser().id: ", authService.getCurrentUser().id);
             console.log("authHeader: ", authHeader().Authorization);
             movieService.getAll()
-                .then(response => {
+                .then(async response => {
                     console.log('Printing the movies data', response.data);
-                    setMovies(response.data);
+
+                    const updatedMovies = await Promise.all(response.data.map(async movie => {
+                        if (await checkHttpStatus('http://' + process.env.REACT_APP_HOST + '/files/images/' + userId + '/' + movie.posterFileName) === true) {
+                            movie.posterFileName = 'http://' + process.env.REACT_APP_HOST + '/files/images/' + userId + '/' + movie.posterFileName;
+                        } else {
+                            movie.posterFileName = movie.posterFilmwebUrl;
+                        }
+
+                        return movie;
+                    }));
+
+                    console.log("updatedMovies: ", updatedMovies)
+                    setMovies(updatedMovies);
+
+                    // console.log("movies: ", movies);
                     setMoviesAreFetched(true);
                 })
                 .catch(error => {
@@ -64,21 +95,25 @@ export default function MovieList() {
                                         <div className="col-md-4">
                                             {movie.posterFileName !== undefined ? (
                                                 <img className="img-fluid rounded-start"
-                                                     src={'http://'+process.env.REACT_APP_HOST+'/files/images/' + userId + "/" + movie.posterFileName}
-                                                     alt={movie.posterFileName}
+                                                     src={movie.posterFileName}
+                                                     alt={movie.title}
                                                 />
                                             ) : null}
                                         </div>
                                         <div className="col-md-8">
                                             <div className="card-body">
-                                                <Link to={"/movies/"+movie.id} className={"stretched-link text-decoration-none"}>
+                                                <Link to={"/movies/" + movie.id}
+                                                      className={"stretched-link text-decoration-none"}>
                                                     {movie.title}
                                                 </Link>
                                                 <p className="card-text">{movie.releaseYear}</p>
                                                 <p className="card-text">{formatGenresToDisplay(movie.genres)}</p>
-                                                <p className="card-text">{movie.filmwebRating === undefined ? ("") : (movie.filmwebRating.toFixed(1))} <BsStarFill style={{color: "gold"}}/></p>
-                                                <p className="card-text">{numberWithSpaces(movie.filmwebNumberOfVotes)} <BsStars style={{color: "gray"}}/></p>
-                                                <p className="card-text"><small className="text-muted">{truncate(movie.description)}</small>
+                                                <p className="card-text">{movie.filmwebRating === undefined ? ("") : (movie.filmwebRating.toFixed(1))}
+                                                    <BsStarFill style={{color: "gold"}}/></p>
+                                                <p className="card-text">{numberWithSpaces(movie.filmwebNumberOfVotes)}
+                                                    <BsStars style={{color: "gray"}}/></p>
+                                                <p className="card-text"><small
+                                                    className="text-muted">{truncate(movie.description)}</small>
                                                 </p>
                                             </div>
                                         </div>

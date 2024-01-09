@@ -2,16 +2,10 @@ package com.verduttio.cinemaapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.mapping.List;
 
 import javax.persistence.*;
-
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.stream.Collectors;
 
 @Entity
 public class Movie {
@@ -42,6 +36,8 @@ public class Movie {
     private String director;
     @JsonProperty("posterFileName")
     private String posterFileName;
+    @JsonProperty("posterFilmwebUrl")
+    private String posterFilmwebUrl;
     @JsonProperty("description")
     @Lob
     private String description;
@@ -72,7 +68,9 @@ public class Movie {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public Movie(int id, String title, double filmwebRating, int filmwebNumberOfVotes, double imdbRating, int imdbNumberOfVotes, int releaseYear, LinkedHashSet<Genre> genres, String director, String posterFileName, String description, int userId) {
+    public Movie(int id, String title, double filmwebRating, int filmwebNumberOfVotes, double imdbRating,
+                 int imdbNumberOfVotes, int releaseYear, LinkedHashSet<Genre> genres, String director,
+                 String posterFileName, String posterFilmwebUrl, String description, int userId) {
         this.id = id;
         this.title = title;
         this.filmwebRating = filmwebRating;
@@ -83,6 +81,7 @@ public class Movie {
         this.genres = genres;
         this.director = director;
         this.posterFileName = posterFileName;
+        this.posterFilmwebUrl = posterFilmwebUrl;
         this.description = description;
         this.note = null;
         this.watched = false;
@@ -118,6 +117,7 @@ public class Movie {
     public Set<Genre> genres() {return genres;}
     public String director() {return director;}
     public String posterFileName() {return posterFileName;}
+    public String posterFilmwebUrl() {return posterFilmwebUrl;}
     public String description() {return description;}
     public String note() {return note;}
     public boolean watched() {return watched;}
@@ -132,6 +132,7 @@ public class Movie {
     public void setGenres(Set<Genre> genres) {this.genres = genres;}
     public void setDirector(String director) {this.director = director;}
     public void setPosterFileName(String posterFileName) {this.posterFileName = posterFileName;}
+    public void setPosterFilmwebUrl(String posterFilmwebUrl) {this.posterFilmwebUrl = posterFilmwebUrl;}
     public void setDescription(String description) {this.description = description;}
     public void setNote(String note) {this.note = note;}
     public void setWatched(boolean watched) {this.watched = watched;}
@@ -150,6 +151,7 @@ public class Movie {
                 ", \ngenre = "  + genres +
                 ", \ndirector = " + director +
                 ", \nposterFileName = " + posterFileName +
+                ", \nposterFilmwebUrl = " + posterFilmwebUrl +
                 ", \ndescription = " + description +
                 ", \nnote = " + note +
                 ", \nwatched = " + watched +

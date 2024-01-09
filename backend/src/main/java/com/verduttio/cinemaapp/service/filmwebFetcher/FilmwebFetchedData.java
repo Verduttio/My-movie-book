@@ -11,12 +11,14 @@ public class FilmwebFetchedData {
     private Set<String> genres;
     private String director;
     private String posterFileName;
+    private String posterFilmwebUrl;
     private String description;
 
     public FilmwebFetchedData(){}
 
     public FilmwebFetchedData(int id, String title, double filmwebRating, int filmwebNumberOfVotes,
-                 int releaseYear, Set<String> genres, String director, String posterFileName, String description) {
+                              int releaseYear, Set<String> genres, String director, String posterFileName,
+                              String posterFilmwebUrl, String description) {
         this.id = id;
         this.title = title;
         this.filmwebRating = filmwebRating;
@@ -25,6 +27,7 @@ public class FilmwebFetchedData {
         this.genres = genres;
         this.director = director;
         this.posterFileName = posterFileName;
+        this.posterFilmwebUrl = posterFilmwebUrl;
         this.description = description;
     }
 
@@ -54,6 +57,10 @@ public class FilmwebFetchedData {
 
     public int getFilmwebNumberOfVotes() {
         return filmwebNumberOfVotes;
+    }
+
+    public String getPosterFilmwebUrl() {
+        return posterFilmwebUrl;
     }
 
     public void setFilmwebNumberOfVotes(int filmwebNumberOfVotes) {
@@ -92,6 +99,10 @@ public class FilmwebFetchedData {
         this.posterFileName = posterFileName;
     }
 
+    public void setPosterFilmwebUrl(String posterFilmwebUrl) {
+        this.posterFilmwebUrl = posterFilmwebUrl;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -111,6 +122,7 @@ public class FilmwebFetchedData {
                 ", genres=" + genres +
                 ", director='" + director + '\'' +
                 ", posterFileName='" + posterFileName + '\'' +
+                ", posterFilmwebUrl='" + posterFilmwebUrl + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

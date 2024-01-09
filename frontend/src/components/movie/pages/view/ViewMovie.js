@@ -11,6 +11,32 @@ function numberWithSpaces (x){
     return x !== undefined ? x.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : x;
 }
 
+const checkHttpStatus = async (url) => {
+    try {
+        const response = await fetch(url);
+
+        if (response.ok) {
+            // console.log(`Adres URL ${url} zwraca kod odpowiedzi HTTP 200 (OK).`);
+            return true;
+        } else {
+            // console.error(`Adres URL ${url} zwraca inny kod odpowiedzi HTTP: ${response.status}`);
+            return false;
+        }
+    } catch (error) {
+        // console.error(`Błąd podczas sprawdzania statusu HTTP dla adresu URL ${url}: ${error.message}`);
+        return false;
+    }
+};
+
+const updatePosterPath = async (movie) => {
+    if (await checkHttpStatus('http://' + process.env.REACT_APP_HOST + '/files/images/' + authService.getCurrentUser().id + '/' + movie.posterFileName) === true) {
+        movie.posterFileName = 'http://' + process.env.REACT_APP_HOST + '/files/images/' + authService.getCurrentUser().id + '/' + movie.posterFileName;
+    } else {
+        movie.posterFileName = movie.posterFilmwebUrl;
+    }
+    return movie;
+}
+
 export default function MovieList() {
     const [movie, setMovie] = useState({});
     const [note, setNote] = useState("");
@@ -24,9 +50,14 @@ export default function MovieList() {
 
     useEffect(()=> {
         movieService.get(id)
-            .then(response => {
+            .then(async response => {
                 console.log('Printing movie data', response.data);
-                setMovie(response.data);
+
+                const updatedMovie = await updatePosterPath(response.data);
+
+                console.log("updatedMovie: ", updatedMovie)
+
+                setMovie(updatedMovie);
             })
             .catch(error => {
                 console.log('An error occurred while getting the movie.', error);
@@ -106,8 +137,9 @@ export default function MovieList() {
                             <div className="row g-0">
                                 <div className="col-md-4">
                                     <img
-                                        src={`http://${process.env.REACT_APP_HOST}/files/images/${userId}/${movie.posterFileName}`}
-                                        alt={movie.posterFileName}
+                                        // src={`http://${process.env.REACT_APP_HOST}/files/images/${userId}/${movie.posterFileName}`}
+                                        src={movie.posterFileName}
+                                        alt={movie.title}
                                         className="rounded-start"
                                         style={{
                                             width: "100%", // Skalowanie zdjęcia na szerokość

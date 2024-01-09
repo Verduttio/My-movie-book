@@ -174,6 +174,7 @@ public class FilmwebDataFetcher {
         filmwebFetchedData.setDescription(getDescription());
         filmwebFetchedData.setDirector(getDirector());
         filmwebFetchedData.setGenres(getGenres());
+        filmwebFetchedData.setPosterFilmwebUrl(getPosterURL());
         filmwebFetchedData.setPosterFileName(FileNameGenerator.generateName() + ".jpg");
         logger.info("fetchMovie() - Fetched movie: {}", movieFetchedInfo(filmwebFetchedData));
 
@@ -190,6 +191,7 @@ public class FilmwebDataFetcher {
                 ", \ngenre = "  + filmwebFetchedData.getGenres().stream().collect(Collectors.joining(",")) +
                 ", \ndirector = " + filmwebFetchedData.getDirector() +
                 ", \nposterFileName = " + filmwebFetchedData.getPosterFileName() +
+                ", \nposterFilmwebUrl = " + filmwebFetchedData.getPosterFilmwebUrl() +
                 ", \ndescription = " + filmwebFetchedData.getDescription() +
                 "\n}";
     }
