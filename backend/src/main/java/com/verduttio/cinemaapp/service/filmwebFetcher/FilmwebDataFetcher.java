@@ -52,7 +52,11 @@ public class FilmwebDataFetcher {
         Matcher matcher = pattern.matcher(content);
         boolean found = matcher.find();
 
-        return matcher.group();
+        if (found) {
+            return matcher.group();
+        } else {
+            return "";
+        }
     }
 
     private LinkedHashSet<String> getRegexResults(String regex, String content) {
@@ -137,6 +141,10 @@ public class FilmwebDataFetcher {
 
     private String getDescription() {
         String regexResult = getRegexResult("<span class=\"description\" itemprop=\"description\">[^<]*</span>", this.pageContent);
+        System.out.println("|" + regexResult + "");
+        if (regexResult == "") {
+            regexResult = getRegexResult("<span class=\"description__plotClamped\" itemprop=\"description\">[^<]*</span>", this.pageContent);
+        }
         String description = findDescription(regexResult);
         logger.debug("getDescription() - description: {}", description);
         return HtmlEscape.unescapeHtml(description);
