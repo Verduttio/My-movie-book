@@ -62,10 +62,11 @@ Like: `sudo docker compose build`.
 
 ## Screenshots
 
-![demo_0](https://user-images.githubusercontent.com/72033031/213208090-bdfd118e-e36c-49a1-96ec-29fda23d3c48.png)
-![demo_1_1](https://user-images.githubusercontent.com/72033031/210176631-2ed5dc92-4c8e-41dd-ac29-995fb682eb72.png)
-![demo_2](https://user-images.githubusercontent.com/72033031/209668184-0345d870-bc82-4f42-a5db-6c3f7bd4e36d.png)
-![demo_3](https://user-images.githubusercontent.com/72033031/209668234-e2f21c75-ebda-4968-bee4-7bdd32816839.png)
+![login](https://github.com/user-attachments/assets/17a1fa94-79a8-40dc-8a6c-e535ef89727f)
+![movies](https://github.com/user-attachments/assets/5250970e-2c52-4885-8523-2cbe0ec56246)
+![movie](https://github.com/user-attachments/assets/248821f1-786c-409a-bd53-65fd526e57ec)
+![add](https://github.com/user-attachments/assets/ff2c45fa-9579-43f6-ba28-01f91b706fae)
+
 
 ## Dev note
 The app is still in development. Many issues are known and are being fixed.
