@@ -73,7 +73,7 @@ public class FilmwebDataFetcher {
     }
 
     private String findNumberOfViews(String regexResult) {
-        regexResult = regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("<br"));
+        regexResult = regexResult.substring(regexResult.indexOf('>')+1, regexResult.indexOf("</span>"));
         return regexResult.replace("\"", "").replace(" ", "");
     }
 
@@ -115,7 +115,7 @@ public class FilmwebDataFetcher {
     }
 
     private int getNumberOfViews() {
-        String regexResult = getRegexResult("<span class=\"filmRating__count\">[^<]*<br", this.pageContent);
+        String regexResult = getRegexResult("<span itemprop=\"ratingCount\">[^<]*</span>", this.pageContent);
         String numberOfViews = findNumberOfViews(regexResult);
         logger.debug("getNumberOfViews() - numberOfViews: {}", numberOfViews);
         return Integer.parseInt(numberOfViews);
