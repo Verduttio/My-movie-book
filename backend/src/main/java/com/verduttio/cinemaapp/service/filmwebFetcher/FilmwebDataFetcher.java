@@ -136,7 +136,7 @@ public class FilmwebDataFetcher {
     }
 
     private String getDescription() {
-        String regexResult = getRegexResult("<span itemprop=\"description\">[^<]*</span>", this.pageContent);
+        String regexResult = getRegexResult("<span class=\"description\" itemprop=\"description\">[^<]*</span>", this.pageContent);
         String description = findDescription(regexResult);
         logger.debug("getDescription() - description: {}", description);
         return HtmlEscape.unescapeHtml(description);
