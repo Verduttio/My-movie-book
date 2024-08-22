@@ -68,9 +68,3 @@ Like: `sudo docker compose build`.
 ![add](https://github.com/user-attachments/assets/ff2c45fa-9579-43f6-ba28-01f91b706fae)
 
 
-## Dev note
-The app is still in development. Many issues are known and are being fixed.
-Major things to solve are currently:
-  * storage management. After recreating docker container all user folders are gone.
-  * frontend<-->backend configuration. 
-
