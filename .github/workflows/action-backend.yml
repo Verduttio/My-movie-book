@@ -4,11 +4,6 @@ on:
     workflows: ["Test backend"]
     types:
       - completed
-#  push:
-#    branches:
-#      - main
-#    paths:
-#      - 'backend/**'
 
 jobs:
   buildJAR:
