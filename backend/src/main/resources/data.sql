@@ -3,6 +3,7 @@ INSERT INTO roles (id, name) VALUES
 (2, 'ROLE_ADMIN')
 ON CONFLICT (id) DO NOTHING ;
 
+
 INSERT INTO genres (id, name) VALUES 
 (1,'Akcja'),
 (2,'Sci-Fi'),
