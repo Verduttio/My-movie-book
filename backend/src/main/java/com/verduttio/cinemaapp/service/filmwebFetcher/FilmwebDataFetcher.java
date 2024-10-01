@@ -100,7 +100,7 @@ public class FilmwebDataFetcher {
     }
 
     private String findGenre(String regexResult) {
-        String field = "\"filmMainHeader\">";
+        String field = "\"genre\">";
         regexResult = regexResult.substring(regexResult.indexOf(field)+field.length());
         return regexResult.substring(0, regexResult.indexOf('<'));
     }
@@ -158,10 +158,11 @@ public class FilmwebDataFetcher {
     }
 
     private Set<String> getGenres() {
-        String regexResult = getRegexResult("<div class=\"filmInfo__info\" itemprop=\"genre\">.*?</div>", this.pageContent);
+        LinkedHashSet<String> regexResults = getRegexResults("<span itemprop=\"genre\">.*?</a>", this.pageContent);
+        System.out.println("regexResult: " + regexResults);
 
         // Get a tags only from the regex
-        LinkedHashSet<String> regexResults = getRegexResults("<a href.*?</a>", regexResult);
+//        LinkedHashSet<String> regexResults = getRegexResults("<a href.*?</a>", regexResult);
         var genres = regexResults.stream().map(this::findGenre).collect(Collectors.toCollection(LinkedHashSet::new));
         logger.debug("getGenres() - genres: {}", genres);
         return genres;
